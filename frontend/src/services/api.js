@@ -245,10 +245,25 @@ class ApiService {
   }
 
   // Logout
-  logout() {
+  async logout() {
+    try {
+      // Call backend logout endpoint to invalidate session
+      await this.request("/api/auth/logout", { method: "POST" });
+    } catch (error) {
+      // Continue with logout even if backend call fails
+      console.log("Backend logout failed, continuing with local cleanup");
+    }
+    
+    // Clear all authentication data from localStorage
     localStorage.removeItem("adminToken");
     localStorage.removeItem("userToken");
     localStorage.removeItem("userRole");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userName");
+    
+    // Clear any other potential auth-related data
+    sessionStorage.clear();
   }
 
   // Check if user is authenticated

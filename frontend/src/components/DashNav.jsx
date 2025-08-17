@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useGlobalFileUpload } from "./GlobalFileUploadContext";
+import apiService from "../services/api.js";
 
 const Logo = () => (
   <div>
@@ -42,6 +43,19 @@ const DashNav = () => {
 
   const handleHomeClick = () => {
     navigate("/");
+  };
+
+  const handleLogout = async () => {
+    try {
+      // Clear authentication tokens and call backend
+      await apiService.logout();
+      // Redirect to home page
+      navigate("/");
+    } catch (error) {
+      console.error("Logout error:", error);
+      // Even if there's an error, redirect to home
+      navigate("/");
+    }
   };
 
   return (
@@ -108,7 +122,7 @@ const DashNav = () => {
             {/* Mobile Logout Button */}
             <button
               className="dashnav-btn dashnav-btn-mobile dashnav-btn-logout"
-              onClick={() => navigate("/")}
+              onClick={handleLogout}
               type="button"
             >
               Logout
@@ -117,7 +131,7 @@ const DashNav = () => {
           {/* Desktop Logout Button */}
           <button
             className="dashnav-btn dashnav-btn-desktop dashnav-btn-logout"
-            onClick={() => navigate("/")}
+            onClick={handleLogout}
             type="button"
           >
             Logout

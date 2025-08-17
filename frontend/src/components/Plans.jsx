@@ -144,15 +144,6 @@ export default function Plans() {
             </motion.div>
           ))}
         </motion.div>
-
-        <motion.p
-          className="new-update-msg"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-        >
-          ✨ More features are on the way — stay tuned!
-        </motion.p>
       </div>
     </>
   );
