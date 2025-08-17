@@ -336,12 +336,34 @@ const UserDashboard = () => {
         <main className="dashboard-main2">
           <header className="dashboard-header">
             <h1>My Subjects</h1>
-            <div style={{ display: "flex" }}>
+            <div style={{ display: "flex", alignItems: "center" }}>
               <button
                 className="add-subject-btn"
                 onClick={() => setShowAddSubject(true)}
               >
                 + Add Subject
+              </button>
+              {/* Mobile Upload Icon Button */}
+              <button
+                className="upload-file-btn-mobile add-subject-btn"
+                onClick={openUploadModal}
+                style={{
+                  marginLeft: "12px",
+                  whiteSpace: "nowrap",
+                }}
+                title="Upload File"
+              >
+                Upload
+              </button>
+              {/* Desktop Upload Button */}
+              <button
+                className="upload-file-btn-desktop add-subject-btn"
+                onClick={openUploadModal}
+                style={{
+                  marginLeft: "16px",
+                }}
+              >
+                Upload File
               </button>
             </div>
           </header>
@@ -1022,23 +1044,32 @@ const UserDashboard = () => {
       <style>{`
         @media (max-width: 768px) {
           .upload-file-btn-mobile {
-            display: inline-block;
-            background: #0078FF;
-            color: #fff;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            border: none;
-            margin-left: 10px;
-            font-size: 1rem;
-            transition: background 0.2s;
+            display: flex !important;
+          }
+          .upload-file-btn-desktop {
+            display: none !important;
+          }
+          .dashboard-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+          }
+          .dashboard-header > div {
+            width: 100%;
+            justify-content: flex-start;
           }
         }
         @media (min-width: 769px) {
           .upload-file-btn-mobile {
             display: none !important;
           }
+          .upload-file-btn-desktop {
+            display: block !important;
+          }
+        }
+        .upload-file-btn-mobile.add-subject-btn,
+        .upload-file-btn-desktop.add-subject-btn {
+          margin-right: 0;
         }
         .file-menu-item:hover, .file-menu-item:focus {
           background: #f5faff;

@@ -105,30 +105,22 @@ const DashNav = () => {
             >
               Trash
             </Link>
-            <Link
-              to="/dashboard/settings"
-              className={
-                location.pathname === "/dashboard/settings" ? "active" : ""
-              }
-            >
-              Settings
-            </Link>
-            {/* Mobile Upload Button */}
+            {/* Mobile Logout Button */}
             <button
-              className="dashnav-btn dashnav-btn-mobile"
-              onClick={openUploadModal}
+              className="dashnav-btn dashnav-btn-mobile dashnav-btn-logout"
+              onClick={() => navigate("/")}
               type="button"
             >
-              Upload File
+              Logout
             </button>
           </div>
-          {/* Desktop Upload Button */}
+          {/* Desktop Logout Button */}
           <button
-            className="dashnav-btn dashnav-btn-desktop"
-            onClick={openUploadModal}
+            className="dashnav-btn dashnav-btn-desktop dashnav-btn-logout"
+            onClick={() => navigate("/")}
             type="button"
           >
-            Upload File
+            Logout
           </button>
         </div>
       </nav>
@@ -175,6 +167,13 @@ const DashNav = () => {
           letter-spacing: 0.5px;
           transition: background 0.2s;
           margin-left: 16px;
+        }
+        .dashnav-btn-logout {
+          background: #dc3545;
+          box-shadow: 0 2px 8px rgba(220,53,69,0.08);
+        }
+        .dashnav-btn-logout:hover {
+          background: #c82333;
         }
         .dashnav-hamburger {
           display: none;
