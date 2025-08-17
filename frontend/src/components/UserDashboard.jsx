@@ -362,7 +362,7 @@ const UserDashboard = () => {
                   marginLeft: "16px",
                 }}
               >
-                Upload File
+                Upload
               </button>
             </div>
           </header>
