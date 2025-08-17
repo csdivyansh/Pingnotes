@@ -22,13 +22,10 @@ const UserDashboard = () => {
   const [error, setError] = useState(null);
   const [showAddSubject, setShowAddSubject] = useState(false);
   const [showAddTopic, setShowAddTopic] = useState(false);
-  const [showUploadFile, setShowUploadFile] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [subjectToDelete, setSubjectToDelete] = useState(null);
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedTopic, setSelectedTopic] = useState(null);
-  const [uploadFile, setUploadFile] = useState(null);
-  const [uploadProgress, setUploadProgress] = useState(0);
   const [newSubject, setNewSubject] = useState({ name: "", subject_code: "" });
   const [newTopic, setNewTopic] = useState({ name: "", description: "" });
   const [needsGoogleDriveAuth, setNeedsGoogleDriveAuth] = useState(false);
@@ -63,6 +60,11 @@ const UserDashboard = () => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState("");
   const [onConfirm, setOnConfirm] = useState(() => () => {});
+  // Add state for topic upload modal
+  const [showTopicUploadModal, setShowTopicUploadModal] = useState(false);
+  const [topicUploadFile, setTopicUploadFile] = useState(null);
+  const [topicUploadProgress, setTopicUploadProgress] = useState(0);
+  const [topicUploadLoading, setTopicUploadLoading] = useState(false);
 
   useEffect(() => {
     fetchSubjects();
@@ -118,53 +120,6 @@ const UserDashboard = () => {
     }
   };
 
-  const handleFileUpload = async (e) => {
-    e.preventDefault();
-    if (!uploadFile) {
-      alert("Please select a file");
-      return;
-    }
-
-    console.log("Uploading file:", uploadFile.name);
-    console.log("Subject ID:", selectedSubject?._id);
-    console.log("Topic ID:", selectedTopic?._id);
-
-    try {
-      const response = await apiService.uploadFile(
-        uploadFile,
-        (progress) => {
-          setUploadProgress(progress);
-        },
-        selectedSubject?._id,
-        selectedTopic?._id
-      );
-
-      console.log("File upload successful");
-      setUploadFile(null);
-      setShowUploadFile(false);
-      setUploadProgress(0);
-      // If backend returns a suggestedSubject, show modal
-      if (response.suggestedSubject) {
-        setSuggestedSubject(response.suggestedSubject);
-        setSubjectInput(response.suggestedSubject);
-        setUploadedFileId(response.files && response.files[0]?._id);
-        setShowSubjectModal(true);
-      } else {
-        fetchSubjects();
-      }
-    } catch (error) {
-      console.error("File upload error:", error);
-      if (error.message.includes("401") || error.message.includes("Google")) {
-        setNeedsGoogleDriveAuth(true);
-        alert(
-          "You need to authorize Google Drive access to upload files. Please click the 'Authorize Google Drive' button."
-        );
-      } else {
-        alert("Failed to upload file: " + error.message);
-      }
-    }
-  };
-
   const handleConfirmSubject = async () => {
     // Call backend to create/associate subject with file
     try {
@@ -180,11 +135,6 @@ const UserDashboard = () => {
     } catch (err) {
       alert("Failed to create/associate subject");
     }
-  };
-
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setUploadFile(file);
   };
 
   const handleDeleteSubject = async (subjectId) => {
@@ -304,6 +254,55 @@ const UserDashboard = () => {
     if (topicFileInputRef.current) topicFileInputRef.current.value = "";
   };
 
+  // New function for opening topic upload modal
+  const openTopicUploadModal = (subject, topic) => {
+    setTopicUploadTarget({ subject, topic });
+    setShowTopicUploadModal(true);
+    setTopicUploadFile(null);
+    setTopicUploadProgress(0);
+  };
+
+  // New function for handling topic file uploads (non-AI)
+  const handleTopicFileUpload = async (e) => {
+    e.preventDefault();
+    if (!topicUploadFile || !topicUploadTarget.subject || !topicUploadTarget.topic) {
+      alert("Please select a file");
+      return;
+    }
+
+    setTopicUploadLoading(true);
+    try {
+      // Use a different API endpoint or add a flag to disable AI processing
+      await apiService.uploadFile(
+        topicUploadFile,
+        (progress) => {
+          setTopicUploadProgress(progress);
+        },
+        topicUploadTarget.subject._id,
+        topicUploadTarget.topic._id
+      );
+
+      setTopicUploadFile(null);
+      setShowTopicUploadModal(false);
+      setTopicUploadProgress(0);
+      setTopicUploadTarget({ subject: null, topic: null });
+      fetchSubjects();
+      // Removed alert - file uploads silently
+    } catch (error) {
+      console.error("Topic file upload error:", error);
+      if (error.message.includes("401") || error.message.includes("Google")) {
+        setNeedsGoogleDriveAuth(true);
+        alert(
+          "You need to authorize Google Drive access to upload files. Please click the 'Authorize Google Drive' button."
+        );
+      } else {
+        alert("Failed to upload file: " + error.message);
+      }
+    } finally {
+      setTopicUploadLoading(false);
+    }
+  };
+
   // Helper to toggle topic expansion
   const toggleTopic = (topicId) => {
     setExpandedTopics((prev) =>
@@ -351,9 +350,9 @@ const UserDashboard = () => {
                   marginLeft: "12px",
                   whiteSpace: "nowrap",
                 }}
-                title="Upload File"
+                title="Upload File with AI"
               >
-                Upload
+                Upload File
               </button>
               {/* Desktop Upload Button */}
               <button
@@ -560,8 +559,7 @@ const UserDashboard = () => {
                                           borderBottom: "1px solid #f1f1f1",
                                         }}
                                         onClick={() => {
-                                          setTopicUploadTarget({ subject, topic });
-                                          if (topicFileInputRef.current) topicFileInputRef.current.click();
+                                          openTopicUploadModal(subject, topic);
                                           setTopicFileMenuOpenId(null);
                                         }}
                                       >
@@ -846,44 +844,6 @@ const UserDashboard = () => {
           </div>
         )}
 
-        {/* Upload File Modal */}
-        {showUploadFile && (
-          <div className="modal-overlay">
-            <div className="modal">
-              <h3>
-                Upload File to {selectedSubject?.name} - {selectedTopic?.name}
-              </h3>
-              <form onSubmit={handleFileUpload}>
-                <div className="form-group">
-                  <label>Select File:</label>
-                  <input type="file" onChange={handleFileChange} required />
-                </div>
-                {uploadProgress > 0 && (
-                  <div className="upload-progress">
-                    <div
-                      className="progress-bar"
-                      style={{ width: `${uploadProgress}%` }}
-                    ></div>
-                    <span>{Math.round(uploadProgress)}%</span>
-                  </div>
-                )}
-                <div className="modal-actions">
-                  <button type="submit" className="btn-primary">
-                    Upload File
-                  </button>
-                  <button
-                    type="button"
-                    className="btn-secondary"
-                    onClick={() => setShowUploadFile(false)}
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-
         {/* Delete Confirmation Modal */}
         {showDeleteConfirm && (
           <div className="modal-overlay">
@@ -1003,6 +963,54 @@ const UserDashboard = () => {
           </div>
         )}
 
+        {/* Topic Upload Modal (Non-AI) */}
+        {showTopicUploadModal && (
+          <div className="modal-overlay">
+            <div className="modal">
+              <h3>Upload File to Topic</h3>
+              <p style={{ marginBottom: "1rem", color: "#666" }}>
+                Uploading to: <strong>{topicUploadTarget.subject?.name}</strong> → <strong>{topicUploadTarget.topic?.name}</strong>
+              </p>
+              <form onSubmit={handleTopicFileUpload}>
+                <div className="form-group">
+                  <label>Select File:</label>
+                  <input 
+                    type="file" 
+                    onChange={(e) => setTopicUploadFile(e.target.files[0])} 
+                    required 
+                  />
+                </div>
+                {topicUploadProgress > 0 && (
+                  <div className="upload-progress">
+                    <div
+                      className="progress-bar"
+                      style={{ width: `${topicUploadProgress}%` }}
+                    ></div>
+                    <span>{Math.round(topicUploadProgress)}%</span>
+                  </div>
+                )}
+                <div className="modal-actions">
+                  <button 
+                    type="submit" 
+                    className="btn-primary"
+                    disabled={topicUploadLoading}
+                  >
+                    {topicUploadLoading ? "Uploading..." : "Upload File"}
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-secondary"
+                    onClick={() => setShowTopicUploadModal(false)}
+                    disabled={topicUploadLoading}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+
         {showSummaryModal && summaryFileId && (
           <div
             className="modal-overlay"
@@ -1070,6 +1078,24 @@ const UserDashboard = () => {
         .upload-file-btn-mobile.add-subject-btn,
         .upload-file-btn-desktop.add-subject-btn {
           margin-right: 0;
+        }
+        .modal select {
+          width: 100%;
+          padding: 8px;
+          border-radius: 6px;
+          border: 1px solid #d1d5db;
+          font-size: 14px;
+          background-color: white;
+          transition: border-color 0.2s;
+        }
+        .modal select:focus {
+          outline: none;
+          border-color: #0078FF;
+          box-shadow: 0 0 0 3px rgba(0, 120, 255, 0.1);
+        }
+        .modal select:disabled {
+          background-color: #f9fafb;
+          cursor: not-allowed;
         }
         .file-menu-item:hover, .file-menu-item:focus {
           background: #f5faff;
