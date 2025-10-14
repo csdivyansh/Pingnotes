@@ -3,7 +3,7 @@ import AdminLoginPage from "./components/AdminLoginPage";
 import Home from "./components/Home";
 import Dashboard from "./components/Dashboard";
 import UserDashboard from "./components/UserDashboard";
-import RoleSelection from "./components/RoleSelection";
+import StudentLogin from "./components/StudentLogin";
 import AuthSuccess from "./components/AuthSuccess";
 import About from "./components/About";
 import Features from "./components/features";
@@ -42,7 +42,7 @@ function App() {
             <Route path="/files/:id/summary" element={<FileSummary />} />
             <Route path="/files/:id/view" element={<FileViewer />} />
             <Route path="/success" element={<Success />} />
-            <Route path="/login" element={<RoleSelection />} />
+            <Route path="/login" element={<StudentLogin />} />
             <Route path="/auth/success" element={<AuthSuccess />} />
             <Route path="/about" element={<About />} />
             <Route path="/features" element={<Features />} />

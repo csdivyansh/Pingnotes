@@ -2,16 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import apiService from "../services/api.js";
 import Navbar from "./Navbar";
-import Footer from "./Footer.jsx";
-
-const roles = [{ label: "Student" }, { label: "Administrator" }];
 
 const GOOGLE_CLIENT_ID =
   import.meta.env.VITE_GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID";
 
-function RoleSelection() {
+function StudentLogin() {
   const navigate = useNavigate();
-  const [selectedRole, setSelectedRole] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const buttonDivRef = useRef(null);
 
@@ -84,18 +80,13 @@ function RoleSelection() {
         method: "POST",
         body: JSON.stringify({
           credential: response.credential,
-          role: selectedRole.toLowerCase(),
+          role: "student",
         }),
       });
 
-      // Store the token based on role
-      if (selectedRole === "Student") {
-        localStorage.setItem("userToken", result.token);
-        localStorage.setItem("userRole", "user");
-      } else if (selectedRole === "Teacher") {
-        localStorage.setItem("userToken", result.token);
-        localStorage.setItem("userRole", "teacher");
-      }
+      // Store the token for student
+      localStorage.setItem("userToken", result.token);
+      localStorage.setItem("userRole", "user");
 
       // Close modal and navigate to dashboard
       setShowModal(false);
@@ -126,26 +117,21 @@ function RoleSelection() {
     }
   }, []);
 
-  const handleRoleClick = (role) => {
-    if (role === "Administrator") {
-      navigate("/admin/login");
-    } else {
-      // Redirect to backend OAuth endpoint for Google login with Drive access
-      const apiBase = import.meta.env.VITE_API_URL || "";
-      const rolePath = role === "Teacher" ? "teacher" : "user";
-      const intendedRedirect =
-        localStorage.getItem("postLoginRedirect") || "/dashboard";
-      window.location.href = `${apiBase}/api/auth/google/${rolePath}?redirect=${encodeURIComponent(
-        intendedRedirect
-      )}`;
-    }
+  const handleStudentLogin = () => {
+    // Redirect to backend OAuth endpoint for Google login with Drive access
+    const apiBase = import.meta.env.VITE_API_URL || "";
+    const intendedRedirect =
+      localStorage.getItem("postLoginRedirect") || "/dashboard";
+    window.location.href = `${apiBase}/api/auth/google/user?redirect=${encodeURIComponent(
+      intendedRedirect
+    )}`;
   };
 
   return (
     <>
       <Navbar />
       <div
-        className="role-selection-main"
+        className="student-login-main"
         style={{
           minHeight: "85vh",
           background: "#fff",
@@ -156,55 +142,48 @@ function RoleSelection() {
         }}
       >
         <h2
-          className="role-selection-heading"
+          className="student-login-heading"
           style={{ marginBottom: 70, fontSize: 50, textAlign: "center" }}
         >
-          You are a...
+          Student Login
         </h2>
         <div
-          className="role-selection-btns"
-          style={{ display: "flex", gap: 30 }}
+          className="student-login-content"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 30,
+          }}
         >
-          {roles.map((role) => (
-            <button
-              key={role.label}
-              className="role-btn"
-              style={{
-                background: "#000",
-                color: "#fff",
-                border: "none",
-                borderRadius: 8,
-                padding: "32px 48px",
-                fontSize: 18,
-                cursor: "pointer",
-              }}
-              onClick={() => handleRoleClick(role.label)}
-            >
-              {role.label}
-            </button>
-          ))}
+          <p style={{ fontSize: 18, textAlign: "center", maxWidth: 400 }}>
+            Sign in with your Google account to access your student dashboard
+          </p>
+          <button
+            className="student-login-btn"
+            style={{
+              background: "#000",
+              color: "#fff",
+              border: "none",
+              borderRadius: 8,
+              padding: "32px 48px",
+              fontSize: 18,
+              cursor: "pointer",
+            }}
+            onClick={handleStudentLogin}
+          >
+            Sign in with Google
+          </button>
         </div>
       </div>
-      <Footer className="fixed-footer" />
       <style>{`
-        .fixed-footer {
-          position: fixed;
-          left: 0;
-          bottom: 0;
-          width: 100%;
-          z-index: 100;
-        }
-        .role-selection-main {
+        .student-login-main {
           padding: 0 24px;
         }
-        .role-selection-heading {
+        .student-login-heading {
           font-size: 70px;
         }
-        .role-selection-btns {
-          display: flex;
-          gap: 32px;
-        }
-        .role-btn {
+        .student-login-btn {
           background: #000;
           color: #fff;
           border: none;
@@ -215,43 +194,37 @@ function RoleSelection() {
           margin-bottom: 0;
           transition: background 0.2s, color 0.2s;
         }
+        .student-login-btn:hover {
+          background: #333;
+        }
         @media (max-width: 700px) {
-          .role-selection-heading {
+          .student-login-heading {
             font-size: 36px;
             margin-bottom: 48px;
           }
-          .role-selection-btns {
-            flex-direction: column;
-            gap: 18px;
-            width: 100%;
-            align-items: center;
-          }
-          .role-btn {
+          .student-login-content {
             width: 100%;
             max-width: 350px;
+          }
+          .student-login-btn {
+            width: 100%;
             padding: 18px 0;
             font-size: 16px;
             margin-bottom: 0;
           }
         }
         @media (max-width: 400px) {
-          .role-selection-heading {
+          .student-login-heading {
             font-size: 24px;
           }
-          .role-btn {
+          .student-login-btn {
             font-size: 14px;
             padding: 12px 0;
-          }
-        }
-        /* Modal responsiveness */
-        @media (max-width: 500px) {
-          .role-selection-modal {
-            min-width: 90vw !important;
-            padding: 1rem 0.5rem !important;
           }
         }
       `}</style>
     </>
   );
 }
-export default RoleSelection;
+
+export default StudentLogin;
