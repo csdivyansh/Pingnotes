@@ -75,7 +75,7 @@ const About = () => {
               >
                 HB
               </div>
-              <h3>Hardeep Beniwal</h3>
+              <h3>Hardeep Bainiwal</h3>
               <p>Backend Developer</p>
             </div>
           </div>
