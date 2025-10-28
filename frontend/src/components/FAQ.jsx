@@ -29,7 +29,7 @@ const faqs = [
   {
     question: "Can I share my notes with classmates?",
     answer:
-      "Yes! Pingnotes allows you to share your notes securely with classmates via links or email invitations.",
+      "Yes! Pingnotes allows you to share your notes securely with classmates via links or email invitations. Its a great feature.",
   },
   {
     question: "Does PingNotes work offline?",
