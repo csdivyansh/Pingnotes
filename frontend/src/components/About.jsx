@@ -54,7 +54,7 @@ const About = () => {
                 AK
               </div>
 
-              <h3>Amit Kumar</h3>
+              <h3>Amit Gurjar</h3>
               <p>Frontend Developer</p>
             </div>
             <div className="dev-card" data-aos="zoom-in">
