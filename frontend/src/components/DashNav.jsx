@@ -109,7 +109,7 @@ const DashNav = () => {
                 location.pathname === "/dashboard/groups" ? "active" : ""
               }
             >
-              ToDos
+              Groups
             </Link>
             <Link
               to="/dashboard/trash"
