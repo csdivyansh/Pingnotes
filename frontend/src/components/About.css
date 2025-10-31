@@ -37,7 +37,7 @@
 }
 
 .feature-card {
-  background: white;
+  background: rgb(96, 142, 201);
   border-radius: 16px;
   padding: 30px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
