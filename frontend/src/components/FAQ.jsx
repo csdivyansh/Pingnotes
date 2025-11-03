@@ -1,8 +1,8 @@
 // FAQpage.js
-import React from "react";
+import React, { useState } from "react";
 import "./FAQpage.css";
-import { FaQuestionCircle } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./Navbar";
 
 const faqs = [
@@ -39,12 +39,17 @@ const faqs = [
 ];
 
 const FAQpage = () => {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const toggleFAQ = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
     <>
       <Navbar />
       <div className="faq-container">
         <header className="faq-header">
-          <FaQuestionCircle className="faq-icon" />
           <h1>
             <span className="blue">Ping</span>notes
           </h1>
@@ -68,8 +73,32 @@ const FAQpage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 * index }}
             >
-              <h3>{faq.question}</h3>
-              <p>{faq.answer}</p>
+              <div 
+                className="faq-question" 
+                onClick={() => toggleFAQ(index)}
+              >
+                <h3>{faq.question}</h3>
+                <div className="faq-icon-container">
+                  {openIndex === index ? (
+                    <FaChevronUp className="dropdown-icon" />
+                  ) : (
+                    <FaChevronDown className="dropdown-icon" />
+                  )}
+                </div>
+              </div>
+              <AnimatePresence>
+                {openIndex === index && (
+                  <motion.div
+                    className="faq-answer"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  >
+                    <p>{faq.answer}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </motion.div>
