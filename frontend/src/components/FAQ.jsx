@@ -19,8 +19,9 @@ const faqs = [
   {
     question: "Is my data safe with Pingnotes?",
     answer:
-      "Yes, we use secure cloud storage and encryption to protect your notes and personal information.",
+      "Yes. Pingnotes uses secure cloud storage and encryption to protect your notes and personal information.",
   },
+  
   {
     question: "How can I organize notes subject-wise or topic-wise?",
     answer:
