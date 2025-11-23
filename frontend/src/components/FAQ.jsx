@@ -1,8 +1,8 @@
 // FAQpage.js
-import React from "react";
+import React, { useState } from "react";
 import "./FAQpage.css";
-import { FaQuestionCircle } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "./Navbar";
 
 const faqs = [
@@ -12,7 +12,7 @@ const faqs = [
       "Pingnotes is a cloud-based note organizing platform designed for students. It helps in managing, storing, and accessing notes from anywhere.",
   },
   {
-    question: "Who can use Pingnotes?",
+    question: "Who can use the Pingnotes?",
     answer:
       "Any student – school, college, or preparing for competitive exams – can use Pingnotes to organize their study materials.",
   },
@@ -25,7 +25,7 @@ const faqs = [
   {
     question: "How can I organize notes subject-wise or topic-wise?",
     answer:
-      "You can create folders or tags based on subjects or topics, and easily group your notes accordingly within the Pingnotes app.",
+      "You can create and manage folders or tags based on subjects or topics, and easily group your notes accordingly within the Pingnotes app.",
   },
   {
     question: "Can I share my notes with classmates?",
@@ -41,12 +41,17 @@ const faqs = [
 ];
 
 const FAQpage = () => {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const toggleFAQ = (index) => {
+    setOpenIndex(openIndex === index ? null : index);
+  };
+
   return (
     <>
       <Navbar />
       <div className="faq-container">
         <header className="faq-header">
-          <FaQuestionCircle className="faq-icon" />
           <h1>
             <span className="blue">Ping</span>notes
           </h1>
@@ -70,8 +75,32 @@ const FAQpage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 * index }}
             >
-              <h3>{faq.question}</h3>
-              <p>{faq.answer}</p>
+              <div 
+                className="faq-question" 
+                onClick={() => toggleFAQ(index)}
+              >
+                <h3>{faq.question}</h3>
+                <div className="faq-icon-container">
+                  {openIndex === index ? (
+                    <FaChevronUp className="dropdown-icon" />
+                  ) : (
+                    <FaChevronDown className="dropdown-icon" />
+                  )}
+                </div>
+              </div>
+              <AnimatePresence>
+                {openIndex === index && (
+                  <motion.div
+                    className="faq-answer"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                  >
+                    <p>{faq.answer}</p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </motion.div>
           ))}
         </motion.div>

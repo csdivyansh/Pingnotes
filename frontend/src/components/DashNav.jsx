@@ -81,13 +81,13 @@
               aria-label="Toggle navigation menu"
               onClick={handleMenuToggle}
             >
-              <span className="hamburger-bar" />
-              <span className="hamburger-bar" />
-              <span className="hamburger-bar" />
-            </button>
-            <div
-              className={`dashnav-links${menuOpen ? " open" : ""}`}
-              onClick={handleNavClick}
+              Groups
+            </Link>
+            <Link
+              to="/dashboard/trash"
+              className={
+                location.pathname === "/dashboard/trash" ? "active" : ""
+              }
             >
               <Link
                 to="/dashboard"

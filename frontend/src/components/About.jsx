@@ -19,8 +19,7 @@ const About = () => {
         <div className="about-header" data-aos="fade-down">
           <h1>About Pingnotes</h1>
           <p>
-            Pingnotes is a digital platform built to help students and teachers
-            collaborate, share notes, and manage academic resources efficiently.
+            Pingnotes is a digital platform built to help students collaborate, share notes, and manage academic resources efficiently.
           </p>
         </div>
         <div className="developer-section">
@@ -54,7 +53,7 @@ const About = () => {
                 AK
               </div>
 
-              <h3>Amit Kumar</h3>
+              <h3>Amit Gurjar</h3>
               <p>Frontend Developer</p>
             </div>
             <div className="dev-card" data-aos="zoom-in">
@@ -75,7 +74,7 @@ const About = () => {
               >
                 HB
               </div>
-              <h3>Hardeep Beniwal</h3>
+              <h3>Hardeep Bainiwal</h3>
               <p>Backend Developer</p>
             </div>
           </div>
