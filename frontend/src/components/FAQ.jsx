@@ -19,8 +19,9 @@ const faqs = [
   {
     question: "Is my data safe with Pingnotes?",
     answer:
-      "Yes, we use secure cloud storage and encryption to protect your notes and personal information.",
+      "Yes. Pingnotes uses secure cloud storage and encryption to protect your notes and personal information.",
   },
+  
   {
     question: "How can I organize notes subject-wise or topic-wise?",
     answer:
@@ -29,8 +30,9 @@ const faqs = [
   {
     question: "Can I share my notes with classmates?",
     answer:
-      "Yes! Pingnotes allows you to share your notes securely with classmates via links or email invitations.",
+      "Absolutely! With Pingnotes, you can instantly and securely share your notes with classmates via links or email invites.",
   },
+  
   {
     question: "Does PingNotes work offline?",
     answer:
