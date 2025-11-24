@@ -3,7 +3,7 @@
   background: linear-gradient(135deg, #f0f4ff, #f9fcff);
   min-height: 100vh;
   position: relative;
-  overflow: hidden;
+  
 }
 
 .about-page::before {
