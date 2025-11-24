@@ -1,3 +1,4 @@
+/*Navbar.jsx file*/
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import pnLogo from "../assets/pn_logo.png";
