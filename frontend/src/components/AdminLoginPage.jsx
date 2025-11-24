@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
         setError("Invalid response from server.");
       }
     } catch (err) {
-      setError(err.message || "Login failed. Please try again.");
+      setError(err.message || "Login Failed. Please try again.");
     } finally {
       setLoading(false);
     }
