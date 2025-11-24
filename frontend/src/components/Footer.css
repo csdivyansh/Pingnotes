@@ -1,71 +1,71 @@
-/*this is our Footer.css*/
-.footer-wrapper {
-  background-color: #0b1120;
-  color: #ffffff;
-  padding: 3rem 2rem 1rem;
-  font-family: 'Segoe UI', sans-serif;
-  bottom: 0;
-}
+    /*this is our Footer.css file*/
+    .footer-wrapper {
+      background-color: #0b1120;
+      color: #ffffff;
+      padding: 3rem 2rem 1rem;
+      font-family: 'Segoe UI', sans-serif;
+      bottom: 0;
+    }
 
-.footer-container {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  max-width: 1200px;
-  margin: auto;
-}
+    .footer-container {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      max-width: 1200px;
+      margin: auto;
+    }
 
-.footer-section {
-  flex: 1;
-  min-width: 250px;
-  margin: 1rem 0;
-}
+    .footer-section {
+      flex: 1;
+      min-width: 250px;
+      margin: 1rem 0;
+    }
 
-.footer-logo {
-  width: 60px;
-  margin-bottom: 0.8rem;
-  border-radius: 8px;
-}
+    .footer-logo {
+      width: 60px;
+      margin-bottom: 0.8rem;
+      border-radius: 8px;
+    }
 
-.footer-tagline {
-  font-size: 0.95rem;
-  color: #d1d5db;
-  margin-top: 0.5rem;
-}
+    .footer-tagline {
+      font-size: 0.95rem;
+      color: #d1d5db;
+      margin-top: 0.5rem;
+    }
 
-.footer-heading {
-  font-size: 1.1rem;
-  margin-bottom: 0.8rem;
-  color: #3b82f6;
-}
+    .footer-heading {
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+      color: #3b82f6;
+    }
 
-.footer-links {
-  list-style: none;
-  padding: 0;
-}
+    .footer-links {
+      list-style: none;
+      padding: 0;
+    }
 
-.footer-links li {
-  margin-bottom: 0.5rem;
-}
+    .footer-links li {
+      margin-bottom: 0.5rem;
+    }
 
-.footer-links a {
-  text-decoration: none;
-  color: #e5e7eb;
-  transition: color 0.3s ease;
-}
+    .footer-links a {
+      text-decoration: none;
+      color: #e5e7eb;
+      transition: color 0.3s ease;
+    }
 
-.footer-links a:hover {
-  color: #ffffff;
-}
+    .footer-links a:hover {
+      color: #ffffff;
+    }
 
-.footer-bottom {
-  margin-top: 2rem;
-  text-align: center;
-  font-size: 0.85rem;
-  color: #6b7280;
-}
+    .footer-bottom {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #6b7280;
+    }
 
-.footer-bottom hr {
-  border-color: #1f2937;
-  margin-bottom: 1rem;
-}
+    .footer-bottom hr {
+      border-color: #1f2937;
+      margin-bottom: 1rem;
+    }
