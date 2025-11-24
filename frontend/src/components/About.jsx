@@ -66,7 +66,7 @@ It offers a clean space where learners can  acesss notes ,share notes, stay upda
                 GC
               </div>
               <h3>Gaurav Chaudhary</h3>
-              <p>Database Specialist</p>
+              <p>Backend Developer</p>
             </div>
 
             <div className="dev-card" data-aos="zoom-in">
