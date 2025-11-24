@@ -19,8 +19,8 @@ const About = () => {
         <div className="about-header" data-aos="fade-down">
           <h1>About Pingnotes</h1>
           <p>
-            Pingnotes is a digital platform built to help students and teachers
-            collaborate, share notes, and manage academic resources efficiently.
+            PingNotes is a digital platform built to help students collaborate, share notes, and manage academic resources efficiently.
+It brings learners together in a space where studying feels organized, smooth, and genuinely supportive. The platform keeps everything streamlined, letting students focus on what actually matters — understanding, improving, and growing. With a clean flow and a no-nonsense vibe, PingNotes aims to make academic life a little easier, a little lighter, and a lot more connected.
           </p>
         </div>
         <div className="developer-section">
