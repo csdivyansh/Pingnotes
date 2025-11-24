@@ -1,3 +1,4 @@
+/*Plans.jsx file*/
 import React, { useEffect } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { motion } from "framer-motion";
@@ -27,7 +28,7 @@ const plans = [
   },
   {
     name: "Premium",
-    price: "₹32.99/mo",
+    price: "₹29.99/mo",
     features: [
       "Team collaboration tools",
       "Admin controls",

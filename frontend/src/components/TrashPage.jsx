@@ -3,7 +3,7 @@ import axios from "axios";
 import { FaDownload, FaTrashRestore, FaTrash } from "react-icons/fa";
 import DashNav from "./DashNav.jsx";
 import apiService from "../services/api";
-
+// this is trash page
 const TrashPage = () => {
   const [files, setFiles] = useState([]);
   const [loading, setLoading] = useState(true);
