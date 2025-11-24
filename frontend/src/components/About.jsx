@@ -45,7 +45,7 @@ It offers a clean space where learners can  acesss notes ,share notes, stay upda
                 DV
               </div>
               <h3>Divyansh Varshney</h3>
-              <p>Backend, API & Devops </p>
+              <p>Backend, API & DevOps </p>
             </div>
             <div className="dev-card" data-aos="zoom-in">
               <div
@@ -86,7 +86,7 @@ It offers a clean space where learners can  acesss notes ,share notes, stay upda
         <div className="about-features">
           <div className="feature-card" data-aos="zoom-in">
             <h2>📘 Organize Subjects</h2>
-            <p>Manage your subjects and topics in a structured format.</p>
+            <p>Manage your topics and subjects in a structured format.</p>
           </div>
 
           <div className="feature-card" data-aos="zoom-in" data-aos-delay="100">
