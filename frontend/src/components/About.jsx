@@ -76,7 +76,7 @@ const About = () => {
                 HB
               </div>
               <h3>Hardeep Bainiwal</h3>
-              <p>Backend Developer</p>
+              <p>UI/UX Designer</p>
             </div>
           </div>
         </div>
