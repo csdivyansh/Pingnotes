@@ -42,7 +42,7 @@ header button:hover {
   background: #4338ca;
   opacity: 0.9;
 }
-
+/* main css*/
 .main {
   display: flex;
   flex-direction: column;
