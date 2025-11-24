@@ -1,85 +1,114 @@
-  import React, { useRef, useState } from "react";
-  import { useNavigate, Link, useLocation } from "react-router-dom";
-  import { useGlobalFileUpload } from "./GlobalFileUploadContext";
-  import apiService from "../services/api.js";
+import React, { useRef, useState } from "react";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import { useGlobalFileUpload } from "./GlobalFileUploadContext";
+import apiService from "../services/api.js";
 
-  const Logo = () => (
-    <div>
-      <span
+const Logo = () => (
+  <div>
+    <span
+      style={{
+        fontWeight: 800,
+        fontSize: 24,
+        color: "#0a192f",
+        fontFamily: "Raleway, sans-serif",
+        fontStyle: "normal",
+      }}
+    >
+      Pingnotes
+    </span>
+  </div>
+);
+
+const DashNav = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const fileInputRef = useRef(null);
+  const { openUploadModal } = useGlobalFileUpload();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleMenuToggle = () => setMenuOpen((open) => !open);
+  const handleNavClick = () => setMenuOpen(false);
+
+  const handleUploadClick = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Placeholder: handle file upload logic here
+      alert(`Selected file: ${file.name}`);
+    }
+  };
+
+  const handleHomeClick = () => {
+    navigate("/");
+  };
+
+  const handleLogout = async () => {
+    try {
+      // Clear authentication tokens and call backend
+      await apiService.logout();
+      // Redirect to home page
+      navigate("/");
+    } catch (error) {
+      console.error("Logout error:", error);
+      // Even if there's an error, redirect to home
+      navigate("/");
+    }
+  };
+
+  return (
+    <>
+      <nav
         style={{
-          fontWeight: 800,
-          fontSize: 24,
-          color: "#0a192f",
-          fontFamily: "Raleway, sans-serif",
-          fontStyle: "normal",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          zIndex: 1000,
+          background: "#fff",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+          width: "100%",
+          fontFamily: "Poppins, Arial, sans-serif",
         }}
       >
-        Pingnotes
-      </span>
-    </div>
-  );
-
-  const DashNav = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-    const fileInputRef = useRef(null);
-    const { openUploadModal } = useGlobalFileUpload();
-    const [menuOpen, setMenuOpen] = useState(false);
-
-    const handleMenuToggle = () => setMenuOpen((open) => !open);
-    const handleNavClick = () => setMenuOpen(false);
-
-    const handleUploadClick = () => {
-      fileInputRef.current.click();
-    };
-
-    const handleFileChange = (e) => {
-      const file = e.target.files[0];
-      if (file) {
-        // Placeholder: handle file upload logic here
-        alert(`Selected file: ${file.name}`);
-      }
-    };
-
-    const handleHomeClick = () => {
-      navigate("/");
-    };
-
-    const handleLogout = async () => {
-      try {
-        // Clear authentication tokens and call backend
-        await apiService.logout();
-        // Redirect to home page
-        navigate("/");
-      } catch (error) {
-        console.error("Logout error:", error);
-        // Even if there's an error, redirect to home
-        navigate("/");
-      }
-    };
-
-    return (
-      <>
-        <nav
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            zIndex: 1000,
-            background: "#fff",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-            width: "100%",
-            fontFamily: "Poppins, Arial, sans-serif",
-          }}
-        >
-          <div className="dashnav-container">
-            <Link to="/" style={{ textDecoration: "none" }}>
-              <Logo />
+        <div className="dashnav-container">
+          <Link to="/" style={{ textDecoration: "none" }}>
+            <Logo />
+          </Link>
+          <button
+            className={`dashnav-hamburger${menuOpen ? " open" : ""}`}
+            aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
+            onClick={handleMenuToggle}
+          >
+            <span className="hamburger-bar bar1" />
+            <span className="hamburger-bar bar2" />
+            <span className="hamburger-bar bar3" />
+          </button>
+          <div
+            className={`dashnav-links${menuOpen ? " open" : ""}`}
+            onClick={handleNavClick}
+          >
+            <Link
+              to="/dashboard"
+              className={location.pathname === "/dashboard" ? "active" : ""}
+            >
+              Subjects
             </Link>
-            <button
-              className="dashnav-hamburger"
-              aria-label="Toggle navigation menu"
-              onClick={handleMenuToggle}
+            <Link
+              to="/dashboard/files"
+              className={
+                location.pathname === "/dashboard/files" ? "active" : ""
+              }
+            >
+              Notes
+            </Link>
+            <Link
+              to="/dashboard/groups"
+              className={
+                location.pathname === "/dashboard/groups" ? "active" : ""
+              }
             >
               Groups
             </Link>
@@ -89,57 +118,29 @@
                 location.pathname === "/dashboard/trash" ? "active" : ""
               }
             >
-              <Link
-                to="/dashboard"
-                className={location.pathname === "/dashboard" ? "active" : ""}
-              >
-              Subjects
-              </Link>
-              <Link
-                to="/dashboard/files"
-                className={
-                  location.pathname === "/dashboard/files" ? "active" : ""
-                }
-              >
-                Notes
-              </Link>
-              <Link
-                to="/dashboard/groups"
-                className={
-                  location.pathname === "/dashboard/groups" ? "active" : ""
-                }
-              >
-                ToDos
-              </Link>
-              <Link
-                to="/dashboard/trash"
-                className={
-                  location.pathname === "/dashboard/trash" ? "active" : ""
-                }
-              >
-                Trash
-              </Link>
-              {/* Mobile Logout Button */}
-              <button
-                className="dashnav-btn dashnav-btn-mobile dashnav-btn-logout"
-                onClick={handleLogout}
-                type="button"
-              >
-                Logout
-              </button>
-            </div>
-            {/* Desktop Logout Button */}
+              Trash
+            </Link>
+            {/* Mobile Logout Button */}
             <button
-              className="dashnav-btn dashnav-btn-desktop dashnav-btn-logout"
+              className="dashnav-btn dashnav-btn-mobile dashnav-btn-logout"
               onClick={handleLogout}
               type="button"
             >
               Logout
             </button>
           </div>
-        </nav>
-        <div style={{ height: 72 }} />
-        <style>{`
+          {/* Desktop Logout Button */}
+          <button
+            className="dashnav-btn dashnav-btn-desktop dashnav-btn-logout"
+            onClick={handleLogout}
+            type="button"
+          >
+            Logout
+          </button>
+        </div>
+      </nav>
+      <div style={{ height: 72 }} />
+      <style>{`
           .dashnav-container {
             max-width: 1200px;
             margin: 0 auto;
@@ -269,8 +270,8 @@
             }
           }
         `}</style>
-      </>
-    );
-  };
+    </>
+  );
+};
 
-  export default DashNav;
+export default DashNav;
