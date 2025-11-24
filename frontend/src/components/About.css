@@ -1,9 +1,9 @@
 .about-page {
   padding: 50px 20px;
-  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 25%, #90caf9 50%, #64b5f6 75%, #42a5f5 100%);
+  background: linear-gradient(135deg, #f0f4ff, #f9fcff);
   min-height: 100vh;
   position: relative;
-  
+  overflow: hidden;
 }
 
 .about-page::before {
@@ -49,8 +49,6 @@
 .about-header {
   text-align: center;
   margin-bottom: 60px;
-  position: relative;
-  z-index: 10;
 }
 
 .about-header h1 {
@@ -77,8 +75,6 @@
   gap: 25px;
   max-width: 1100px;
   margin: 0 auto 60px;
-  position: relative;
-  z-index: 10;
 }
 
 .feature-card {
@@ -107,15 +103,13 @@
   line-height: 1.5;
 }
 
-/* Developed By Section */
-.developed-by {
+/* Developer Section */
+.developer-section {
   margin: 0 auto 60px;
   text-align: center;
-  position: relative;
-  z-index: 10;
 }
 
-.developed-by h2 {
+.developer-section h2 {
   font-size: 28px;
   margin-bottom: 30px;
   color: #004aad;
@@ -132,61 +126,30 @@
   margin: 0 auto;
 }
 
-.flip-card {
+.dev-card {
+  background: linear-gradient(145deg, #f9faff, #e6f0ff);
+  border-radius: 20px;
   width: 220px;
   min-width: 160px;
   max-width: 90vw;
   flex: 1 1 180px;
-  height: 280px;
-  perspective: 1000px;
+  padding: 30px 25px;
+  box-shadow: 6px 6px 10px rgba(163, 177, 198, 0.6),
+    -6px -6px 10px rgba(255, 255, 255, 0.8);
+  transition: all 0.4s ease;
   cursor: pointer;
   position: relative;
+  overflow: hidden;
   margin-bottom: 20px;
 }
 
-.flip-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  text-align: center;
-  transition: transform 0.8s;
-  transform-style: preserve-3d;
-  border-radius: 20px;
+.dev-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 8px 8px 20px rgba(0, 191, 255, 0.4),
+    -8px -8px 20px rgba(255, 255, 255, 0.9);
 }
 
-.flip-card:hover .flip-card-inner {
-  transform: rotateY(180deg);
-}
-
-.flip-card-front,
-.flip-card-back {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 30px 25px;
-  box-sizing: border-box;
-}
-
-.flip-card-front {
-  background: linear-gradient(145deg, #f9faff, #e6f0ff);
-  box-shadow: 6px 6px 10px rgba(163, 177, 198, 0.6),
-    -6px -6px 10px rgba(255, 255, 255, 0.8);
-}
-
-.flip-card-back {
-  background: linear-gradient(145deg, #e6f0ff, #f9faff);
-  box-shadow: 6px 6px 10px rgba(163, 177, 198, 0.6),
-    -6px -6px 10px rgba(255, 255, 255, 0.8);
-  transform: rotateY(180deg);
-}
-
-.flip-card h3 {
+.dev-card h3 {
   font-size: 22px;
   color: #004aad;
   margin-bottom: 10px;
@@ -194,7 +157,7 @@
   letter-spacing: 0.5px;
 }
 
-.flip-card p {
+.dev-card p {
   font-size: 16px;
   color: #333;
   margin: 0;
@@ -202,29 +165,30 @@
   text-transform: capitalize;
 }
 
-.flip-card-back h3 {
-  font-size: 20px;
-  color: #004aad;
-  margin-bottom: 15px;
+/* Initials Avatar */
+.dev-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  color: white;
   font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-.flip-card-back p {
-  font-size: 16px;
-  color: #0078FF;
-  margin: 0 0 10px 0;
-  font-weight: 600;
+  font-size: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 15px auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  user-select: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  cursor: default;
 }
 
-.flip-card-back p:last-child {
-  font-size: 14px;
-  color: #555;
-  text-transform: none;
-  font-weight: 400;
-  line-height: 1.4;
+.dev-card:hover .dev-avatar {
+  transform: scale(1.15);
+  box-shadow: 0 8px 25px rgba(0, 75, 173, 0.6);
 }
 
 /* Footer Section */
@@ -233,8 +197,6 @@
   padding: 40px 10px 20px;
   font-size: 16px;
   color: #555;
-  position: relative;
-  z-index: 10;
 }
 
 /* Responsive Layout */
@@ -248,12 +210,8 @@
   .developer-cards {
     gap: 20px;
   }
-  .flip-card {
+  .dev-card {
     width: 180px;
-    height: 240px;
-  }
-  .flip-card-front,
-  .flip-card-back {
     padding: 20px 10px;
   }
 }
@@ -264,13 +222,10 @@
     align-items: center;
     gap: 16px;
   }
-  .flip-card {
+  .dev-card {
     width: 70vw;
     min-width: 0;
-    height: 220px;
-  }
-  .flip-card-front,
-  .flip-card-back {
-    padding: 20px 15px;
+    padding: 32px 6vw 32px 6vw;
+    min-height: 220px;
   }
 }
