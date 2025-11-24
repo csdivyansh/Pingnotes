@@ -1,3 +1,4 @@
+/*Plans.jsx file*/
 import React, { useEffect } from "react";
 import { FaCheckCircle } from "react-icons/fa";
 import { motion } from "framer-motion";

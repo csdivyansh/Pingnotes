@@ -36,7 +36,7 @@ const Dashboard = () => {
       <div className="dashboard-container">
         <AdminSidebar />
         <main className="main-content">
-          <div className="loading">Loading dashboard...</div>
+          <div className="loading">Loading Dashboard...</div>
         </main>
       </div>
     );
