@@ -1,3 +1,4 @@
+/*SettingsPage.css file*/
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import DashNav from "./DashNav.jsx";
