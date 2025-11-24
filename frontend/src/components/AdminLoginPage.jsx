@@ -65,7 +65,7 @@ export default function AdminLoginPage() {
             value={password}
             onChange={e => setPassword(e.target.value)}
             autoComplete="current-password"
-            placeholder="••••••••"
+            placeholder="******"
           />
         </div>
         {error && <div style={styles.error}>{error}</div>}

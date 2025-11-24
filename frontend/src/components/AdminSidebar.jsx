@@ -16,7 +16,7 @@ const AdminSidebar = () => {
     <aside className="user-sidebar">
       <div className="sidebar-header">
         <h2>
-          Ping<span>notes</span>
+          Ping<span>Notes</span>
         </h2>
         <p className="user-role">Admin Dashboard</p>
       </div>
