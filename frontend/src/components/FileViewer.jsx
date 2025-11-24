@@ -92,7 +92,7 @@ const FileViewer = () => {
           ← Back
         </button>
         {loading ? (
-          <div>Loading file...</div>
+          <div>Loading File...</div>
         ) : error ? (
           <div style={{ color: "red" }}>{error}</div>
         ) : file ? (

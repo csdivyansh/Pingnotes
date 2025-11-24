@@ -15,6 +15,7 @@
   import Navbar from "./Navbar";
   import "./features.css"
   const features = [
+    //this is the features of our ping note;
     {
       title: "Organised Structure",
       icon: <FaFolderOpen size={28} color="#007bff" />,
@@ -24,7 +25,7 @@
     {
       title: "Quick Search",
       icon: <FaSearch size={28} color="#007bff" />,
-      description: "Find notes instantly with smart search and filters.",
+      description: "Find notes instantly with easy search and filters.",
     },
     {
       title: "Collaborative Sharing",
@@ -66,49 +67,49 @@
     {
       title: "Smart Suggestions",
       icon: <FaLaptopCode size={28} color="#007bff" />,
-      description: "Get automatic tag suggestions and topic links while writing.",
+      description: "Get automatic tag suggestions and topic link  while writing.",
     },
   ];
 
-  export default function Features() {
-    return (
-      <>
-        <Navbar />
-        <div className="features-container">
-          <motion.header
-            className="features-header"
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <h1>
-              Why <span>PingNotes</span>?
-            </h1>
-            <p>Your ultimate tool for smarter note organisation.</p>
-          </motion.header>
-          <motion.section
-            className="feature-cards"
-            initial="hidden"
-            whileInView="visible"
-            transition={{ staggerChildren: 0.3 }}
-            viewport={{ once: true }}
-          >
-            {features.map((feature, idx) => (
-              <motion.div
-                className="card"
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: idx * 0.2 }}
-                viewport={{ once: true }}
-              >
-                <div className="card-icon glow">{feature.icon}</div>
-                <h3>{feature.title}</h3>
-                <p>{feature.description}</p>
-              </motion.div>
-            ))}
-          </motion.section>
-        </div>
-      </>
-    );
-  }
+export default function Features() {
+  return (
+    <>
+      <Navbar />
+      <div className="features-container">
+        <motion.header
+          className="features-header"
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h1>
+            Why <span>PingNotes</span>?
+          </h1>
+          <p>Your ultimate tool for smarter note organisation.</p>
+        </motion.header>
+        <motion.section
+          className="feature-cards"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ staggerChildren: 0.3 }}
+          viewport={{ once: true }}
+        >
+          {features.map((feature, idx) => (
+            <motion.div
+              className="card"
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: idx * 0.2 }}
+              viewport={{ once: true }}
+            >
+              <div className="card-icon glow">{feature.icon}</div>
+              <h3>{feature.title}</h3>
+              <p>{feature.description}</p>
+            </motion.div>
+          ))}
+        </motion.section>
+      </div>
+    </>
+  );
+}

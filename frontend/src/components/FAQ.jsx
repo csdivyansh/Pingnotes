@@ -9,7 +9,7 @@ const faqs = [
   {
     question: "What is Pingnotes?",
     answer:
-      "Pingnotes are  a cloud-based note organizing platform designed for students. It helps in managing, storing, and accessing notes from anywhere.",
+      "Pingnotes are  a cloud-based note organizing platform designed for Students. It helps in storing , managing and accessing notes from anywhere.",
   },
   {
     question: "Who can use the Pingnotes?",
@@ -36,6 +36,12 @@ const faqs = [
     question: "Does PingNotes work offline?",
     answer:
       "Currently, PingNotes is optimized for online access, but we are working on an offline mode for future updates.",
+  },
+
+  {
+   question: "Can I sync my notes across multiple devices?",
+
+  answer:"Yes! Pingnotes automatically syncs your notes across all your devices so you can access them anytime, anywhere.",
   },
 ];
 

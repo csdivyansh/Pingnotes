@@ -17,7 +17,7 @@ const Success = () => {
         }}
       >
         <h1 style={{ color: "#27ae60", marginBottom: 16 }}>
-          Payment Successful!
+          Payment Successfull!
         </h1>
         <p style={{ fontSize: 18, marginBottom: 32 }}>
           Thank you for your purchase. Your plan is now active.
