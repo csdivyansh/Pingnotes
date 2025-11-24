@@ -3,7 +3,6 @@ body {
   font-family: 'Segoe UI', 'Poppins', Arial, sans-serif;
   min-height: 100vh;
   position: relative;
-  overflow: hidden;
 }
 
 body::before {
