@@ -38,6 +38,12 @@ const faqs = [
     answer:
       "Currently, PingNotes is optimized for online access, but we are working on an offline mode for future updates.",
   },
+
+  {
+   question: "Can I sync my notes across multiple devices?",
+
+  answer:"Yes! Pingnotes automatically syncs your notes across all your devices so you can access them anytime, anywhere.",
+  },
 ];
 
 const FAQpage = () => {
