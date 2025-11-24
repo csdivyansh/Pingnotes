@@ -19,7 +19,7 @@ const features = [
     title: "Organised Structure",
     icon: <FaFolderOpen size={28} color="#007bff" />,
     description:
-      "Easily group notes by subjects, tags, or categories to stay organised.",
+      "Easily group notes by tags, subjects, or categories to stay organised.",
   },
   {
     title: "Quick Search",

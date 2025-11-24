@@ -35,7 +35,7 @@ const FileSummary = ({ fileId }) => {
         setSummary(res.summary || "No summary available.");
         setError(null);
       } catch (err) {
-        setError("Failed to fetch summary");
+        setError("Failed to fetch Summary");
       } finally {
         setLoading(false);
       }
@@ -57,7 +57,7 @@ const FileSummary = ({ fileId }) => {
         }}
       >
         {loading ? (
-          <div>Loading summary...</div>
+          <div>Loading Summary...</div>
         ) : error ? (
           <div style={{ color: "red" }}>{error}</div>
         ) : (
