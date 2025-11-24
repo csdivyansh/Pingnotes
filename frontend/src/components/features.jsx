@@ -67,7 +67,7 @@
     {
       title: "Smart Suggestions",
       icon: <FaLaptopCode size={28} color="#007bff" />,
-      description: "Get automatic tag suggestions and topic links while writing.",
+      description: "Get automatic tag suggestions and topic link  while writing.",
     },
   ];
 
