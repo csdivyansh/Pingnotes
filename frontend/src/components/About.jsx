@@ -77,7 +77,7 @@ It offers a clean space where learners can share notes, stay updated, and suppor
                 HB
               </div>
               <h3>Hardeep Bainiwal</h3>
-              <p>UI/UX Designer</p>
+              <p>Backend Developer</p>
             </div>
           </div>
         </div>
