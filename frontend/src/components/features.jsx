@@ -15,6 +15,7 @@
   import Navbar from "./Navbar";
   import "./features.css"
   const features = [
+    //this is the features of our ping note;
     {
       title: "Organised Structure",
       icon: <FaFolderOpen size={28} color="#007bff" />,
