@@ -25,7 +25,7 @@
     {
       title: "Quick Search",
       icon: <FaSearch size={28} color="#007bff" />,
-      description: "Find notes instantly with smart search and filters.",
+      description: "Find notes instantly with easy search and filters.",
     },
     {
       title: "Collaborative Sharing",
