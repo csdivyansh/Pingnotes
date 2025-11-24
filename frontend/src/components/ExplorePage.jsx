@@ -19,7 +19,7 @@ const plans = [
     features: ["Sell notes", "Advanced analytics", "Priority support"],
   },
   {
-    title: "Institution",
+    title: "Institution/",
     price: "₹5000+/month",
     features: ["Admin tools", "Custom branding", "Unlimited users"],
   },
