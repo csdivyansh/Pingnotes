@@ -88,8 +88,8 @@ export default function Features() {
         </motion.header>
         <motion.section
           className="feature-cards"
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           transition={{ staggerChildren: 0.3 }}
           viewport={{ once: true }}
         >
