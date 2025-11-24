@@ -6,7 +6,7 @@ const plans = [
   {
     title: "Free",
     price: "₹0/month",
-    features: ["Basic notes access", "Google Drive sync", "Ads shown"],
+    features: ["Basic notes access", "Google Drive sync", "Ads Shown"],
   },
   {
     title: "Student",
@@ -19,7 +19,7 @@ const plans = [
     features: ["Sell notes", "Advanced analytics", "Priority support"],
   },
   {
-    title: "Institution",
+    title: "Institution/",
     price: "₹5000+/month",
     features: ["Admin tools", "Custom branding", "Unlimited users"],
   },

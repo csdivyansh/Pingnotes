@@ -1,3 +1,5 @@
+/*this is our ExplorePages.css*/
+
 /* Explore Container */
 .explore {
   color: #222;
@@ -80,14 +82,14 @@
   color: #111;
 }
 
-/* Subtext below price */
+/* subtext*/
 .card .subtext {
   font-size: 0.9rem;
   color: #777;
   margin-bottom: 20px;
 }
 
-/* Features List */
+/* Features List card */
 .card ul {
   list-style: none;
   padding: 0;
