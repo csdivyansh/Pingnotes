@@ -36,7 +36,7 @@ const Footer = () => {
         <div className="footer-section">
           <h4 className="footer-heading">Contact</h4>
           <p>Email: support@pingnotes.com</p>
-          <p>Phone: +91 98765 43210</p>
+          <p>Phone: +91 7300913553</p>
         </div>
       </div>
 

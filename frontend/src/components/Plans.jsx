@@ -27,7 +27,7 @@ const plans = [
   },
   {
     name: "Premium",
-    price: "₹29.99/mo",
+    price: "₹32.99/mo",
     features: [
       "Team collaboration tools",
       "Admin controls",

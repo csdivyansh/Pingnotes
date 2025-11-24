@@ -15,6 +15,7 @@
   import Navbar from "./Navbar";
   import "./features.css"
   const features = [
+    //this is the features of our ping note;
     {
       title: "Organised Structure",
       icon: <FaFolderOpen size={28} color="#007bff" />,
@@ -24,7 +25,7 @@
     {
       title: "Quick Search",
       icon: <FaSearch size={28} color="#007bff" />,
-      description: "Find notes instantly with smart search and filters.",
+      description: "Find notes instantly with easy search and filters.",
     },
     {
       title: "Collaborative Sharing",
