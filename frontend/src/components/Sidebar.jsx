@@ -4,6 +4,7 @@ const Sidebar = () => {
   return (
     <aside className="sidebar">
       <h2>Ping<span>notes</span></h2>
+      // features of list in ping note
       <ul>
         <li>Dashboard</li>
         <li>Notes</li>
