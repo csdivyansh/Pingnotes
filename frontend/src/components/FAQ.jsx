@@ -9,28 +9,29 @@ const faqs = [
   {
     question: "What is Pingnotes?",
     answer:
-      "Pingnotes is a cloud-based note organizing platform designed for students. It helps in managing, storing, and accessing notes from anywhere.",
+      "Pingnotes are  a cloud-based note organizing platform designed for students. It helps in managing, storing, and accessing notes from anywhere.",
   },
   {
-    question: "Who can use Pingnotes?",
+    question: "Who can use the Pingnotes?",
     answer:
-      "Any student – school, college, or preparing for competitive exams – can use Pingnotes to organize their study materials.",
+      "Any student – college , school or preparing for competitive exams – can use Pingnotes to organize their study materials.",
   },
   {
     question: "Is my data safe with Pingnotes?",
     answer:
       "Yes, we use secure cloud storage and encryption to protect your notes and personal information.",
-  },
+   },
   {
     question: "How can I organize notes subject-wise or topic-wise?",
     answer:
-      "You can create folders or tags based on subjects or topics, and easily group your notes accordingly within the Pingnotes app.",
+      "You can create and manage tags and folders based on subjects or topics, and easily group your notes accordingly within the Pingnotes app.",
   },
   {
     question: "Can I share my notes with classmates?",
     answer:
-      "Yes! Pingnotes allows you to share your notes securely with classmates via links or email invitations.",
+      "Absolutely! With Pingnotes, you can instantly and securely share your notes with classmates via links or email invites.",
   },
+  
   {
     question: "Does PingNotes work offline?",
     answer:
