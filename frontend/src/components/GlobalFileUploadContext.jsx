@@ -1,4 +1,4 @@
-/*GlobalFileUploadContext.jsx file*/
+/*GlobalFileUploadContext.jsx*/
 import React, { createContext, useContext, useState } from "react";
 import apiService from "../services/api";
 
