@@ -24,7 +24,7 @@ const faqs = [
   {
     question: "How can I organize notes subject-wise or topic-wise?",
     answer:
-      "You can create and manage folders or tags based on subjects or topics, and easily group your notes accordingly within the Pingnotes app.",
+      "You can create and manage tags and folders based on subjects or topics, and easily group your notes accordingly within the Pingnotes app.",
   },
   {
     question: "Can I share my notes with classmates?",
