@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
     <div style={styles.bg}>
       <form style={styles.card} onSubmit={handleSubmit} autoComplete="off">
         <h2 style={styles.title}>Admin Login</h2>
-        <p style={styles.subtitle}>Sign in to access the admin dashboard</p>
+        <p style={styles.subtitle}>Sign in to access the Admin Dashboard</p>
         <div style={styles.inputGroup}>
           <label style={styles.label} htmlFor="email">Email</label>
           <input
