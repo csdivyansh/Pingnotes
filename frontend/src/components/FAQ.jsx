@@ -14,18 +14,17 @@ const faqs = [
   {
     question: "Who can use the Pingnotes?",
     answer:
-      "Any student – school, college, or preparing for competitive exams – can use Pingnotes to organize their study materials.",
+      "Any student – college , school or preparing for competitive exams – can use Pingnotes to organize their study materials.",
   },
   {
     question: "Is my data safe with Pingnotes?",
     answer:
-      "Yes. Pingnotes uses secure cloud storage and encryption to protect your notes and personal information.",
-  },
-  
+      "Yes, we use secure cloud storage and encryption to protect your notes and personal information.",
+   },
   {
     question: "How can I organize notes subject-wise or topic-wise?",
     answer:
-      "You can create and manage folders or tags based on subjects or topics, and easily group your notes accordingly within the Pingnotes app.",
+      "You can create and manage tags and folders based on subjects or topics, and easily group your notes accordingly within the Pingnotes app.",
   },
   {
     question: "Can I share my notes with classmates?",
