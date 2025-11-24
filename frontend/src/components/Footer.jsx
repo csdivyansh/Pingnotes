@@ -1,6 +1,7 @@
 import React from "react";
 import "./Footer.css"; // Make sure this path is correct
 
+//footer page 
 const Footer = () => {
   return (
     <footer className="footer-wrapper">
