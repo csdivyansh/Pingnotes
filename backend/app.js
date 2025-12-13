@@ -15,6 +15,7 @@ import subjectRoutes from "./routes/subject.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import fileRoutes from "./routes/file.routes.js";
 import stripeRoutes from "./routes/stripe.routes.js";
+import miscRoutes from "./routes/misc.routes.js";
 
 // Load environment variables
 dotenv.config();
@@ -44,6 +45,7 @@ app.use("/api/teachers", teacherRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/files", fileRoutes);
 app.use("/api/stripe", stripeRoutes);
+app.use("/api/misc", miscRoutes);
 
 // 404 handler for undefined routes
 app.use((req, res) => {
