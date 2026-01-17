@@ -74,6 +74,24 @@ const plans: Plan[] = [
     gradient: "from-purple-500 to-pink-500",
     accentColor: "rgb(168, 85, 247)",
   },
+  {
+    name: "Institutions",
+    price: "₹1000",
+    oldPrice: "₹10000",
+    icon: <FaRocket size={28} />,
+    features: [
+      "Everything in Premium, plus:",
+      "Unlimited team members",
+      "Advanced security & compliance",
+      "Dedicated account manager",
+      "Custom SLA & support",
+      "White-label options",
+      "Enterprise integrations",
+      "Advanced analytics & reporting",
+    ],
+    gradient: "from-orange-500 to-red-500",
+    accentColor: "rgb(249, 115, 22)",
+  },
 ];
 
 const Plans: React.FC = () => {
@@ -214,34 +232,6 @@ const Plans: React.FC = () => {
               viewport={{ once: false }}
               whileHover={{ y: -8, transition: { duration: 0.2 } }}
             >
-              {/* Popular Badge */}
-              {plan.popular && (
-                <motion.div
-                  style={{
-                    position: "absolute",
-                    top: -16,
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    background: "linear-gradient(90deg, #0078FF, #00D4FF)",
-                    color: "#000",
-                    padding: "6px 20px",
-                    borderRadius: 20,
-                    fontSize: 12,
-                    fontWeight: 700,
-                    zIndex: 20,
-                    boxShadow: "0 4px 16px rgba(0, 212, 255, 0.3)",
-                    letterSpacing: "0.5px",
-                    whiteSpace: "nowrap",
-                  }}
-                  initial={{ opacity: 0, y: -10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3 }}
-                  viewport={{ once: false }}
-                >
-                  MOST POPULAR
-                </motion.div>
-              )}
-
               {/* Card */}
               <div
                 style={{
@@ -260,7 +250,7 @@ const Plans: React.FC = () => {
                           : "rgba(0, 120, 255, 0.1)"
                       }`,
                   borderRadius: 24,
-                  padding: plan.popular ? 28 : 24,
+                  padding: 24,
                   minHeight: 540,
                   display: "flex",
                   flexDirection: "column",
@@ -273,11 +263,37 @@ const Plans: React.FC = () => {
                     : plan.popular
                       ? "0 8px 32px rgba(0, 120, 255, 0.12)"
                       : "0 4px 20px rgba(0, 120, 255, 0.08)",
-                  marginTop: plan.popular ? 20 : 0,
+                  marginTop: 0,
                   position: "relative",
                   zIndex: plan.popular ? 10 : 1,
                 }}
               >
+                {/* Popular Badge - Inside Card */}
+                {plan.popular && (
+                  <motion.div
+                    style={{
+                      position: "absolute",
+                      top: 16,
+                      right: 16,
+                      background: "linear-gradient(90deg, #0078FF, #00D4FF)",
+                      color: "#000",
+                      padding: "6px 16px",
+                      borderRadius: 20,
+                      fontSize: 11,
+                      fontWeight: 700,
+                      zIndex: 20,
+                      boxShadow: "0 4px 16px rgba(0, 212, 255, 0.3)",
+                      letterSpacing: "0.5px",
+                      whiteSpace: "nowrap",
+                    }}
+                    initial={{ opacity: 0, y: -10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                    viewport={{ once: false }}
+                  >
+                    MOST POPULAR
+                  </motion.div>
+                )}
                 {/* Icon Container */}
                 <motion.div
                   style={{
