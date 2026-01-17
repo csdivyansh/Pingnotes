@@ -4,39 +4,39 @@ import DashboardCard from "./DashboardCard";
 import apiService from "../services/api";
 import "./Dashboard.css";
 
-const Dashboard = () => {
-  const [stats, setStats] = useState({
-    notes: 0,
-    users: 0,
-    teachers: 0,
-    groups: 0,
-    subjects: 0,
-    admins: 0
-  });
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const Dashboard = () => {
+    const [stats, setStats] = useState({
+      notes: 0,
+      users: 0,
+      teachers: 0,
+      groups: 0,
+      subjects: 0,
+      admins: 0
+    });
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const data = await apiService.getAdminDashboardStats();
-        setStats(data);
-        setError(null);
-      } catch (err) {
-        setError("Failed to fetch dashboard stats");
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchStats();
-  }, []);
+    useEffect(() => {
+      const fetchStats = async () => {
+        try {
+          const data = await apiService.getAdminDashboardStats();
+          setStats(data);
+          setError(null);
+        } catch (err) {
+          setError("Failed to fetch dashboard stats");
+        } finally {
+          setLoading(false);
+        }
+      };
+      fetchStats();
+    }, []);
 
   if (loading) {
     return (
       <div className="dashboard-container">
         <AdminSidebar />
         <main className="main-content">
-          <div className="loading">Loading dashboard...</div>
+          <div className="loading">Loading Dashboard...</div>
         </main>
       </div>
     );
@@ -71,4 +71,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+  export default Dashboard;

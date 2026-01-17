@@ -1,3 +1,4 @@
+/*Navbar.jsx file*/
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import pnLogo from "../assets/pn_logo.png";
@@ -108,14 +109,9 @@ const Navbar = ({ onLoginClick }) => {
           left: "50%",
           transform: "translateX(-50%)",
           zIndex: 1000,
-          width: "calc(100% - 32px)",
-          maxWidth: "1200px",
-          background: theme.navBg,
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
-          border: `1px solid ${theme.navBorder}`,
-          borderRadius: 16,
-          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+          background: "#ffff",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
+          width: "100%",
           fontFamily: "Poppins, Arial, sans-serif",
         }}
         role="navigation"

@@ -20,7 +20,7 @@ const About = () => {
           <h1>About Pingnotes</h1>
           <p>
             PingNotes is a modern study companion designed to keep students connected and organized.
-It offers a clean space where learners can share notes, stay updated, and support each other through their academic journey. Built with a focus on clarity and ease, PingNotes helps students cut through the noise and keep their studies on track. It’s all about smarter learning, better collaboration, and a calm, collected approach to education.
+It offers a clean space where learners can  acesss notes ,share notes, stay updated, and support each other through their academic journey. Built with a focus on clarity and ease, PingNotes helps students cut through the noise and keep their studies on track. It’s all about smarter learning, better collaboration, and a calm, collected approach to education.
 
           </p>
         </div>
@@ -45,7 +45,7 @@ It offers a clean space where learners can share notes, stay updated, and suppor
                 DV
               </div>
               <h3>Divyansh Varshney</h3>
-              <p>Backend, API & Devops </p>
+              <p>Backend, API & DevOps </p>
             </div>
             <div className="dev-card" data-aos="zoom-in">
               <div
@@ -66,7 +66,7 @@ It offers a clean space where learners can share notes, stay updated, and suppor
                 GC
               </div>
               <h3>Gaurav Chaudhary</h3>
-              <p>Database Specialist</p>
+              <p>Backend Developer</p>
             </div>
 
             <div className="dev-card" data-aos="zoom-in">
@@ -86,7 +86,7 @@ It offers a clean space where learners can share notes, stay updated, and suppor
         <div className="about-features">
           <div className="feature-card" data-aos="zoom-in">
             <h2>📘 Organize Subjects</h2>
-            <p>Manage your subjects and topics in a structured format.</p>
+            <p>Manage your topics and subjects in a structured format.</p>
           </div>
 
           <div className="feature-card" data-aos="zoom-in" data-aos-delay="100">

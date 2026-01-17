@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import { useGlobalFileUpload } from "./GlobalFileUploadContext";
-import apiService from "../services/api.js";
-
+import pnLogo from "../assets/pn_logo.png";
 const Logo = () => (
-  <div>
+  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+    <img src={pnLogo} alt="PingNotes Logo" style={{ height: 50, width: 50, objectFit: 'contain' }} />
     <span
       style={{
         fontWeight: 800,
@@ -45,19 +45,6 @@ const DashNav = () => {
     navigate("/");
   };
 
-  const handleLogout = async () => {
-    try {
-      // Clear authentication tokens and call backend
-      await apiService.logout();
-      // Redirect to home page
-      navigate("/");
-    } catch (error) {
-      console.error("Logout error:", error);
-      // Even if there's an error, redirect to home
-      navigate("/");
-    }
-  };
-
   return (
     <>
       <nav
@@ -77,14 +64,13 @@ const DashNav = () => {
             <Logo />
           </Link>
           <button
-            className={`dashnav-hamburger${menuOpen ? " open" : ""}`}
+            className="dashnav-hamburger"
             aria-label="Toggle navigation menu"
-            aria-expanded={menuOpen}
             onClick={handleMenuToggle}
           >
-            <span className="hamburger-bar bar1" />
-            <span className="hamburger-bar bar2" />
-            <span className="hamburger-bar bar3" />
+            <span className="hamburger-bar" />
+            <span className="hamburger-bar" />
+            <span className="hamburger-bar" />
           </button>
           <div
             className={`dashnav-links${menuOpen ? " open" : ""}`}
@@ -94,7 +80,7 @@ const DashNav = () => {
               to="/dashboard"
               className={location.pathname === "/dashboard" ? "active" : ""}
             >
-              Subjects
+            Subjects
             </Link>
             <Link
               to="/dashboard/files"
@@ -110,7 +96,7 @@ const DashNav = () => {
                 location.pathname === "/dashboard/groups" ? "active" : ""
               }
             >
-              Groups
+              ToDos
             </Link>
             <Link
               to="/dashboard/trash"
@@ -120,156 +106,157 @@ const DashNav = () => {
             >
               Trash
             </Link>
-            {/* Mobile Logout Button */}
+            <Link
+              to="/dashboard/settings"
+              className={
+                location.pathname === "/dashboard/settings" ? "active" : ""
+              }
+            >
+              Settings
+            </Link>
+            {/* Mobile Upload Button */}
             <button
-              className="dashnav-btn dashnav-btn-mobile dashnav-btn-logout"
-              onClick={handleLogout}
+              className="dashnav-btn dashnav-btn-mobile"
+              onClick={openUploadModal}
               type="button"
             >
-              Logout
+              Upload File
             </button>
           </div>
-          {/* Desktop Logout Button */}
+          {/* Desktop Upload Button */}
           <button
-            className="dashnav-btn dashnav-btn-desktop dashnav-btn-logout"
-            onClick={handleLogout}
+            className="dashnav-btn dashnav-btn-desktop"
+            onClick={openUploadModal}
             type="button"
           >
-            Logout
+            Upload File
           </button>
         </div>
       </nav>
       <div style={{ height: 72 }} />
       <style>{`
+        .dashnav-container {
+          max-width: 1200px;
+          margin: 0 auto;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 20px 32px 12px 32px;
+          position: relative;
+        }
+        .dashnav-links {
+          display: flex;
+          gap: 32px;
+          align-items: center;
+        }
+        .dashnav-links a {
+          color: #0a192f;
+          text-decoration: none;
+          font-weight: 700;
+          font-size: 18px;
+          font-family: Poppins, Arial, sans-serif;
+          letter-spacing: 0.5px;
+          transition: color 0.2s;
+        }
+        .dashnav-links a.active {
+          color: #0078FF;
+        }
+        .dashnav-btn {
+          background: #0078FF;
+          color: #fff;
+          padding: 10px 28px;
+          border-radius: 10px;
+          font-weight: 700;
+          font-size: 16px;
+          font-family: Poppins, Arial, sans-serif;
+          text-decoration: none;
+          box-shadow: 0 2px 8px rgba(0,120,255,0.08);
+          border: none;
+          cursor: pointer;
+          letter-spacing: 0.5px;
+          transition: background 0.2s;
+          margin-left: 16px;
+        }
+        .dashnav-hamburger {
+          display: none;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 40px;
+          height: 40px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          padding: 0;
+          margin-left: 16px;
+        }
+        .hamburger-bar {
+          width: 28px;
+          height: 3px;
+          background: #0a192f;
+          margin: 4px 0;
+          border-radius: 2px;
+          transition: all 0.3s;
+        }
+        @media (max-width: 900px) {
           .dashnav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 20px 32px 12px 32px;
-            position: relative;
+            padding: 16px 16px 8px 16px;
           }
           .dashnav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
+            gap: 18px;
           }
-          .dashnav-links a {
-            color: #0a192f;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 18px;
-            font-family: Poppins, Arial, sans-serif;
-            letter-spacing: 0.5px;
-            transition: color 0.2s;
-          }
-          .dashnav-links a.active {
-            color: #0078FF;
-          }
-          .dashnav-btn {
-            background: #0078FF;
-            color: #fff;
-            padding: 10px 28px;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 16px;
-            font-family: Poppins, Arial, sans-serif;
-            text-decoration: none;
-            box-shadow: 0 2px 8px rgba(0,120,255,0.08);
-            border: none;
-            cursor: pointer;
-            letter-spacing: 0.5px;
-            transition: background 0.2s;
-            margin-left: 16px;
-          }
-          .dashnav-btn-logout {
-            background: #dc3545;
-            box-shadow: 0 2px 8px rgba(220,53,69,0.08);
-          }
-          .dashnav-btn-logout:hover {
-            background: #c82333;
-          }
+        }
+        @media (max-width: 768px) {
           .dashnav-hamburger {
-            display: none;
+            display: flex;
+          }
+          .dashnav-links {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            left: 0;
+            background: #fff;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 40px;
-            height: 40px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            margin-left: 16px;
+            align-items: flex-start;
+            gap: 0;
+            padding: 0 0 12px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: none;
+            z-index: 1001;
           }
-          .hamburger-bar {
-            width: 28px;
-            height: 3px;
-            background: #0a192f;
-            margin: 4px 0;
-            border-radius: 2px;
-            transition: all 0.3s;
+          .dashnav-links.open {
+            display: flex;
           }
-          @media (max-width: 900px) {
-            .dashnav-container {
-              padding: 16px 16px 8px 16px;
-            }
-            .dashnav-links {
-              gap: 18px;
-            }
+          .dashnav-links a, .dashnav-btn {
+            width: 100%;
+            padding: 14px 24px;
+            font-size: 18px;
+            border-radius: 0;
+            margin: 0;
+            text-align: left;
           }
-          @media (max-width: 768px) {
-            .dashnav-hamburger {
-              display: flex;
-            }
-            .dashnav-links {
-              position: absolute;
-              top: 100%;
-              right: 0;
-              left: 0;
-              background: #fff;
-              flex-direction: column;
-              align-items: flex-start;
-              gap: 0;
-              padding: 0 0 12px 0;
-              box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-              display: none;
-              z-index: 1001;
-            }
-            .dashnav-links.open {
-              display: flex;
-            }
-            .dashnav-links a, .dashnav-btn {
-              width: 100%;
-              padding: 14px 24px;
-              font-size: 18px;
-              border-radius: 0;
-              margin: 0;
-              text-align: left;
-            }
-            .dashnav-btn-desktop {
-              display: none;
-            }
-            .dashnav-btn-mobile {
-              display: block;
-            }
+          .dashnav-btn-desktop {
+            display: none;
           }
-          @media (min-width: 769px) {
-            .dashnav-btn-mobile {
-              display: none !important;
-            }
+          .dashnav-btn-mobile {
+            display: block;
           }
-          @media (max-width: 480px) {
-            .dashnav-container {
-              padding: 10px 4vw 6px 4vw;
-            }
-            .dashnav-links a, .dashnav-btn {
-              font-size: 16px;
-              padding: 12px 16px;
-            }
+        }
+        @media (min-width: 769px) {
+          .dashnav-btn-mobile {
+            display: none !important;
           }
-        `}</style>
+        }
+        @media (max-width: 480px) {
+          .dashnav-container {
+            padding: 10px 4vw 6px 4vw;
+          }
+          .dashnav-links a, .dashnav-btn {
+            font-size: 16px;
+            padding: 12px 16px;
+          }
+        }
+      `}</style>
     </>
   );
 };

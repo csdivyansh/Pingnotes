@@ -32,7 +32,7 @@ export default function AdminLoginPage() {
         setError("Invalid response from server.");
       }
     } catch (err) {
-      setError(err.message || "Login failed. Please try again.");
+      setError(err.message || "Login Failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -42,7 +42,7 @@ export default function AdminLoginPage() {
     <div style={styles.bg}>
       <form style={styles.card} onSubmit={handleSubmit} autoComplete="off">
         <h2 style={styles.title}>Admin Login</h2>
-        <p style={styles.subtitle}>Sign in to access the admin dashboard</p>
+        <p style={styles.subtitle}>Sign in to access the Admin Dashboard</p>
         <div style={styles.inputGroup}>
           <label style={styles.label} htmlFor="email">Email</label>
           <input
@@ -65,7 +65,7 @@ export default function AdminLoginPage() {
             value={password}
             onChange={e => setPassword(e.target.value)}
             autoComplete="current-password"
-            placeholder="••••••••"
+            placeholder="******"
           />
         </div>
         {error && <div style={styles.error}>{error}</div>}

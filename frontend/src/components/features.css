@@ -1,95 +1,97 @@
-body {
-  margin: 0;
-  background: linear-gradient(135deg, #eef5ff, #fdfdff);
-  color: #111;
-}
+  /*this is our features.css file*/
 
-.features-container {
-  padding: 80px 24px;
-  max-width: 1200px;
-  margin: auto;
-  position: relative;
-  z-index: 1;
-}
-
-.features-header {
-  text-align: center;
-  margin-bottom: 60px;
-  position: relative;
-}
-
-.features-header h1 {
-  font-size: 48px;
-  color: #000;
-  font-weight: 700;
-}
-
-.features-header h1 span {
-  color: #007bff;
-  background: linear-gradient(to right, #007bff, #00c6ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.features-header p {
-  font-size: 18px;
-  color: #555;
-  margin-top: 8px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.feature-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 28px;
-}
-
-.card {
-  background: #ffffffcc;
-  padding: 30px;
-  border-radius: 20px;
-  box-shadow: 0 12px 30px rgba(0, 123, 255, 0.1);
-  text-align: center;
-  transition: all 0.4s ease;
-  border: 1px solid transparent;
-  backdrop-filter: blur(10px);
-  display: block;
-  position: relative;
-}
-
-.card:hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 20px 40px rgba(0, 123, 255, 0.25);
-  border: 1px solid #007bff33;
-}
-
-.card-icon {
-  margin-bottom: 18px;
-}
-
-.card-icon.glow {
-  animation: glow 1.8s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-  from {
-    filter: drop-shadow(0 0 0px #007bff);
+  body {
+    margin: 0;
+    background: linear-gradient(135deg, #eef5ff, #fdfdff);
+    color: #111;
   }
-  to {
-    filter: drop-shadow(0 0 10px #007bff);
+
+  .features-container {
+    padding: 80px 24px;
+    max-width: 1200px;
+    margin: auto;
+    position: relative;
+    z-index: 1;
   }
-}
 
-.card h3 {
-  font-size: 22px;
-  color: #000;
-  margin-bottom: 12px;
-}
+  .features-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+  }
 
-.card p {
-  font-size: 16px;
-  color: #444;
-  line-height: 1.5;
-}
+  .features-header h1 {
+    font-size: 48px;
+    color: #000;
+    font-weight: 700;
+  }
+
+  .features-header h1 span {
+    color: #007bff;
+    background: linear-gradient(to right, #007bff, #00c6ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .features-header p {
+    font-size: 18px;
+    color: #555;
+    margin-top: 8px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .feature-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 28px;
+  }
+
+  .card {
+    background: #ffffffcc;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 123, 255, 0.1);
+    text-align: center;
+    transition: all 0.4s ease;
+    border: 1px solid transparent;
+    backdrop-filter: blur(10px);
+    display: block;
+    position: relative;
+  }
+
+  .card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 20px 40px rgba(0, 123, 255, 0.25);
+    border: 1px solid #007bff33;
+  }
+
+  .card-icon {
+    margin-bottom: 18px;
+  }
+
+  .card-icon.glow {
+    animation: glow 1.8s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from {
+      filter: drop-shadow(0 0 0px #007bff);
+    }
+    to {
+      filter: drop-shadow(0 0 10px #007bff);
+    }
+  }
+
+  .card h3 {
+    font-size: 22px;
+    color: #000;
+    margin-bottom: 12px;
+  }
+
+  .card p {
+    font-size: 16px;
+    color: #444;
+    line-height: 1.5;
+  }
