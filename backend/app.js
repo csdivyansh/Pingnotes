@@ -27,7 +27,7 @@ await connectDB();
 
 // CORS configuration for separated frontend/backend
 const corsOptions = {
-  origin: process.env.FRONTEND_URL || "https://pingnotes.vercel.app",
+  origin: process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech",
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
