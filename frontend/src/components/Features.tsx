@@ -153,7 +153,7 @@ const Features: React.FC = () => {
                 backgroundClip: "text",
               }}
             >
-              PingNotes
+              Pingnotes
             </span>
             ?
           </motion.h1>
@@ -199,12 +199,19 @@ const Features: React.FC = () => {
                   position: "relative",
                   overflow: "hidden",
                   cursor: "pointer",
+                  transformStyle: "preserve-3d",
                 }}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
                 viewport={{ once: true }}
-                whileHover={{ y: -8, scale: 1.02 }}
+                whileHover={{
+                  y: -6,
+                  scale: 1.02,
+                  rotateX: -3,
+                  rotateY: 3,
+                  cursor: "pointer",
+                }}
               >
                 {/* Background gradient card */}
                 <div

@@ -35,14 +35,14 @@ const Footer = () => {
         {/* Contact Info */}
         <div className="footer-section">
           <h4 className="footer-heading">Contact</h4>
-          <p>Email: support@pingnotes.com</p>
-          <p>Phone: +91 7300913553</p>
+          <p>Email: idivyanshv@gmail.com</p>
+          <p>Phone: +91 70601 43331</p>
         </div>
       </div>
 
       <div className="footer-bottom">
         <hr />
-        <p>© {new Date().getFullYear()} Ping Note. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Pingnotes. All rights reserved.</p>
       </div>
     </footer>
   );

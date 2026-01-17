@@ -37,9 +37,9 @@ const faqs: FAQItem[] = [
       "Absolutely! With Pingnotes, you can instantly and securely share your notes with classmates via links or email invites. You can control who has access and what permissions they have.",
   },
   {
-    question: "Does PingNotes work offline?",
+    question: "Does Pingnotes work offline?",
     answer:
-      "Currently, PingNotes is optimized for online access, but we are working on an offline mode for future updates that will allow you to access cached notes without internet.",
+      "Currently, Pingnotes is optimized for online access, but we are working on an offline mode for future updates that will allow you to access cached notes without internet.",
   },
   {
     question: "Can I sync my notes across multiple devices?",
@@ -107,7 +107,7 @@ const FAQ: React.FC = () => {
                 backgroundClip: "text",
               }}
             >
-              FAQ
+              FAQs
             </span>
           </motion.h1>
           <motion.p

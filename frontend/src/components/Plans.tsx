@@ -8,9 +8,18 @@ import { themes } from "./themeConfig";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
+// Safely add alpha to an rgb color string like "rgb(59, 130, 246)".
+const withAlpha = (rgb: string, alpha: number) => {
+  const match = rgb.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+  if (!match) return rgb;
+  const [, r, g, b] = match;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
 interface Plan {
   name: string;
   price: string;
+  oldPrice?: string;
   icon: React.ReactNode;
   features: string[];
   popular?: boolean;
@@ -20,8 +29,9 @@ interface Plan {
 
 const plans: Plan[] = [
   {
-    name: "Free",
+    name: "Go",
     price: "₹0",
+    oldPrice: "₹99",
     icon: <FaStar size={28} />,
     features: [
       "Access to basic notes",
@@ -88,7 +98,7 @@ const Plans: React.FC = () => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ plan: planName }),
-        }
+        },
       );
       const data = await res.json();
       if (data.url) {
@@ -196,7 +206,7 @@ const Plans: React.FC = () => {
               key={idx}
               style={{
                 position: "relative",
-                overflow: "hidden",
+                overflow: "visible", // allow badges to escape the card bounds
               }}
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -274,7 +284,7 @@ const Plans: React.FC = () => {
                     width: 64,
                     height: 64,
                     borderRadius: 16,
-                    background: `linear-gradient(135deg, ${plan.accentColor}22, ${plan.accentColor}11)`,
+                    background: `linear-gradient(135deg, ${withAlpha(plan.accentColor, 0.13)}, ${withAlpha(plan.accentColor, 0.07)})`,
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -306,17 +316,33 @@ const Plans: React.FC = () => {
                   }}
                 >
                   <div
-                    style={{
-                      fontSize: 42,
-                      fontWeight: 800,
-                      background: `linear-gradient(90deg, ${plan.accentColor}, ${plan.accentColor}dd)`,
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                      backgroundClip: "text",
-                      marginBottom: 4,
-                    }}
+                    style={{ display: "flex", alignItems: "baseline", gap: 10 }}
                   >
-                    {plan.price}
+                    {plan.oldPrice && (
+                      <span
+                        style={{
+                          fontSize: 16,
+                          fontWeight: 700,
+                          color: theme.textMuted,
+                          textDecoration: "line-through",
+                        }}
+                      >
+                        {plan.oldPrice}
+                      </span>
+                    )}
+                    <div
+                      style={{
+                        fontSize: 42,
+                        fontWeight: 800,
+                        background: `linear-gradient(90deg, ${plan.accentColor}, ${withAlpha(plan.accentColor, 0.85)})`,
+                        WebkitBackgroundClip: "text",
+                        WebkitTextFillColor: "transparent",
+                        backgroundClip: "text",
+                        marginBottom: 4,
+                      }}
+                    >
+                      {plan.price}
+                    </div>
                   </div>
                   <div
                     style={{
@@ -324,7 +350,7 @@ const Plans: React.FC = () => {
                       color: theme.textMuted,
                     }}
                   >
-                    {plan.name === "Free" ? "Forever" : "per month"}
+                    {plan.name === "Go" ? "Forever" : "per month"}
                   </div>
                 </div>
 
@@ -366,7 +392,7 @@ const Plans: React.FC = () => {
                 <motion.div
                   style={{
                     height: 2,
-                    background: `linear-gradient(90deg, ${plan.accentColor}, ${plan.accentColor}00)`,
+                    background: `linear-gradient(90deg, ${plan.accentColor}, ${withAlpha(plan.accentColor, 0)})`,
                     marginBottom: 20,
                     borderRadius: 1,
                   }}
@@ -388,20 +414,20 @@ const Plans: React.FC = () => {
                     cursor: "pointer",
                     transition: "all 0.3s ease",
                     background: plan.popular
-                      ? `linear-gradient(90deg, ${plan.accentColor}, ${plan.accentColor}dd)`
+                      ? `linear-gradient(90deg, ${plan.accentColor}, ${withAlpha(plan.accentColor, 0.85)})`
                       : isDark
                         ? "rgba(255, 255, 255, 0.08)"
                         : "rgba(0, 120, 255, 0.08)",
                     color: plan.popular ? "#000" : plan.accentColor,
                     border: plan.popular
                       ? "none"
-                      : `1.5px solid ${plan.accentColor}40`,
+                      : `1.5px solid ${withAlpha(plan.accentColor, 0.25)}`,
                     boxShadow: plan.popular
-                      ? `0 4px 20px ${plan.accentColor}30`
+                      ? `0 4px 20px ${withAlpha(plan.accentColor, 0.18)}`
                       : "none",
                   }}
                   onClick={
-                    plan.name === "Free"
+                    plan.name === "Go"
                       ? () => navigate("/login")
                       : () => handlePaidPlan(plan.name)
                   }
@@ -422,7 +448,7 @@ const Plans: React.FC = () => {
                     position: "absolute",
                     inset: 0,
                     borderRadius: 24,
-                    background: `radial-gradient(circle at 50% 50%, ${plan.accentColor}15, transparent 70%)`,
+                    background: `radial-gradient(circle at 50% 50%, ${withAlpha(plan.accentColor, 0.08)}, transparent 70%)`,
                     opacity: 0.5,
                     pointerEvents: "none",
                     zIndex: 0,

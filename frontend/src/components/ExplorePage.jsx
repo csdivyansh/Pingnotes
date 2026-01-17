@@ -39,7 +39,7 @@ const ExplorePage = () => {
       <Navbar />
       <div className="explore">
         <header className="header">
-          <h1>Welcome to PingNotes Explore 🧠</h1>
+          <h1>Welcome to Pingnotes Explore 🧠</h1>
           <p>Organize smarter. Share faster. Learn better.</p>
         </header>
 
@@ -75,7 +75,7 @@ const ExplorePage = () => {
 
         <footer className="footer">
           <p>
-            &copy; {new Date().getFullYear()} PingNotes. All rights reserved.
+            &copy; {new Date().getFullYear()} Pingnotes. All rights reserved.
           </p>
         </footer>
       </div>

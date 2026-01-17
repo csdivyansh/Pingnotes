@@ -141,10 +141,10 @@ const About: React.FC = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.6 }}
           >
-            PingNotes is a modern study companion designed to keep students
+            Pingnotes is a modern study companion designed to keep students
             connected and organized. It offers a clean space where learners can
             share notes, stay updated, and support each other through their
-            academic journey. Built with a focus on clarity and ease, PingNotes
+            academic journey. Built with a focus on clarity and ease, Pingnotes
             helps students cut through the noise and keep their studies on
             track. It's all about smarter learning, better collaboration, and a
             calm, collected approach to education.
