@@ -44,13 +44,14 @@ const MoonIcon = ({ color }) => (
   </svg>
 );
 
-const Logo = ({ theme }) => {
+const Logo = ({ theme, onClick }) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
   }, []);
   return (
-    <div
+    <button
+      onClick={onClick}
       className="navbar-logo"
       style={{
         fontWeight: 800,
@@ -62,10 +63,17 @@ const Logo = ({ theme }) => {
         transform: mounted ? "scale(1)" : "scale(0.9)",
         transition: "opacity 0.5s ease, transform 0.5s ease",
         userSelect: "none",
+        background: "none",
+        border: "none",
+        cursor: "pointer",
+        padding: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
       Pingnotes
-    </div>
+    </button>
   );
 };
 
@@ -123,7 +131,7 @@ const Navbar = ({ onLoginClick }) => {
         aria-label="Primary"
       >
         <div className="navbar-container" style={{ gap: 16 }}>
-          <Logo theme={theme} />
+          <Logo theme={theme} onClick={() => navigate("/")} />
           <button
             className={`navbar-hamburger${menuOpen ? " open" : ""}`}
             aria-label="Toggle navigation menu"
