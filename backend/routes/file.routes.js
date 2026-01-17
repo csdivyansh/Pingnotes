@@ -17,7 +17,8 @@ import {
 } from "../controllers/file/file.controller.js";
 
 const router = express.Router();
-const upload = multer({ dest: "uploads/" });
+// Use memory storage instead of disk storage for Vercel compatibility
+const upload = multer({ storage: multer.memoryStorage() });
 
 // 🔒 Protect all routes
 router.use(requireAuth(["admin", "teacher", "user"]));
@@ -46,7 +47,7 @@ router.delete("/empty-trash", emptyTrash);
 router.delete(
   "/all",
   requireAuth(["admin", "teacher", "user"]),
-  deleteAllFiles
+  deleteAllFiles,
 );
 router.get("/:id", getFileById);
 router.delete("/:id", deleteFile);
