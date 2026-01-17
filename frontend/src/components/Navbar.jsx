@@ -138,7 +138,7 @@ const Navbar = ({ onLoginClick }) => {
           <div
             className={`navbar-links${menuOpen ? " open" : ""}`}
             onClick={handleNavClick}
-            style={{ color: theme.text, background: theme.navBg }}
+            style={{ color: theme.text, background: menuOpen ? theme.navBg : "transparent" }}
           >
             <Link to="/" className={location.pathname === "/" ? "active" : ""}>
               Home
