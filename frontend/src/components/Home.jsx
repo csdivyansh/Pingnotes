@@ -65,14 +65,17 @@ const Home = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
             style={{
-              fontSize: "clamp(80px, 18vw, 140px)",
+              fontSize: "clamp(48px, 12vw, 140px)",
               fontWeight: 800,
-              letterSpacing: 4,
-              marginBottom: 60,
-              lineHeight: 1.5,
+              letterSpacing: 2,
+              marginBottom: 40,
+              lineHeight: 1.3,
               position: "relative",
-              marginTop: "40px",
-              paddingBottom: "20px",
+              marginTop: "20px",
+              paddingBottom: "10px",
+              width: "100%",
+              maxWidth: "100%",
+              overflow: "visible",
             }}
           >
             {/* Background text with color animation */}
@@ -90,7 +93,7 @@ const Home = () => {
                 backgroundClip: "text",
                 display: "inline-block",
                 position: "relative",
-                paddingRight: "20px",
+                padding: "0 10px",
               }}
             >
               Pingnotes

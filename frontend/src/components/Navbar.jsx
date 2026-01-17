@@ -51,6 +51,7 @@ const Logo = ({ theme }) => {
   }, []);
   return (
     <div
+      className="navbar-logo"
       style={{
         fontWeight: 800,
         fontSize: 24,
@@ -137,7 +138,7 @@ const Navbar = ({ onLoginClick }) => {
           <div
             className={`navbar-links${menuOpen ? " open" : ""}`}
             onClick={handleNavClick}
-            style={{ color: theme.text }}
+            style={{ color: theme.text, background: theme.navBg }}
           >
             <Link to="/" className={location.pathname === "/" ? "active" : ""}>
               Home
@@ -166,9 +167,36 @@ const Navbar = ({ onLoginClick }) => {
             >
               About
             </Link>
-            {/* Mobile button inside hamburger */}
+          </div>
+
+          {/* Mobile buttons - visible on mobile navbar */}
+          <div className="navbar-btn-mobile-bar">
+            {/* Theme Toggle Button */}
             <button
-              className="navbar-btn navbar-btn-mobile"
+              onClick={toggleTheme}
+              style={{
+                background: "none",
+                border: `2px solid ${theme.primary}`,
+                borderRadius: 8,
+                padding: "6px 10px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "all 0.3s ease",
+                color: theme.primary,
+              }}
+              title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              {isDark ? (
+                <SunIcon color={theme.primary} />
+              ) : (
+                <MoonIcon color={theme.primary} />
+              )}
+            </button>
+
+            <button
+              className="navbar-btn navbar-btn-mobile-visible"
               onClick={() =>
                 loggedIn ? navigate("/dashboard") : handleLoginClick()
               }
@@ -176,9 +204,11 @@ const Navbar = ({ onLoginClick }) => {
               style={{
                 background: theme.primary,
                 color: isDark ? "#000" : "#fff",
+                padding: "8px 16px",
+                fontSize: "14px",
               }}
             >
-              {loggedIn ? "Dashboard" : "Login / Register"}
+              {loggedIn ? "Dashboard" : "Login"}
             </button>
           </div>
 
@@ -256,6 +286,9 @@ const Navbar = ({ onLoginClick }) => {
           position: relative;
           user-select: none;
         }
+        .navbar-btn-mobile-bar {
+          display: none;
+        }
         .navbar-links {
           display: flex;
           gap: 32px;
@@ -270,25 +303,25 @@ const Navbar = ({ onLoginClick }) => {
         }
         .navbar-links a {
           text-decoration: none;
-          font-weight: 700;
-          font-size: 16px;
+          font-weight: 600;
+          font-size: 17px;
           font-family: Poppins, Arial, sans-serif;
+          color: inherit;
           transition:
             color 0.2s,
             border-bottom-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           border-bottom: 3px solid transparent;
           padding-bottom: 4px;
           user-select: text;
-          inherit: color;
         }
         .navbar-links a:hover,
         .navbar-links a:focus {
           outline: none;
-          opacity: 0.8;
+          color: #00d4ff;
         }
         .navbar-links a.active {
-          font-weight: 800;
-          opacity: 1;
+          font-weight: 700;
+          color: #00d4ff;
         }
         .navbar-btn {
           color: #fff;
@@ -336,7 +369,7 @@ const Navbar = ({ onLoginClick }) => {
         .hamburger-bar {
           width: 28px;
           height: 3px;
-          background: #0a192f;
+          background: currentColor;
           margin: 4px 0;
           border-radius: 2px;
           transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
@@ -367,12 +400,20 @@ const Navbar = ({ onLoginClick }) => {
           .navbar-hamburger {
             display: flex;
           }
+          .navbar-btn-desktop {
+            display: none !important;
+          }
+          .navbar-btn-mobile-bar {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+          }
           .navbar-links {
             position: absolute;
             top: 100%;
             right: 0;
             left: 0;
-            background: #fff;
+            background: inherit;
             flex-direction: column;
             align-items: flex-start;
             gap: 0;
@@ -431,38 +472,6 @@ const Navbar = ({ onLoginClick }) => {
             animation-name: slideFadeIn;
             animation-delay: 0.33s;
           }
-          .navbar-links.open .navbar-btn-mobile {
-            display: block;
-            width: 100%;
-            padding: 14px 32px;
-            font-size: 18px;
-            border-radius: 0;
-            margin: 0;
-            text-align: left;
-            background: #0078FF;
-            color: #fff;
-            border: none;
-            font-weight: 700;
-            font-family: Poppins, Arial, sans-serif;
-            box-shadow: 0 2px 8px rgba(0,120,255,0.08);
-            cursor: pointer;
-            transition:
-              background 0.2s cubic-bezier(0.4,0,0.2,1),
-              transform 0.2s ease;
-            opacity: 0;
-            transform: translateX(-15px);
-            animation-fill-mode: forwards;
-            animation-duration: 0.31s;
-            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-            animation-name: slideFadeIn;
-            animation-delay: 0.40s;
-          }
-          .navbar-links.open .navbar-btn-mobile:hover,
-          .navbar-links.open .navbar-btn-mobile:focus-visible {
-            background-color: #0056b3;
-            transform: scale(1.05);
-            outline-offset: 3px;
-          }
 
           @keyframes slideFadeIn {
             from {
@@ -486,7 +495,15 @@ const Navbar = ({ onLoginClick }) => {
         }
         @media (max-width: 480px) {
           .navbar-container {
-            padding: 10px 4vw 6px 4vw;
+            padding: 10px 12px 6px 12px;
+            justify-content: flex-end;
+          }
+          .navbar-logo {
+            display: none !important;
+          }
+          .navbar-hamburger {
+            margin-left: 0;
+            margin-right: auto;
           }
           .navbar-links a, .navbar-btn {
             font-size: 16px;
