@@ -288,7 +288,7 @@ const UserDashboard: React.FC = () => {
                   className="rounded-2xl p-8 transition-all duration-300 flex flex-direction flex-col min-h-96 backdrop-blur"
                   style={{
                     background: isDark
-                      ? "rgba(30, 30, 30, 0.8)"
+                      ? "rgba(20, 20, 20, 0.95)"
                       : "rgba(255, 255, 255, 0.85)",
                     borderColor: isDark
                       ? "rgba(0, 212, 255, 0.15)"
