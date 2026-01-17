@@ -142,13 +142,19 @@ export const uploadFiles = async (req, res) => {
 
       // --- AI-powered subject & topic suggestion ---
       try {
-        const result = await suggestSubjectAndTopicFromFile(file.path, file.mimetype);
+        const result = await suggestSubjectAndTopicFromFile(
+          file.path,
+          file.mimetype
+        );
         suggestedSubject = result.subject;
         suggestedTopic = result.topic;
         console.log("Final subject for file:", suggestedSubject);
         console.log("Final topic for file:", suggestedTopic);
       } catch (extractErr) {
-        console.error("Text extraction/subject/topic suggestion error:", extractErr);
+        console.error(
+          "Text extraction/subject/topic suggestion error:",
+          extractErr
+        );
       }
 
       try {
@@ -483,16 +489,16 @@ export const getFileSummary = async (req, res) => {
   try {
     const file = await File.findById(id);
     if (!file) return res.status(404).json({ message: "File not found" });
-    
-    console.log('[File Summary] File found:', {
+
+    console.log("[File Summary] File found:", {
       id: file._id,
       name: file.name,
       mimetype: file.mimetype,
       hasPath: !!file.path,
       hasDriveId: !!file.drive_file_id,
-      hasSummary: !!file.summary
+      hasSummary: !!file.summary,
     });
-    
+
     if (file.summary && file.summary.length > 0) {
       return res.json({ summary: file.summary });
     }
@@ -500,7 +506,7 @@ export const getFileSummary = async (req, res) => {
     let filePath = file.path;
     let tempFilePath = null;
     if (!filePath && file.drive_file_id) {
-      console.log('[File Summary] No local path, downloading from Drive...');
+      console.log("[File Summary] No local path, downloading from Drive...");
       // Find user or teacher for access token
       let userAccessToken = null;
       if (file.uploaded_by_role === "User") {
@@ -517,21 +523,21 @@ export const getFileSummary = async (req, res) => {
       }
       // Download from Drive to temp file
       tempFilePath = path.join(os.tmpdir(), `file-${file._id}-${Date.now()}`);
-      console.log('[File Summary] Downloading to temp path:', tempFilePath);
-      
+      console.log("[File Summary] Downloading to temp path:", tempFilePath);
+
       try {
         await downloadFileFromDrive(
           file.drive_file_id,
           userAccessToken,
           tempFilePath
         );
-        console.log('[File Summary] Download completed successfully');
+        console.log("[File Summary] Download completed successfully");
         filePath = tempFilePath;
       } catch (downloadError) {
-        console.error('[File Summary] Download failed:', downloadError);
-        return res.status(500).json({ 
+        console.error("[File Summary] Download failed:", downloadError);
+        return res.status(500).json({
           message: "Failed to download file from Google Drive.",
-          error: downloadError.message 
+          error: downloadError.message,
         });
       }
     }
@@ -540,9 +546,9 @@ export const getFileSummary = async (req, res) => {
         .status(400)
         .json({ message: "File path not available for summary." });
     }
-    
-    console.log('[File Summary] Final file path for processing:', filePath);
-    
+
+    console.log("[File Summary] Final file path for processing:", filePath);
+
     // Log what type of summary is being generated
     if (
       file.mimetype.startsWith("image/") ||
@@ -550,9 +556,13 @@ export const getFileSummary = async (req, res) => {
         require("path").extname(filePath).toLowerCase()
       )
     ) {
-      console.log("[Gemini Summary] Generating summary for image file using Gemini.");
+      console.log(
+        "[Gemini Summary] Generating summary for image file using Gemini."
+      );
     } else {
-      console.log("[Gemini Summary] Generating summary for text-based file using Gemini.");
+      console.log(
+        "[Gemini Summary] Generating summary for text-based file using Gemini."
+      );
     }
     // Generate summary for any file type using Gemini
     const summary = await generateSummaryFromFile(filePath, file.mimetype);
@@ -562,9 +572,9 @@ export const getFileSummary = async (req, res) => {
     if (tempFilePath) {
       try {
         fs.unlinkSync(tempFilePath);
-        console.log('[File Summary] Temp file cleaned up:', tempFilePath);
+        console.log("[File Summary] Temp file cleaned up:", tempFilePath);
       } catch (e) {
-        console.error('[File Summary] Failed to clean up temp file:', e);
+        console.error("[File Summary] Failed to clean up temp file:", e);
       }
     }
     res.json({ summary });
@@ -577,11 +587,16 @@ export const getFileSummary = async (req, res) => {
 // Utility endpoint: Update all files to use webViewLink instead of webContentLink
 export const updateAllFilesToWebViewLink = async (req, res) => {
   try {
-    const files = await File.find({ drive_file_id: { $exists: true, $ne: null } });
+    const files = await File.find({
+      drive_file_id: { $exists: true, $ne: null },
+    });
     let updatedCount = 0;
     for (const file of files) {
       // Only update if the URL is a webContentLink (download link)
-      if (file.drive_file_url && file.drive_file_url.includes("/uc?export=download")) {
+      if (
+        file.drive_file_url &&
+        file.drive_file_url.includes("/uc?export=download")
+      ) {
         // Get the user's access token
         let userAccessToken = null;
         if (file.uploaded_by_role === "User") {
@@ -596,7 +611,10 @@ export const updateAllFilesToWebViewLink = async (req, res) => {
         const auth = new google.auth.OAuth2();
         auth.setCredentials({ access_token: userAccessToken });
         const drive = google.drive({ version: "v3", auth });
-        const driveRes = await drive.files.get({ fileId: file.drive_file_id, fields: "webViewLink" });
+        const driveRes = await drive.files.get({
+          fileId: file.drive_file_id,
+          fields: "webViewLink",
+        });
         if (driveRes.data.webViewLink) {
           file.drive_file_url = driveRes.data.webViewLink;
           await file.save();
@@ -607,6 +625,8 @@ export const updateAllFilesToWebViewLink = async (req, res) => {
     res.json({ message: `Updated ${updatedCount} files to use webViewLink.` });
   } catch (err) {
     console.error("Error updating files to webViewLink:", err);
-    res.status(500).json({ message: "Failed to update files.", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Failed to update files.", error: err.message });
   }
 };

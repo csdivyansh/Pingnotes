@@ -1,10 +1,19 @@
 import fs from "fs";
-import pdfParse from "pdf-parse";
 import { fromPath as pdf2picFromPath } from "pdf2pic";
 import Tesseract from "tesseract.js";
 import mammoth from "mammoth";
 import path from "path";
 import fetch from "node-fetch";
+
+// Lazy load pdf-parse to avoid initialization issues with test data
+let pdfParse = null;
+
+async function getPdfParse() {
+  if (!pdfParse) {
+    pdfParse = (await import("pdf-parse")).default;
+  }
+  return pdfParse;
+}
 
 function cleanExtractedText(text) {
   if (!text) return "";
@@ -33,8 +42,9 @@ function isMeaningfulText(text) {
 
 async function extractTextFromPDF(filePath) {
   // Try pdf-parse first
+  const pdfParseModule = await getPdfParse();
   const dataBuffer = fs.readFileSync(filePath);
-  const data = await pdfParse(dataBuffer);
+  const data = await pdfParseModule(dataBuffer);
   let text = cleanExtractedText(data.text);
   if (isMeaningfulText(text)) {
     console.log("Used embedded text extraction");
@@ -80,21 +90,21 @@ async function extractTextFromTXT(filePath) {
 // Helper function to encode image to base64
 function encodeImageToBase64(filePath) {
   const imageBuffer = fs.readFileSync(filePath);
-  return imageBuffer.toString('base64');
+  return imageBuffer.toString("base64");
 }
 
 // Helper function to get MIME type from file extension
 function getMimeType(filePath) {
-  const ext = filePath.split('.').pop().toLowerCase();
+  const ext = filePath.split(".").pop().toLowerCase();
   const mimeTypes = {
-    'png': 'image/png',
-    'jpg': 'image/jpeg',
-    'jpeg': 'image/jpeg',
-    'webp': 'image/webp',
-    'bmp': 'image/bmp',
-    'tiff': 'image/tiff'
+    png: "image/png",
+    jpg: "image/jpeg",
+    jpeg: "image/jpeg",
+    webp: "image/webp",
+    bmp: "image/bmp",
+    tiff: "image/tiff",
   };
-  return mimeTypes[ext] || 'image/jpeg';
+  return mimeTypes[ext] || "image/jpeg";
 }
 
 async function extractTextFromImageWithGemini(filePath) {
@@ -104,25 +114,27 @@ async function extractTextFromImageWithGemini(filePath) {
     GEMINI_API_KEY;
 
   console.log("🔍 Using GEMINI API for image text extraction...");
-  
+
   try {
     const base64Image = encodeImageToBase64(filePath);
     const mimeType = getMimeType(filePath);
-    
+
     const prompt = `Extract all the text content from this image. Include any text, numbers, equations, or code that you can see. Return only the extracted text without any additional commentary.`;
-    
+
     const body = {
-      contents: [{
-        parts: [
-          { text: prompt },
-          {
-            inline_data: {
-              mime_type: mimeType,
-              data: base64Image
-            }
-          }
-        ]
-      }]
+      contents: [
+        {
+          parts: [
+            { text: prompt },
+            {
+              inline_data: {
+                mime_type: mimeType,
+                data: base64Image,
+              },
+            },
+          ],
+        },
+      ],
     };
 
     const response = await fetch(GEMINI_API_URL, {
@@ -130,11 +142,12 @@ async function extractTextFromImageWithGemini(filePath) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
-    
+
     const result = await response.json();
     console.log("✅ Gemini text extraction completed successfully");
-    
-    const extractedText = result?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
+
+    const extractedText =
+      result?.candidates?.[0]?.content?.parts?.[0]?.text?.trim();
     return extractedText || "";
   } catch (err) {
     console.error("❌ Gemini text extraction error:", err);
@@ -157,7 +170,11 @@ async function extractTextFromImage(filePath, useGemini = false) {
 }
 
 // Supported: PDF, DOCX, TXT, and images (including .webp)
-export async function extractTextFromFile(filePath, mimetype, useGeminiForImages = false) {
+export async function extractTextFromFile(
+  filePath,
+  mimetype,
+  useGeminiForImages = false
+) {
   if (mimetype === "application/pdf") {
     return await extractTextFromPDF(filePath);
   } else if (

@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import "./UserSidebar.css";
 
 const getCurrentUserName = () => {
   const token =
@@ -24,86 +23,52 @@ const UserSidebar = () => {
     navigate("/");
   };
 
+  const navItems = [
+    { to: "/dashboard", icon: "📚", label: "My Subjects", end: true },
+    { to: "/dashboard/files", icon: "📁", label: "My Files" },
+    { to: "/dashboard/groups", icon: "👥", label: "My Groups" },
+    { to: "/dashboard/trash", icon: "🗑️", label: "Trash" },
+    { to: "/dashboard/settings", icon: "⚙️", label: "Settings" },
+  ];
+
   return (
-    <aside className="user-sidebar">
-      <div className="sidebar-header">
-        <h2>
-          Ping<span>notes</span>
+    <aside className="w-64 h-screen bg-gradient-to-br from-indigo-500 to-purple-600 text-white py-8 px-6 flex flex-col fixed left-0 top-0 shadow-xl z-50">
+      <div className="mb-12 text-center">
+        <h2 className="text-2xl font-bold m-0 mb-2 text-white">
+          Ping<span className="text-yellow-400">notes</span>
         </h2>
-        <p className="user-role">
+        <p className="text-sm opacity-80 m-0 font-medium">
           {currentName ? `Welcome, ${currentName}` : "Student Dashboard"}
         </p>
       </div>
 
-      <nav className="sidebar-nav">
-        <ul>
-          <li>
-            <NavLink
-              to="/dashboard"
-              className={({ isActive }) =>
-                "nav-item" + (isActive ? " active" : "")
-              }
-              style={{ color: "inherit", textDecoration: "none" }}
-              end
-            >
-              <span className="nav-icon">📚</span>
-              My Subjects
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/files"
-              className={({ isActive }) =>
-                "nav-item" + (isActive ? " active" : "")
-              }
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              <span className="nav-icon">📁</span>
-              My Files
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/groups"
-              className={({ isActive }) =>
-                "nav-item" + (isActive ? " active" : "")
-              }
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              <span className="nav-icon">👥</span>
-              My Groups
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/trash"
-              className={({ isActive }) =>
-                "nav-item" + (isActive ? " active" : "")
-              }
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              <span className="nav-icon">🗑️</span>
-              Trash
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/dashboard/settings"
-              className={({ isActive }) =>
-                "nav-item" + (isActive ? " active" : "")
-              }
-              style={{ color: "inherit", textDecoration: "none" }}
-            >
-              <span className="nav-icon">⚙️</span>
-              Settings
-            </NavLink>
-          </li>
+      <nav className="flex-1">
+        <ul className="list-none p-0 m-0">
+          {navItems.map((item) => (
+            <li key={item.to}>
+              <NavLink
+                to={item.to}
+                end={item.end}
+                className={({ isActive }) =>
+                  `flex items-center gap-4 py-4 px-5 mb-2 rounded-lg cursor-pointer transition-all duration-300 font-medium no-underline text-white hover:bg-white/10 hover:translate-x-1 ${
+                    isActive ? "bg-white/20 shadow-md" : ""
+                  }`
+                }
+              >
+                <span className="text-xl w-6 text-center">{item.icon}</span>
+                <span>{item.label}</span>
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </nav>
 
-      <div className="sidebar-footer">
-        <button className="logout-btn" onClick={handleLogout}>
-          <span className="nav-icon">🚪</span>
+      <div className="mt-auto pt-8 border-t border-white/10">
+        <button
+          className="w-full flex items-center gap-4 py-4 px-5 bg-red-500/80 text-white border-none rounded-lg cursor-pointer transition-all duration-300 font-medium text-base hover:bg-red-500 hover:-translate-y-0.5 hover:shadow-lg"
+          onClick={handleLogout}
+        >
+          <span className="text-xl w-6 text-center">🚪</span>
           <span>Logout</span>
         </button>
       </div>

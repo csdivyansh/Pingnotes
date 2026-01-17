@@ -259,19 +259,58 @@ const Home = () => {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.4, delay: idx * 0.05 }}
                 style={{
-                  background: "#ffffff",
-                  border: "1px solid #e9eef5",
+                  background: isDark ? "rgba(255, 255, 255, 0.05)" : "#ffffff",
+                  border: `1px solid ${
+                    isDark
+                      ? "rgba(255, 255, 255, 0.1)"
+                      : "rgba(0, 120, 255, 0.1)"
+                  }`,
                   borderRadius: 14,
-                  padding: 18,
-                  boxShadow: "0 2px 10px rgba(14,30,62,0.04)",
+                  padding: 20,
+                  boxShadow: isDark
+                    ? "0 4px 20px rgba(0, 212, 255, 0.05)"
+                    : "0 2px 10px rgba(0, 120, 255, 0.04)",
                   textAlign: "left",
+                  transition: "all 0.3s ease",
+                  cursor: "pointer",
+                }}
+                onHoverStart={(e) => {
+                  e.currentTarget.style.borderColor = theme.primary;
+                  e.currentTarget.style.boxShadow = isDark
+                    ? `0 4px 20px ${theme.primary}20`
+                    : `0 4px 20px ${theme.primary}15`;
+                  e.currentTarget.style.transform = "translateY(-4px)";
+                }}
+                onHoverEnd={(e) => {
+                  e.currentTarget.style.borderColor = isDark
+                    ? "rgba(255, 255, 255, 0.1)"
+                    : "rgba(0, 120, 255, 0.1)";
+                  e.currentTarget.style.boxShadow = isDark
+                    ? "0 4px 20px rgba(0, 212, 255, 0.05)"
+                    : "0 2px 10px rgba(0, 120, 255, 0.04)";
+                  e.currentTarget.style.transform = "translateY(0)";
                 }}
               >
-                <div style={{ fontSize: 28 }}>{f.icon}</div>
-                <div style={{ fontWeight: 700, fontSize: 18, marginTop: 8 }}>
+                <div style={{ fontSize: 32, marginBottom: 12 }}>{f.icon}</div>
+                <div
+                  style={{
+                    fontWeight: 700,
+                    fontSize: 18,
+                    color: theme.text,
+                  }}
+                >
                   {f.title}
                 </div>
-                <div style={{ color: "#334155", marginTop: 6 }}>{f.desc}</div>
+                <div
+                  style={{
+                    color: theme.textMuted,
+                    marginTop: 8,
+                    fontSize: 15,
+                    lineHeight: 1.5,
+                  }}
+                >
+                  {f.desc}
+                </div>
               </motion.div>
             ))}
           </div>
@@ -282,27 +321,31 @@ const Home = () => {
           style={{
             width: "100%",
             boxSizing: "border-box",
-            padding: "12px 20px 32px 20px",
+            padding: "32px 20px 32px 20px",
           }}
         >
           <div
             style={{ margin: "0 auto", maxWidth: 1100, textAlign: "center" }}
           >
-            <div
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5 }}
               style={{
                 fontWeight: 800,
-                fontSize: 24,
-                color: "#0a192f",
-                marginBottom: 14,
+                fontSize: 28,
+                color: theme.text,
+                marginBottom: 28,
               }}
             >
               How it works
-            </div>
+            </motion.div>
             <div
               style={{
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                gap: 16,
+                gap: 20,
                 textAlign: "left",
               }}
             >
@@ -322,37 +365,69 @@ const Home = () => {
                   title: "Search",
                   desc: "Use filters to find what matters.",
                 },
-              ].map((s) => (
-                <div
+              ].map((s, idx) => (
+                <motion.div
                   key={s.step}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.2 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
                   style={{
-                    background: "#ffffff",
-                    border: "1px solid #e9eef5",
+                    background: isDark
+                      ? "rgba(255, 255, 255, 0.05)"
+                      : "#ffffff",
+                    border: `1px solid ${
+                      isDark
+                        ? "rgba(255, 255, 255, 0.1)"
+                        : "rgba(0, 120, 255, 0.1)"
+                    }`,
                     borderRadius: 14,
-                    padding: 18,
-                    boxShadow: "0 2px 10px rgba(14,30,62,0.04)",
+                    padding: 20,
+                    boxShadow: isDark
+                      ? "0 4px 20px rgba(0, 212, 255, 0.05)"
+                      : "0 2px 10px rgba(0, 120, 255, 0.04)",
+                    transition: "all 0.3s ease",
                   }}
                 >
                   <div
                     style={{
-                      width: 36,
-                      height: 36,
+                      width: 44,
+                      height: 44,
                       borderRadius: 10,
-                      background: "#e8f2ff",
-                      color: "#0a63d1",
+                      background: isDark
+                        ? `${theme.primary}20`
+                        : `${theme.primary}15`,
+                      color: theme.primary,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                       fontWeight: 800,
+                      fontSize: 20,
                     }}
                   >
                     {s.step}
                   </div>
-                  <div style={{ fontWeight: 700, marginTop: 10 }}>
+                  <div
+                    style={{
+                      fontWeight: 700,
+                      marginTop: 14,
+                      color: theme.text,
+                      fontSize: 18,
+                    }}
+                  >
                     {s.title}
                   </div>
-                  <div style={{ color: "#334155", marginTop: 6 }}>{s.desc}</div>
-                </div>
+                  <div
+                    style={{
+                      color: theme.textMuted,
+                      marginTop: 8,
+                      fontSize: 15,
+                      lineHeight: 1.5,
+                    }}
+                  >
+                    {s.desc}
+                  </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -370,41 +445,80 @@ const Home = () => {
             style={{
               margin: "0 auto",
               maxWidth: 1100,
-              background: "linear-gradient(90deg, #0078FF 0%, #00B1FF 100%)",
+              background: isDark
+                ? "linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(0, 120, 255, 0.1) 100%)"
+                : "linear-gradient(135deg, #0078FF 0%, #00B1FF 100%)",
               borderRadius: 16,
-              padding: 20,
+              padding: 28,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               textAlign: "center",
-              color: "#fff",
+              color: isDark ? theme.text : "#fff",
+              border: isDark ? `1px solid ${theme.primary}40` : "none",
             }}
           >
-            <div style={{ fontWeight: 800, fontSize: 22 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5 }}
+              style={{
+                fontWeight: 800,
+                fontSize: 26,
+              }}
+            >
               Ready to get organised?
-            </div>
-            <div style={{ opacity: 0.9, marginTop: 6 }}>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              style={{
+                opacity: isDark ? 0.8 : 0.9,
+                marginTop: 8,
+                fontSize: 16,
+              }}
+            >
               Start free. Upgrade anytime.
-            </div>
-            <div
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
               style={{
                 display: "flex",
-                gap: 10,
-                marginTop: 14,
+                gap: 12,
+                marginTop: 18,
                 flexWrap: "wrap",
+                justifyContent: "center",
               }}
             >
               <button
                 onClick={() => setShowLoginModal(true)}
                 style={{
-                  background: "#0a192f",
-                  color: "#fff",
-                  padding: "12px 20px",
+                  background: isDark ? "rgba(255, 255, 255, 0.1)" : "#0a192f",
+                  color: isDark ? theme.primary : "#fff",
+                  padding: "12px 28px",
                   borderRadius: 10,
                   textDecoration: "none",
                   fontWeight: 700,
-                  border: "none",
+                  border: isDark ? `1px solid ${theme.primary}40` : "none",
                   cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  fontSize: 15,
+                }}
+                onMouseEnter={(e) => {
+                  e.target.style.background = isDark
+                    ? `rgba(255, 255, 255, 0.15)`
+                    : "#1a2744";
+                }}
+                onMouseLeave={(e) => {
+                  e.target.style.background = isDark
+                    ? "rgba(255, 255, 255, 0.1)"
+                    : "#0a192f";
                 }}
               >
                 Sign In
@@ -412,17 +526,27 @@ const Home = () => {
               <Link
                 to="/explore"
                 style={{
-                  background: "#ffffff",
-                  color: "#0a192f",
-                  padding: "12px 20px",
+                  background: isDark ? theme.primary : "#ffffff",
+                  color: isDark ? "#000" : "#0a192f",
+                  padding: "12px 28px",
                   borderRadius: 10,
                   textDecoration: "none",
                   fontWeight: 700,
+                  transition: "all 0.3s ease",
+                  fontSize: 15,
+                }}
+                onMouseEnter={(e) => {
+                  e.style.opacity = "0.9";
+                  e.style.transform = "translateY(-2px)";
+                }}
+                onMouseLeave={(e) => {
+                  e.style.opacity = "1";
+                  e.style.transform = "translateY(0)";
                 }}
               >
                 Explore
               </Link>
-            </div>
+            </motion.div>
           </div>
         </section>
       </div>
