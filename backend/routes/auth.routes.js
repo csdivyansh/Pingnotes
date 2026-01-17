@@ -127,12 +127,15 @@ router.get("/google/drive/status", async (req, res) => {
 
 // Google OAuth for Users
 router.get(
-  "/google/user",
-  passport.authenticate("google-user", {
-    scope: ["profile", "email", "https://www.googleapis.com/auth/drive.file"],
-    accessType: "offline",
-    prompt: "consent",
-  }),
+  "/google/user", (req, res, next) => {
+    const redirect = req.query.redirect || "/auth/success";
+    passport.authenticate("google-user", {
+      scope: ["profile", "email", "https://www.googleapis.com/auth/drive.file"],
+      accessType: "offline",
+      prompt: "consent",
+      state: redirect,
+    })(req, res, next);
+  }
 );
 
 router.get(
@@ -150,32 +153,37 @@ router.get(
   (req, res) => {
     try {
       const token = generateToken(req.user, "user");
-      // Use request origin if available; fall back to configured FRONTEND_URL or production default
-      const origin =
-        req.headers.origin ||
-        process.env.FRONTEND_URL ||
-        "https://pingnotes.csdiv.tech";
+      const frontendBase = process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
+      const stateRedirect = req.query.state || "/auth/success";
 
-      res.redirect(`${origin}/auth/success?token=${token}&role=user`);
+      const targetUrl = stateRedirect.toString().startsWith("http")
+        ? stateRedirect.toString()
+        : `${frontendBase}${stateRedirect}`;
+
+      const url = new URL(targetUrl);
+      url.searchParams.set("token", token);
+      url.searchParams.set("role", "user");
+
+      res.redirect(url.toString());
     } catch (error) {
       console.error("Google OAuth callback error:", error);
-      const origin =
-        req.headers.origin ||
-        process.env.FRONTEND_URL ||
-        "https://pingnotes.csdiv.tech";
-      res.redirect(`${origin}/auth/error`);
+      const frontendBase = process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
+      res.redirect(`${frontendBase}/auth/error`);
     }
   },
 );
 
 // Google OAuth for Teachers
 router.get(
-  "/google/teacher",
-  passport.authenticate("google-teacher", {
-    scope: ["profile", "email", "https://www.googleapis.com/auth/drive.file"],
-    accessType: "offline",
-    prompt: "consent",
-  }),
+  "/google/teacher", (req, res, next) => {
+    const redirect = req.query.redirect || "/auth/success";
+    passport.authenticate("google-teacher", {
+      scope: ["profile", "email", "https://www.googleapis.com/auth/drive.file"],
+      accessType: "offline",
+      prompt: "consent",
+      state: redirect,
+    })(req, res, next);
+  }
 );
 
 router.get(
@@ -193,19 +201,22 @@ router.get(
   (req, res) => {
     try {
       const token = generateToken(req.user, "teacher");
-      const origin =
-        req.headers.origin ||
-        process.env.FRONTEND_URL ||
-        "https://pingnotes.csdiv.tech";
+      const frontendBase = process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
+      const stateRedirect = req.query.state || "/auth/success";
 
-      res.redirect(`${origin}/auth/success?token=${token}&role=teacher`);
+      const targetUrl = stateRedirect.toString().startsWith("http")
+        ? stateRedirect.toString()
+        : `${frontendBase}${stateRedirect}`;
+
+      const url = new URL(targetUrl);
+      url.searchParams.set("token", token);
+      url.searchParams.set("role", "teacher");
+
+      res.redirect(url.toString());
     } catch (error) {
       console.error("Google OAuth callback error:", error);
-      const origin =
-        req.headers.origin ||
-        process.env.FRONTEND_URL ||
-        "https://pingnotes.csdiv.tech";
-      res.redirect(`${origin}/auth/error`);
+      const frontendBase = process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
+      res.redirect(`${frontendBase}/auth/error`);
     }
   },
 );
