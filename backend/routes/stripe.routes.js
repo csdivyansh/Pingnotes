@@ -17,12 +17,15 @@ router.post("/create-checkout-session", async (req, res) => {
   if (!priceId) return res.status(400).json({ error: "Invalid plan" });
 
   try {
+    // Use the origin from the request or fallback to FRONTEND_URL
+    const origin = req.headers.origin || process.env.FRONTEND_URL || "http://localhost:5173";
+    
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: [{ price: priceId, quantity: 1 }],
       mode: "subscription",
-      success_url: `${process.env.FRONTEND_URL}/success`,
-      cancel_url: `${process.env.FRONTEND_URL}/plans`,
+      success_url: `${origin}/success`,
+      cancel_url: `${origin}/plans`,
     });
     res.json({ url: session.url });
   } catch (err) {
