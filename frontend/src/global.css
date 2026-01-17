@@ -49,3 +49,12 @@ a,
   margin: 0;
   box-sizing: border-box;
 }
+
+/* Prefers reduced motion - respect user accessibility settings */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

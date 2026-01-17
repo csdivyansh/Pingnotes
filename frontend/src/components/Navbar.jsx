@@ -457,23 +457,23 @@ const Navbar = ({ onLoginClick }) => {
           /* Stagger the menu items appearing */
           .navbar-links.open a:nth-child(1) {
             animation-name: slideFadeIn;
-            animation-delay: 0.05s;
+            animation-delay: 0s;
           }
           .navbar-links.open a:nth-child(2) {
             animation-name: slideFadeIn;
-            animation-delay: 0.12s;
+            animation-delay: 0.03s;
           }
           .navbar-links.open a:nth-child(3) {
             animation-name: slideFadeIn;
-            animation-delay: 0.19s;
+            animation-delay: 0.06s;
           }
           .navbar-links.open a:nth-child(4) {
             animation-name: slideFadeIn;
-            animation-delay: 0.26s;
+            animation-delay: 0.09s;
           }
           .navbar-links.open a:nth-child(5) {
             animation-name: slideFadeIn;
-            animation-delay: 0.33s;
+            animation-delay: 0.12s;
           }
 
           @keyframes slideFadeIn {

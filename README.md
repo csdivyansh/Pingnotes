@@ -1,12 +1,17 @@
+# Pingnotes - Full Project Documentation
 
-# PingNotes - Full Project Documentation
+## 🚀 Try It Out
+
+**[Visit Pingnotes](https://pingnotes.vercel.app)** to experience the app live!
 
 ## Overview
+
 PingNotes is a cloud-based notes organizer built using the MERN stack. It allows teachers to send notes (PDFs, images, files) directly to students. Files are uploaded to Google Drive and shared via signed URLs.
 
 ---
 
 ## Features
+
 - User roles: Admin, Teacher, Student
 - JWT Authentication (Login / Protected Routes)
 - Subjects with nested Topics
@@ -16,6 +21,7 @@ PingNotes is a cloud-based notes organizer built using the MERN stack. It allows
 ---
 
 ## Folder Structure
+
 ```
 PingNotes/
 ├── controllers/
@@ -55,18 +61,20 @@ PingNotes/
 ## API Routes
 
 ### Admin Routes
-| Method | Endpoint        | Description         |
-|--------|-----------------|---------------------|
-| POST   | /api/admin/login| Login as admin      |
-| GET    | /api/admin/     | Get all admins      |
-| GET    | /api/admin/:id  | Get admin by ID     |
-| POST   | /api/admin/     | Create new admin    |
-| PUT    | /api/admin/:id  | Update admin        |
-| DELETE | /api/admin/:id  | Soft delete admin   |
+
+| Method | Endpoint         | Description       |
+| ------ | ---------------- | ----------------- |
+| POST   | /api/admin/login | Login as admin    |
+| GET    | /api/admin/      | Get all admins    |
+| GET    | /api/admin/:id   | Get admin by ID   |
+| POST   | /api/admin/      | Create new admin  |
+| PUT    | /api/admin/:id   | Update admin      |
+| DELETE | /api/admin/:id   | Soft delete admin |
 
 ### File Routes
+
 | Method | Endpoint         | Description            |
-|--------|------------------|------------------------|
+| ------ | ---------------- | ---------------------- |
 | POST   | /api/file/upload | Upload file to Drive   |
 | GET    | /api/file/       | List all files         |
 | GET    | /api/file/:id    | Get file by ID         |
@@ -75,6 +83,7 @@ PingNotes/
 ---
 
 ## Google Drive Integration
+
 - Service account configured at `config/drive-service-account.json`
 - All files private by default
 - Temporary signed URLs generated for secure access
@@ -82,6 +91,7 @@ PingNotes/
 ---
 
 ## Tech Stack
+
 - MongoDB Atlas
 - Express.js
 - React.js (frontend in progress)
