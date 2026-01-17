@@ -152,7 +152,7 @@ const Plans: React.FC = () => {
         }}
       >
         {/* Header */}
-        <motion.div
+        <div
           style={{
             textAlign: "center",
             marginBottom: 48,
@@ -160,11 +160,8 @@ const Plans: React.FC = () => {
             maxWidth: 800,
             margin: "0 auto 48px auto",
           }}
-          initial={{ opacity: 0, y: -40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
         >
-          <motion.h2
+          <h2
             style={{
               fontSize: "clamp(36px, 6vw, 56px)",
               fontWeight: 800,
@@ -172,9 +169,6 @@ const Plans: React.FC = () => {
               color: theme.text,
               letterSpacing: "-1px",
             }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
           >
             Choose your{" "}
             <span
@@ -187,8 +181,8 @@ const Plans: React.FC = () => {
             >
               perfect plan
             </span>
-          </motion.h2>
-          <motion.p
+          </h2>
+          <p
             style={{
               fontSize: "clamp(16px, 2.5vw, 20px)",
               maxWidth: 600,
@@ -196,41 +190,29 @@ const Plans: React.FC = () => {
               color: theme.textSecondary,
               lineHeight: 1.6,
             }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.6 }}
           >
             From free forever to power-packed pro — find what fits you best.
-          </motion.p>
-        </motion.div>
+          </p>
+        </div>
 
         {/* Plans Grid */}
-        <motion.div
+        <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
             gap: 28,
-            maxWidth: "1200px",
+            maxWidth: "1400px",
             margin: "0 auto",
             padding: "0 16px",
           }}
-          initial="hidden"
-          whileInView="visible"
-          transition={{ staggerChildren: 0.15 }}
-          viewport={{ once: false }}
         >
           {plans.map((plan, idx) => (
-            <motion.div
+            <div
               key={idx}
               style={{
                 position: "relative",
-                overflow: "visible", // allow badges to escape the card bounds
+                overflow: "visible",
               }}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: idx * 0.15 }}
-              viewport={{ once: false }}
-              whileHover={{ y: -8, transition: { duration: 0.2 } }}
             >
               {/* Card */}
               <div
@@ -270,7 +252,7 @@ const Plans: React.FC = () => {
               >
                 {/* Popular Badge - Inside Card */}
                 {plan.popular && (
-                  <motion.div
+                  <div
                     style={{
                       position: "absolute",
                       top: 16,
@@ -286,13 +268,9 @@ const Plans: React.FC = () => {
                       letterSpacing: "0.5px",
                       whiteSpace: "nowrap",
                     }}
-                    initial={{ opacity: 0, y: -10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    viewport={{ once: false }}
                   >
                     MOST POPULAR
-                  </motion.div>
+                  </div>
                 )}
                 {/* Icon Container */}
                 <motion.div
@@ -405,21 +383,17 @@ const Plans: React.FC = () => {
                 </ul>
 
                 {/* Bottom Accent Line */}
-                <motion.div
+                <div
                   style={{
                     height: 2,
                     background: `linear-gradient(90deg, ${plan.accentColor}, ${withAlpha(plan.accentColor, 0)})`,
                     marginBottom: 20,
                     borderRadius: 1,
                   }}
-                  initial={{ scaleX: 0, originX: 0 }}
-                  whileInView={{ scaleX: 1 }}
-                  transition={{ duration: 0.6, delay: idx * 0.15 + 0.2 }}
-                  viewport={{ once: true }}
                 />
 
                 {/* CTA Button */}
-                <motion.button
+                <button
                   style={{
                     width: "100%",
                     padding: "14px 20px",
@@ -447,19 +421,16 @@ const Plans: React.FC = () => {
                       ? () => navigate("/login")
                       : () => handlePaidPlan(plan.name)
                   }
-                  disabled={loadingPlan === plan.name}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
                 >
                   {loadingPlan === plan.name
                     ? "Redirecting..."
                     : `Choose ${plan.name}`}
-                </motion.button>
+                </button>
               </div>
 
               {/* Glow Effect */}
               {plan.popular && (
-                <motion.div
+                <div
                   style={{
                     position: "absolute",
                     inset: 0,
@@ -471,20 +442,16 @@ const Plans: React.FC = () => {
                   }}
                 />
               )}
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Bottom FAQ CTA */}
-        <motion.div
+        <div
           style={{
             textAlign: "center",
             marginTop: 80,
           }}
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: false }}
         >
           <p
             style={{
@@ -510,7 +477,7 @@ const Plans: React.FC = () => {
           >
             FAQs →
           </a>
-        </motion.div>
+        </div>
       </div>
     </div>
   );
