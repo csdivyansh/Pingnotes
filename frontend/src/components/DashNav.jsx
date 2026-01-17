@@ -269,7 +269,6 @@ const DashNav = () => {
           </div>
         </div>
       </nav>
-      <div style={{ height: 72 }} />
       <style>{`
         .dashnav-container {
           justify-content: space-between;
