@@ -238,7 +238,7 @@ const UserDashboard: React.FC = () => {
         className="min-h-screen pb-16 transition-all duration-300"
         style={{ background: theme.bg, color: theme.text }}
       >
-        <main className="max-w-7xl mx-auto px-4 pt-4 pb-6">
+        <main className="max-w-7xl mx-auto px-4 pb-6">
           {/* Header */}
           <header
             className="flex items-center justify-between gap-6 mb-8 rounded-2xl p-6 backdrop-blur-md transition-all duration-300"
