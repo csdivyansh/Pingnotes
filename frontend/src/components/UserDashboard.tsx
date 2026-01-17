@@ -200,30 +200,34 @@ const UserDashboard: React.FC = () => {
   // Loading state
   if (loading) {
     return (
-      <div
-        className="min-h-screen pt-20 pb-16 transition-all duration-300"
-        style={{ background: theme.bg, color: theme.text }}
-      >
+      <>
         <DashNav />
-        <div className="text-center py-12 text-lg font-semibold">
-          Loading subjects...
+        <div
+          className="min-h-screen pb-16 transition-all duration-300"
+          style={{ background: theme.bg, color: theme.text }}
+        >
+          <div className="text-center py-12 text-lg font-semibold">
+            Loading subjects...
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
   // Error state
   if (error) {
     return (
-      <div
-        className="min-h-screen pt-20 pb-16 transition-all duration-300"
-        style={{ background: theme.bg, color: theme.text }}
-      >
+      <>
         <DashNav />
-        <div className="text-center py-12 text-lg font-semibold text-red-500">
-          {error}
+        <div
+          className="min-h-screen pb-16 transition-all duration-300"
+          style={{ background: theme.bg, color: theme.text }}
+        >
+          <div className="text-center py-12 text-lg font-semibold text-red-500">
+            {error}
+          </div>
         </div>
-      </div>
+      </>
     );
   }
 
@@ -231,13 +235,13 @@ const UserDashboard: React.FC = () => {
     <>
       <DashNav />
       <div
-        className="min-h-screen pt-20 pb-16 transition-all duration-300"
+        className="min-h-screen pb-16 transition-all duration-300"
         style={{ background: theme.bg, color: theme.text }}
       >
-        <main className="max-w-7xl mx-auto px-4 py-6">
+        <main className="max-w-7xl mx-auto px-4 pt-4 pb-6">
           {/* Header */}
           <header
-            className="flex items-center justify-between gap-6 mb-9 rounded-2xl p-6 backdrop-blur-md transition-all duration-300"
+            className="flex items-center justify-between gap-6 mb-8 rounded-2xl p-6 backdrop-blur-md transition-all duration-300"
             style={{
               background: isDark
                 ? "rgba(30, 30, 30, 0.7)"
@@ -317,7 +321,8 @@ const UserDashboard: React.FC = () => {
                       onClick={() => handleDeleteSubject(subject._id)}
                       className="w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300 hover:scale-105 text-white"
                       style={{
-                        background: "linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%)",
+                        background:
+                          "linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%)",
                       }}
                     >
                       <FaTrash size={18} />
@@ -338,7 +343,8 @@ const UserDashboard: React.FC = () => {
                           onClick={() => setSelectedSubject(subject)}
                           className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-lg text-black transition-all duration-300 hover:scale-110"
                           style={{
-                            background: "linear-gradient(135deg, #00d4ff 0%, #0078ff 100%)",
+                            background:
+                              "linear-gradient(135deg, #00d4ff 0%, #0078ff 100%)",
                           }}
                         >
                           +
@@ -463,12 +469,18 @@ const UserDashboard: React.FC = () => {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              <h3 className="text-2xl font-bold mb-6" style={{ color: "#00d4ff" }}>
+              <h3
+                className="text-2xl font-bold mb-6"
+                style={{ color: "#00d4ff" }}
+              >
                 Add Subject
               </h3>
               <form onSubmit={handleAddSubject} className="space-y-4">
                 <div>
-                  <label className="block font-semibold text-sm mb-2" style={{ color: "#00d4ff" }}>
+                  <label
+                    className="block font-semibold text-sm mb-2"
+                    style={{ color: "#00d4ff" }}
+                  >
                     Subject Name
                   </label>
                   <input
@@ -492,14 +504,20 @@ const UserDashboard: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block font-semibold text-sm mb-2" style={{ color: "#00d4ff" }}>
+                  <label
+                    className="block font-semibold text-sm mb-2"
+                    style={{ color: "#00d4ff" }}
+                  >
                     Subject Code (Optional)
                   </label>
                   <input
                     type="text"
                     value={newSubject.subject_code}
                     onChange={(e) =>
-                      setNewSubject({ ...newSubject, subject_code: e.target.value })
+                      setNewSubject({
+                        ...newSubject,
+                        subject_code: e.target.value,
+                      })
                     }
                     placeholder="Enter subject code"
                     className="w-full px-4 py-2 rounded-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400"
