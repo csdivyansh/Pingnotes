@@ -4,6 +4,8 @@ import apiService from "../services/api.js";
 import "./UserDashboard.css";
 import { useNavigate, Link } from "react-router-dom";
 import DashNav from "./DashNav.jsx";
+import { useTheme } from "./ThemeContext";
+import { themes } from "./themeConfig";
 import {
   FaDownload,
   FaTrash,
@@ -207,7 +209,7 @@ const UserDashboard = () => {
     setSelectedFriends((prev) =>
       prev.includes(friendId)
         ? prev.filter((id) => id !== friendId)
-        : [...prev, friendId]
+        : [...prev, friendId],
     );
   };
   const handleShare = async () => {
@@ -244,7 +246,7 @@ const UserDashboard = () => {
         file,
         undefined, // no progress callback
         topicUploadTarget.subject._id,
-        topicUploadTarget.topic._id
+        topicUploadTarget.topic._id,
       );
       fetchSubjects();
     } catch (err) {
@@ -265,7 +267,11 @@ const UserDashboard = () => {
   // New function for handling topic file uploads (non-AI)
   const handleTopicFileUpload = async (e) => {
     e.preventDefault();
-    if (!topicUploadFile || !topicUploadTarget.subject || !topicUploadTarget.topic) {
+    if (
+      !topicUploadFile ||
+      !topicUploadTarget.subject ||
+      !topicUploadTarget.topic
+    ) {
       alert("Please select a file");
       return;
     }
@@ -279,7 +285,7 @@ const UserDashboard = () => {
           setTopicUploadProgress(progress);
         },
         topicUploadTarget.subject._id,
-        topicUploadTarget.topic._id
+        topicUploadTarget.topic._id,
       );
 
       setTopicUploadFile(null);
@@ -293,7 +299,7 @@ const UserDashboard = () => {
       if (error.message.includes("401") || error.message.includes("Google")) {
         setNeedsGoogleDriveAuth(true);
         alert(
-          "You need to authorize Google Drive access to upload files. Please click the 'Authorize Google Drive' button."
+          "You need to authorize Google Drive access to upload files. Please click the 'Authorize Google Drive' button.",
         );
       } else {
         alert("Failed to upload file: " + error.message);
@@ -308,37 +314,69 @@ const UserDashboard = () => {
     setExpandedTopics((prev) =>
       prev.includes(topicId)
         ? prev.filter((id) => id !== topicId)
-        : [...prev, topicId]
+        : [...prev, topicId],
     );
   };
 
   if (loading) {
+    const { isDark } = useTheme();
+    const theme = isDark ? themes.dark : themes.light;
     return (
-      <div className="user-dashboard">
+      <div className="user-dashboard" style={{ background: theme.bg }}>
+        <DashNav />
         <div className="loading">Loading subjects...</div>
       </div>
     );
   }
 
   if (error) {
+    const { isDark } = useTheme();
+    const theme = isDark ? themes.dark : themes.light;
     return (
-      <div className="user-dashboard">
+      <div className="user-dashboard" style={{ background: theme.bg }}>
+        <DashNav />
         <div className="error">{error}</div>
       </div>
     );
   }
 
+  const { isDark } = useTheme();
+  const theme = isDark ? themes.dark : themes.light;
+
   return (
     <>
       <DashNav />
-      <div className="user-dashboard">
+      <div
+        className="user-dashboard"
+        style={{
+          background: theme.bg,
+          color: theme.text,
+          transition: "background 0.3s ease, color 0.3s ease",
+        }}
+      >
         <main className="dashboard-main2">
-          <header className="dashboard-header">
-            <h1>My Subjects</h1>
+          <header
+            className="dashboard-header"
+            style={{
+              background: isDark
+                ? "rgba(30, 30, 30, 0.7)"
+                : "rgba(255, 255, 255, 0.7)",
+              borderColor: isDark
+                ? "rgba(100, 100, 100, 0.2)"
+                : "rgba(0, 0, 0, 0.1)",
+              color: theme.text,
+              backdropFilter: "blur(8px)",
+            }}
+          >
+            <h1 style={{ color: theme.text }}>My Subjects</h1>
             <div style={{ display: "flex", alignItems: "center" }}>
               <button
                 className="add-subject-btn"
                 onClick={() => setShowAddSubject(true)}
+                style={{
+                  background: `linear-gradient(93deg, ${theme.primary} 0%, ${theme.secondary} 100%)`,
+                  color: isDark ? "#000" : "#fff",
+                }}
               >
                 + Add Subject
               </button>
@@ -349,6 +387,8 @@ const UserDashboard = () => {
                 style={{
                   marginLeft: "12px",
                   whiteSpace: "nowrap",
+                  background: `linear-gradient(93deg, ${theme.primary} 0%, ${theme.secondary} 100%)`,
+                  color: isDark ? "#000" : "#fff",
                 }}
                 title="Upload File with AI"
               >
@@ -495,7 +535,11 @@ const UserDashboard = () => {
                           <div key={topic._id} className="topic-item">
                             <div
                               className="topic-header"
-                              style={{ display: "flex", alignItems: "center", cursor: "pointer" }}
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                cursor: "pointer",
+                              }}
                               onClick={() => toggleTopic(topic._id)}
                             >
                               {expandedTopics.includes(topic._id) ? (
@@ -508,9 +552,14 @@ const UserDashboard = () => {
                             {expandedTopics.includes(topic._id) && (
                               <>
                                 {topic.description && (
-                                  <p className="topic-description">{topic.description}</p>
+                                  <p className="topic-description">
+                                    {topic.description}
+                                  </p>
                                 )}
-                                <div className="topic-actions" style={{ position: "relative" }}>
+                                <div
+                                  className="topic-actions"
+                                  style={{ position: "relative" }}
+                                >
                                   <button
                                     className="file-menu-btn"
                                     style={{
@@ -523,7 +572,9 @@ const UserDashboard = () => {
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       setTopicFileMenuOpenId(
-                                        topicFileMenuOpenId === topic._id ? null : topic._id
+                                        topicFileMenuOpenId === topic._id
+                                          ? null
+                                          : topic._id,
                                       );
                                     }}
                                     aria-label="Topic actions"
@@ -540,7 +591,8 @@ const UserDashboard = () => {
                                         background: "#fff",
                                         border: "1px solid #e5e7eb",
                                         borderRadius: 8,
-                                        boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
+                                        boxShadow:
+                                          "0 4px 16px rgba(0,0,0,0.08)",
                                         zIndex: 10,
                                         minWidth: 140,
                                       }}
@@ -578,7 +630,10 @@ const UserDashboard = () => {
                                           cursor: "pointer",
                                         }}
                                         onClick={() => {
-                                          handleDeleteTopic(subject._id, topic._id);
+                                          handleDeleteTopic(
+                                            subject._id,
+                                            topic._id,
+                                          );
                                           setTopicFileMenuOpenId(null);
                                         }}
                                       >
@@ -620,7 +675,7 @@ const UserDashboard = () => {
                                             setTopicFileMenuOpenId(
                                               topicFileMenuOpenId === file._id
                                                 ? null
-                                                : file._id
+                                                : file._id,
                                             )
                                           }
                                           aria-label="File actions"
@@ -660,7 +715,8 @@ const UserDashboard = () => {
                                                 border: "none",
                                                 textAlign: "left",
                                                 cursor: "pointer",
-                                                borderBottom: "1px solid #f1f1f1",
+                                                borderBottom:
+                                                  "1px solid #f1f1f1",
                                               }}
                                             >
                                               AI Summary
@@ -680,10 +736,11 @@ const UserDashboard = () => {
                                                 fontSize: "15px",
                                                 fontWeight: "400",
                                                 textAlign: "left",
-                                              
+
                                                 background: "none",
                                                 border: "none",
-                                                borderBottom: "1px solid #f1f1f1",
+                                                borderBottom:
+                                                  "1px solid #f1f1f1",
                                               }}
                                             >
                                               View
@@ -703,7 +760,8 @@ const UserDashboard = () => {
                                                 border: "none",
                                                 textAlign: "left",
                                                 cursor: "pointer",
-                                                borderBottom: "1px solid #f1f1f1",
+                                                borderBottom:
+                                                  "1px solid #f1f1f1",
                                               }}
                                             >
                                               Share
@@ -723,13 +781,12 @@ const UserDashboard = () => {
                                                 border: "none",
                                                 textAlign: "left",
                                                 cursor: "pointer",
-                                                borderBottom: "1px solid #f1f1f1",
+                                                borderBottom:
+                                                  "1px solid #f1f1f1",
                                               }}
                                             >
                                               Delete
                                             </button>
-                                            
-                                            
                                           </div>
                                         )}
                                       </div>
@@ -969,15 +1026,16 @@ const UserDashboard = () => {
             <div className="modal">
               <h3>Upload File to Topic</h3>
               <p style={{ marginBottom: "1rem", color: "#666" }}>
-                Uploading to: <strong>{topicUploadTarget.subject?.name}</strong> → <strong>{topicUploadTarget.topic?.name}</strong>
+                Uploading to: <strong>{topicUploadTarget.subject?.name}</strong>{" "}
+                → <strong>{topicUploadTarget.topic?.name}</strong>
               </p>
               <form onSubmit={handleTopicFileUpload}>
                 <div className="form-group">
                   <label>Select File:</label>
-                  <input 
-                    type="file" 
-                    onChange={(e) => setTopicUploadFile(e.target.files[0])} 
-                    required 
+                  <input
+                    type="file"
+                    onChange={(e) => setTopicUploadFile(e.target.files[0])}
+                    required
                   />
                 </div>
                 {topicUploadProgress > 0 && (
@@ -990,8 +1048,8 @@ const UserDashboard = () => {
                   </div>
                 )}
                 <div className="modal-actions">
-                  <button 
-                    type="submit" 
+                  <button
+                    type="submit"
                     className="btn-primary"
                     disabled={topicUploadLoading}
                   >
@@ -1021,27 +1079,27 @@ const UserDashboard = () => {
               }
             }}
           >
-              <div
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                padding: 8,
+              }}
+            >
+              <button
+                onClick={() => {
+                  setShowSummaryModal(false);
+                  setSummaryFileId(null);
+                }}
                 style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  padding: 8,
+                  fontSize: 22,
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
                 }}
               >
-                <button
-                  onClick={() => {
-                    setShowSummaryModal(false);
-                    setSummaryFileId(null);
-                  }}
-                  style={{
-                    fontSize: 22,
-                    background: "none",
-                    border: "none",
-                    cursor: "pointer",
-                  }}
-                >
-                  &times;
-                </button>
+                &times;
+              </button>
               <div style={{ padding: 24 }}>
                 <FileSummary fileId={summaryFileId} />
               </div>
@@ -1107,7 +1165,9 @@ const UserDashboard = () => {
         <div className="modal-overlay">
           <div className="modal">
             <p>{modalMessage}</p>
-            <button onClick={() => setModalOpen(false)} className="btn-primary">Close</button>
+            <button onClick={() => setModalOpen(false)} className="btn-primary">
+              Close
+            </button>
           </div>
         </div>
       )}
@@ -1115,8 +1175,21 @@ const UserDashboard = () => {
         <div className="modal-overlay">
           <div className="modal">
             <p>{confirmMessage}</p>
-            <button onClick={() => { onConfirm(); setConfirmOpen(false); }} className="btn-danger">Yes</button>
-            <button onClick={() => setConfirmOpen(false)} className="btn-secondary">No</button>
+            <button
+              onClick={() => {
+                onConfirm();
+                setConfirmOpen(false);
+              }}
+              className="btn-danger"
+            >
+              Yes
+            </button>
+            <button
+              onClick={() => setConfirmOpen(false)}
+              className="btn-secondary"
+            >
+              No
+            </button>
           </div>
         </div>
       )}
