@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "framer-motion": "^12.26.2",
     "pdfjs-dist": "^5.3.93",
     "prop-types": "^15.8.1",
     "react": "^19.1.0",
