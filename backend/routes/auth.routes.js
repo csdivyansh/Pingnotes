@@ -85,7 +85,7 @@ router.get("/google/drive/status", async (req, res) => {
 
     const decoded = jwt.verify(
       token,
-      process.env.JWT_SECRET || "fallback-jwt-secret-for-development"
+      process.env.JWT_SECRET || "fallback-jwt-secret-for-development",
     );
     console.log("Token decoded:", { userId: decoded.id, role: decoded.role });
 
@@ -132,7 +132,7 @@ router.get(
     scope: ["profile", "email", "https://www.googleapis.com/auth/drive.file"],
     accessType: "offline",
     prompt: "consent",
-  })
+  }),
 );
 
 router.get(
@@ -150,19 +150,22 @@ router.get(
   (req, res) => {
     try {
       const token = generateToken(req.user, "user");
-      // Redirect to frontend with token
-      res.redirect(
-        `${
-          process.env.FRONTEND_URL || "http://localhost:5173"
-        }/auth/success?token=${token}&role=user`
-      );
+      // Use request origin if available; fall back to configured FRONTEND_URL or production default
+      const origin =
+        req.headers.origin ||
+        process.env.FRONTEND_URL ||
+        "https://pingnotes.csdiv.tech";
+
+      res.redirect(`${origin}/auth/success?token=${token}&role=user`);
     } catch (error) {
       console.error("Google OAuth callback error:", error);
-      res.redirect(
-        `${process.env.FRONTEND_URL || "http://localhost:5173"}/auth/error`
-      );
+      const origin =
+        req.headers.origin ||
+        process.env.FRONTEND_URL ||
+        "https://pingnotes.csdiv.tech";
+      res.redirect(`${origin}/auth/error`);
     }
-  }
+  },
 );
 
 // Google OAuth for Teachers
@@ -172,7 +175,7 @@ router.get(
     scope: ["profile", "email", "https://www.googleapis.com/auth/drive.file"],
     accessType: "offline",
     prompt: "consent",
-  })
+  }),
 );
 
 router.get(
@@ -190,19 +193,21 @@ router.get(
   (req, res) => {
     try {
       const token = generateToken(req.user, "teacher");
-      // Redirect to frontend with token
-      res.redirect(
-        `${
-          process.env.FRONTEND_URL || "http://localhost:5173"
-        }/auth/success?token=${token}&role=teacher`
-      );
+      const origin =
+        req.headers.origin ||
+        process.env.FRONTEND_URL ||
+        "https://pingnotes.csdiv.tech";
+
+      res.redirect(`${origin}/auth/success?token=${token}&role=teacher`);
     } catch (error) {
       console.error("Google OAuth callback error:", error);
-      res.redirect(
-        `${process.env.FRONTEND_URL || "http://localhost:5173"}/auth/error`
-      );
+      const origin =
+        req.headers.origin ||
+        process.env.FRONTEND_URL ||
+        "https://pingnotes.csdiv.tech";
+      res.redirect(`${origin}/auth/error`);
     }
-  }
+  },
 );
 
 // Logout route
