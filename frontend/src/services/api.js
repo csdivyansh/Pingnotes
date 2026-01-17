@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+const API_BASE_URL = (import.meta.env.VITE_API_URL || "").replace(/\/$/, ""); // Remove trailing slash
 
 class ApiService {
   constructor() {
@@ -36,13 +36,13 @@ class ApiService {
       if (!response.ok) {
         if (response.status === 401) {
           alert(
-            "Your session has expired or you are not logged in. Please log in again."
+            "Your session has expired or you are not logged in. Please log in again.",
           );
           window.location.href = "/login";
           return;
         }
         throw new Error(
-          data.message || `HTTP error! status: ${response.status}`
+          data.message || `HTTP error! status: ${response.status}`,
         );
       }
 
@@ -253,7 +253,7 @@ class ApiService {
       // Continue with logout even if backend call fails
       console.log("Backend logout failed, continuing with local cleanup");
     }
-    
+
     // Clear all authentication data from localStorage
     localStorage.removeItem("adminToken");
     localStorage.removeItem("userToken");
@@ -261,7 +261,7 @@ class ApiService {
     localStorage.removeItem("userId");
     localStorage.removeItem("userEmail");
     localStorage.removeItem("userName");
-    
+
     // Clear any other potential auth-related data
     sessionStorage.clear();
   }

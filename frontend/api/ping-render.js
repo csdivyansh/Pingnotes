@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-  const renderUrl = "https://pingnotes.onrender.com/"; // Root endpoint of your Render backend
+  const renderUrl = "https://pingnotes-backend.vercel.app/";
   try {
     const ping = await fetch(renderUrl);
     const text = await ping.text();
