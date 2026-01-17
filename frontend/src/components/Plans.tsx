@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useTheme } from "./ThemeContext";
 import { themes } from "./themeConfig";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+const API_BASE_URL = (import.meta.env.VITE_API_URL as string) || "";
 
 // Safely add alpha to an rgb color string like "rgb(59, 130, 246)".
 const withAlpha = (rgb: string, alpha: number) => {
@@ -76,8 +76,8 @@ const plans: Plan[] = [
   },
   {
     name: "Institutions",
-    price: "₹1000",
-    oldPrice: "₹10000",
+    price: "₹999",
+    oldPrice: "₹9999",
     icon: <FaRocket size={28} />,
     features: [
       "Everything in Premium, plus:",
@@ -143,7 +143,7 @@ const Plans: React.FC = () => {
         overflowX: "hidden",
       }}
     >
-      <Navbar />
+      <Navbar onLoginClick={() => navigate("/login")} />
       <div
         style={{
           padding: "40px 20px 64px",
@@ -400,7 +400,6 @@ const Plans: React.FC = () => {
                     borderRadius: 12,
                     fontWeight: 700,
                     fontSize: 15,
-                    border: "none",
                     cursor: "pointer",
                     transition: "all 0.3s ease",
                     background: plan.popular
