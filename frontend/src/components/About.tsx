@@ -30,16 +30,16 @@ const developers: Developer[] = [
     accentColor: "rgb(59, 130, 246)",
   },
   {
-    initials: "DV",
-    name: "Divyansh Varshney",
-    role: "Backend, API & Devops",
-    accentColor: "rgb(168, 85, 247)",
-  },
-  {
     initials: "AK",
     name: "Amit Kumar",
     role: "Frontend Developer",
     accentColor: "rgb(34, 211, 238)",
+  },
+  {
+    initials: "DV",
+    name: "Divyansh Varshney",
+    role: "Backend, API & Devops",
+    accentColor: "rgb(168, 85, 247)",
   },
   {
     initials: "GC",
@@ -58,19 +58,19 @@ const developers: Developer[] = [
 const features = [
   {
     icon: <FaBook size={28} />,
-    title: "📘 Organize Subjects",
+    title: "Organize Subjects",
     description: "Manage your subjects and topics in a structured format.",
     accentColor: "rgb(59, 130, 246)",
   },
   {
     icon: <FaUsers size={28} />,
-    title: "👥 Collaborate with Groups",
+    title: "Collaborate with Groups",
     description: "Share notes and work together in real time.",
     accentColor: "rgb(168, 85, 247)",
   },
   {
     icon: <FaFolder size={28} />,
-    title: "📂 File Management",
+    title: "File Management",
     description: "Keep all academic files in one secure location.",
     accentColor: "rgb(34, 211, 238)",
   },
