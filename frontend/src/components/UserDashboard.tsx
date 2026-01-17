@@ -5,7 +5,13 @@ import { themes } from "./themeConfig";
 import DashNav from "./DashNav";
 import { useGlobalFileUpload } from "./GlobalFileUploadContext";
 import apiService from "../services/api";
-import { FaTrash } from "react-icons/fa";
+import {
+  FaTrash,
+  FaGoogleDrive,
+  FaLock,
+  FaCloudUploadAlt,
+} from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Subject {
   _id: string;
@@ -59,12 +65,18 @@ const UserDashboard: React.FC = () => {
   const [topicFileMenuOpenId, setTopicFileMenuOpenId] = useState<string | null>(
     null,
   );
+  const [authChecked, setAuthChecked] = useState(false);
 
   // Effects
   useEffect(() => {
-    fetchSubjects();
     checkGoogleDriveAccess();
   }, []);
+
+  useEffect(() => {
+    if (authChecked && !needsGoogleDriveAuth) {
+      fetchSubjects();
+    }
+  }, [authChecked, needsGoogleDriveAuth]);
 
   // API functions
   const checkGoogleDriveAccess = async () => {
@@ -73,7 +85,17 @@ const UserDashboard: React.FC = () => {
       setNeedsGoogleDriveAuth(!response.hasDriveAccess);
     } catch {
       setNeedsGoogleDriveAuth(true);
+    } finally {
+      setAuthChecked(true);
     }
+  };
+
+  const handleAuthenticateGoogleDrive = () => {
+    const apiBase = (import.meta.env.VITE_API_URL as string) || "";
+    const currentUrl = window.location.pathname;
+    window.location.href = `${apiBase}/api/auth/google/user?redirect=${encodeURIComponent(
+      currentUrl,
+    )}`;
   };
 
   const fetchSubjects = async () => {
@@ -1264,6 +1286,208 @@ const UserDashboard: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Google Drive Authentication Modal - Cannot be dismissed */}
+      <AnimatePresence>
+        {needsGoogleDriveAuth && authChecked && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            style={{
+              position: "fixed",
+              inset: 0,
+              background: "rgba(0, 0, 0, 0.85)",
+              backdropFilter: "blur(8px)",
+              zIndex: 9999,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "1rem",
+            }}
+          >
+            <motion.div
+              initial={{ scale: 0.9, y: 20 }}
+              animate={{ scale: 1, y: 0 }}
+              style={{
+                background: isDark
+                  ? "linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)"
+                  : "linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)",
+                borderRadius: "24px",
+                padding: "3rem 2.5rem",
+                maxWidth: "520px",
+                width: "100%",
+                boxShadow: isDark
+                  ? "0 25px 80px rgba(0, 0, 0, 0.6)"
+                  : "0 25px 80px rgba(0, 0, 0, 0.15)",
+                border: `2px solid ${isDark ? "rgba(0, 212, 255, 0.3)" : "rgba(0, 120, 255, 0.2)"}`,
+                textAlign: "center",
+              }}
+            >
+              {/* Icon */}
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                style={{
+                  width: "80px",
+                  height: "80px",
+                  margin: "0 auto 1.5rem",
+                  borderRadius: "50%",
+                  background:
+                    "linear-gradient(135deg, #4285F4 0%, #34A853 50%, #FBBC05 75%, #EA4335 100%)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  boxShadow: "0 8px 24px rgba(66, 133, 244, 0.4)",
+                }}
+              >
+                <FaGoogleDrive style={{ fontSize: "2.5rem", color: "#fff" }} />
+              </motion.div>
+
+              {/* Title */}
+              <h2
+                style={{
+                  fontSize: "1.75rem",
+                  fontWeight: "700",
+                  color: theme.text,
+                  marginBottom: "1rem",
+                  lineHeight: "1.3",
+                }}
+              >
+                Google Drive Access Required
+              </h2>
+
+              {/* Description */}
+              <div
+                style={{
+                  color: theme.textSecondary,
+                  fontSize: "1rem",
+                  lineHeight: "1.6",
+                  marginBottom: "2rem",
+                  textAlign: "left",
+                }}
+              >
+                <p style={{ marginBottom: "1rem" }}>
+                  PingNotes uses{" "}
+                  <strong style={{ color: theme.text }}>Google Drive</strong> to
+                  securely store and manage all your files. This integration is
+                  mandatory because:
+                </p>
+                <ul
+                  style={{
+                    listStyle: "none",
+                    padding: 0,
+                    margin: 0,
+                  }}
+                >
+                  <li
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: "0.75rem",
+                      marginBottom: "0.75rem",
+                    }}
+                  >
+                    <FaCloudUploadAlt
+                      style={{
+                        fontSize: "1.25rem",
+                        color: theme.primary,
+                        marginTop: "0.125rem",
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span>
+                      Your files are stored securely in your personal Google
+                      Drive
+                    </span>
+                  </li>
+                  <li
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: "0.75rem",
+                      marginBottom: "0.75rem",
+                    }}
+                  >
+                    <FaLock
+                      style={{
+                        fontSize: "1.25rem",
+                        color: theme.primary,
+                        marginTop: "0.125rem",
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span>
+                      You maintain full control and ownership of your data
+                    </span>
+                  </li>
+                  <li
+                    style={{
+                      display: "flex",
+                      alignItems: "flex-start",
+                      gap: "0.75rem",
+                    }}
+                  >
+                    <FaGoogleDrive
+                      style={{
+                        fontSize: "1.25rem",
+                        color: theme.primary,
+                        marginTop: "0.125rem",
+                        flexShrink: 0,
+                      }}
+                    />
+                    <span>
+                      Access your files from anywhere using Google's
+                      infrastructure
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Authentication Button */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleAuthenticateGoogleDrive}
+                style={{
+                  width: "100%",
+                  padding: "16px 32px",
+                  borderRadius: "12px",
+                  border: "none",
+                  background:
+                    "linear-gradient(135deg, #4285F4 0%, #34A853 100%)",
+                  color: "#fff",
+                  fontSize: "1.1rem",
+                  fontWeight: "600",
+                  cursor: "pointer",
+                  boxShadow: "0 6px 20px rgba(66, 133, 244, 0.4)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "0.75rem",
+                  transition: "all 0.3s ease",
+                }}
+              >
+                <FaGoogleDrive style={{ fontSize: "1.5rem" }} />
+                Connect Google Drive
+              </motion.button>
+
+              {/* Note */}
+              <p
+                style={{
+                  marginTop: "1.5rem",
+                  fontSize: "0.875rem",
+                  color: theme.textMuted,
+                  fontStyle: "italic",
+                }}
+              >
+                You'll be redirected to Google to grant access
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
