@@ -1,0 +1,26 @@
+export const themes = {
+  dark: {
+    bg: "linear-gradient(180deg, #0a0a0a 0%, #1a1a1a 100%)",
+    navBg: "rgba(15, 15, 15, 0.7)",
+    navBorder: "rgba(200, 200, 200, 0.1)",
+    text: "#ffffff",
+    textSecondary: "#cccccc",
+    textMuted: "#888888",
+    primary: "#00D4FF",
+    secondary: "#0078FF",
+    hover: "rgba(0, 212, 255, 0.1)",
+    accent: "#00D4FF",
+  },
+  light: {
+    bg: "linear-gradient(180deg, #f9fbfd 0%, #f6f9ff 100%)",
+    navBg: "rgba(255, 255, 255, 0.7)",
+    navBorder: "rgba(0, 0, 0, 0.1)",
+    text: "#0a192f",
+    textSecondary: "#333333",
+    textMuted: "#666666",
+    primary: "#0078FF",
+    secondary: "#0056b3",
+    hover: "rgba(0, 120, 255, 0.1)",
+    accent: "#0078FF",
+  },
+};

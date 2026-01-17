@@ -1,8 +1,50 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
 import pnLogo from "../assets/pn_logo.png";
+import { useTheme } from "./ThemeContext";
+import { themes } from "./themeConfig";
 
-const Logo = () => {
+// Sun Icon SVG
+const SunIcon = ({ color }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="12" cy="12" r="5" />
+    <line x1="12" y1="1" x2="12" y2="3" />
+    <line x1="12" y1="21" x2="12" y2="23" />
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+    <line x1="1" y1="12" x2="3" y2="12" />
+    <line x1="21" y1="12" x2="23" y2="12" />
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+  </svg>
+);
+
+// Moon Icon SVG
+const MoonIcon = ({ color }) => (
+  <svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+  </svg>
+);
+
+const Logo = ({ theme }) => {
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -12,7 +54,7 @@ const Logo = () => {
       style={{
         fontWeight: 800,
         fontSize: 24,
-        color: "#0a192f",
+        color: theme.primary,
         fontFamily: "Raleway, sans-serif",
         fontStyle: "normal",
         opacity: mounted ? 1 : 0,
@@ -32,14 +74,25 @@ function isLoggedIn() {
   );
 }
 
-const Navbar = () => {
+const Navbar = ({ onLoginClick }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const loggedIn = isLoggedIn();
   const [menuOpen, setMenuOpen] = useState(false);
+  const { isDark, toggleTheme } = useTheme();
+  const theme = isDark ? themes.dark : themes.light;
 
   const handleMenuToggle = () => setMenuOpen((open) => !open);
   const handleNavClick = () => setMenuOpen(false);
+
+  const handleLoginClick = () => {
+    setMenuOpen(false);
+    if (onLoginClick) {
+      onLoginClick();
+    } else {
+      navigate("/login");
+    }
+  };
 
   // Close menu if route changes
   useEffect(() => {
@@ -50,24 +103,32 @@ const Navbar = () => {
     <>
       <nav
         style={{
-          position: "sticky",
-          top: 0,
+          position: "fixed",
+          top: 16,
+          left: "50%",
+          transform: "translateX(-50%)",
           zIndex: 1000,
-          background: "#fff",
-          boxShadow: "0 2px 8px rgba(0,0,0,0.2)",
-          width: "100%",
+          width: "calc(100% - 32px)",
+          maxWidth: "1200px",
+          background: theme.navBg,
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          border: `1px solid ${theme.navBorder}`,
+          borderRadius: 16,
+          boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
           fontFamily: "Poppins, Arial, sans-serif",
         }}
         role="navigation"
         aria-label="Primary"
       >
-        <div className="navbar-container">
-          <Logo />
+        <div className="navbar-container" style={{ gap: 16 }}>
+          <Logo theme={theme} />
           <button
             className={`navbar-hamburger${menuOpen ? " open" : ""}`}
             aria-label="Toggle navigation menu"
             aria-expanded={menuOpen}
             onClick={handleMenuToggle}
+            style={{ color: theme.text }}
           >
             <span className="hamburger-bar bar1" />
             <span className="hamburger-bar bar2" />
@@ -76,6 +137,7 @@ const Navbar = () => {
           <div
             className={`navbar-links${menuOpen ? " open" : ""}`}
             onClick={handleNavClick}
+            style={{ color: theme.text }}
           >
             <Link to="/" className={location.pathname === "/" ? "active" : ""}>
               Home
@@ -107,27 +169,75 @@ const Navbar = () => {
             {/* Mobile button inside hamburger */}
             <button
               className="navbar-btn navbar-btn-mobile"
-              onClick={() => navigate(loggedIn ? "/dashboard" : "/login")}
+              onClick={() =>
+                loggedIn ? navigate("/dashboard") : handleLoginClick()
+              }
               type="button"
+              style={{
+                background: theme.primary,
+                color: isDark ? "#000" : "#fff",
+              }}
             >
               {loggedIn ? "Dashboard" : "Login / Register"}
             </button>
           </div>
+
           {/* Desktop button */}
-          <div className="navbar-btn-desktop">
+          <div
+            className="navbar-btn-desktop"
+            style={{ display: "flex", gap: 8, alignItems: "center" }}
+          >
+            {/* Theme Toggle Button */}
+            <button
+              onClick={toggleTheme}
+              style={{
+                background: "none",
+                border: `2px solid ${theme.primary}`,
+                borderRadius: 10,
+                padding: "8px 12px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                transition: "all 0.3s ease",
+                color: theme.primary,
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.background = theme.hover;
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.background = "none";
+              }}
+              title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            >
+              {isDark ? (
+                <SunIcon color={theme.primary} />
+              ) : (
+                <MoonIcon color={theme.primary} />
+              )}
+            </button>
+
             {loggedIn ? (
               <button
                 className="navbar-btn"
                 onClick={() => navigate("/dashboard")}
                 type="button"
+                style={{
+                  background: theme.primary,
+                  color: isDark ? "#000" : "#fff",
+                }}
               >
                 Dashboard
               </button>
             ) : (
               <button
                 className="navbar-btn"
-                onClick={() => navigate("/login")}
+                onClick={handleLoginClick}
                 type="button"
+                style={{
+                  background: theme.primary,
+                  color: isDark ? "#000" : "#fff",
+                }}
               >
                 Login
               </button>
@@ -140,11 +250,9 @@ const Navbar = () => {
       <style>{`
         .navbar-container {
           justify-content: space-between;
-          max-width: 1200px;
-          margin: 0 auto;
           display: flex;
           align-items: center;
-          padding: 20px 32px 12px 32px;
+          padding: 12px 24px;
           position: relative;
           user-select: none;
         }
@@ -161,10 +269,9 @@ const Navbar = () => {
           transition: opacity 0.3s ease;
         }
         .navbar-links a {
-          color: #0a192f;
           text-decoration: none;
           font-weight: 700;
-          font-size: 18px;
+          font-size: 16px;
           font-family: Poppins, Arial, sans-serif;
           transition:
             color 0.2s,
@@ -172,22 +279,20 @@ const Navbar = () => {
           border-bottom: 3px solid transparent;
           padding-bottom: 4px;
           user-select: text;
+          inherit: color;
         }
         .navbar-links a:hover,
         .navbar-links a:focus {
-          color: #0078FF;
-          border-bottom-color: #0078FF;
           outline: none;
+          opacity: 0.8;
         }
         .navbar-links a.active {
-          color: #0078FF;
-          border-bottom-color: #0078FF;
           font-weight: 800;
+          opacity: 1;
         }
         .navbar-btn {
-          background: #0078FF;
           color: #fff;
-          padding: 10px 28px;
+          padding: 10px 24px;
           border-radius: 10px;
           font-weight: 700;
           font-size: 16px;

@@ -1,11 +1,33 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import pnLogo from "../assets/pn_logo.png";
 import Navbar from "./Navbar";
+import LoginModal from "./LoginModal";
+import { useTheme } from "./ThemeContext";
+import { themes } from "./themeConfig";
+
+// Sparkle component
+const Sparkle = ({ delay }) => (
+  <motion.div
+    initial={{ opacity: 0, scale: 0 }}
+    animate={{ opacity: [0, 1, 0], scale: [0, 1, 0] }}
+    transition={{ duration: 1, repeat: Infinity, delay }}
+    style={{
+      position: "absolute",
+      width: 6,
+      height: 6,
+      background: "white",
+      borderRadius: "50%",
+      pointerEvents: "none",
+    }}
+  />
+);
 
 const Home = () => {
   const [showBanner, setShowBanner] = useState(true);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const { isDark } = useTheme();
+  const theme = isDark ? themes.dark : themes.light;
 
   useEffect(() => {
     const timer = setTimeout(() => setShowBanner(false), 7000);
@@ -17,28 +39,15 @@ const Home = () => {
       <div
         style={{
           fontFamily: "Poppins, Arial, sans-serif",
-          background: "linear-gradient(180deg, #f9fbfd 0%, #f6f9ff 100%)",
+          background: theme.bg,
           minHeight: "100vh",
           width: "100vw",
           display: "flex",
           flexDirection: "column",
+          paddingTop: "80px",
         }}
       >
-        <Navbar />
-        {showBanner && (
-          <div
-            style={{
-              background: "linear-gradient(90deg, #0093E9 0%, #80D0C7 100%)",
-              color: "#fff",
-              padding: "8px 0",
-              textAlign: "center",
-              fontWeight: 600,
-              fontSize: 18,
-            }}
-          >
-            🚀 Welcome!
-          </div>
-        )}
+        <Navbar onLoginClick={() => setShowLoginModal(true)} />
         {/* Hero */}
         <section
           style={{
@@ -47,37 +56,95 @@ const Home = () => {
             flexDirection: "column",
             alignItems: "center",
             textAlign: "center",
-            padding: "20px",
+            padding: "60px 20px",
             boxSizing: "border-box",
           }}
         >
-          <motion.img
-            src={pnLogo}
-            alt="PingNotes Logo"
-            style={{
-              width: "clamp(120px, 25vw, 200px)",
-              height: "clamp(120px, 25vw, 200px)",
-              filter: "drop-shadow(0 0 32px #0078FF55)",
-              marginTop: "20px",
-            }}
-            initial={{ opacity: 0, y: -40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-          />
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
             style={{
-              fontSize: "clamp(40px, 10vw, 72px)",
+              fontSize: "clamp(80px, 18vw, 140px)",
               fontWeight: 800,
-              color: "#0078FF",
-              letterSpacing: 2,
-              marginBottom: 0,
-              lineHeight: 1.1,
+              letterSpacing: 4,
+              marginBottom: 60,
+              lineHeight: 1.5,
+              position: "relative",
+              marginTop: "40px",
+              paddingBottom: "20px",
             }}
           >
-            Ping<span style={{ color: "#0a192f" }}>notes</span>
+            {/* Background text with color animation */}
+            <motion.div
+              animate={{
+                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+              }}
+              transition={{ duration: 1, repeat: Infinity }}
+              style={{
+                backgroundImage:
+                  "linear-gradient(90deg, #0078FF, #00D4FF, #0078FF)",
+                backgroundSize: "200% 200%",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                backgroundClip: "text",
+                display: "inline-block",
+                position: "relative",
+                paddingRight: "20px",
+              }}
+            >
+              Pingnotes
+              {/* Sparkles */}
+              <Sparkle delay={0} />
+              <Sparkle delay={0.2} />
+              <Sparkle delay={0.4} />
+              <Sparkle delay={0.6} />
+              <Sparkle delay={0.8} />
+              <motion.div
+                style={{
+                  position: "absolute",
+                  top: "20%",
+                  left: "15%",
+                  width: 8,
+                  height: 8,
+                }}
+              >
+                <Sparkle delay={0.1} />
+              </motion.div>
+              <motion.div
+                style={{
+                  position: "absolute",
+                  top: "60%",
+                  right: "20%",
+                  width: 8,
+                  height: 8,
+                }}
+              >
+                <Sparkle delay={0.3} />
+              </motion.div>
+              <motion.div
+                style={{
+                  position: "absolute",
+                  bottom: "10%",
+                  left: "25%",
+                  width: 8,
+                  height: 8,
+                }}
+              >
+                <Sparkle delay={0.5} />
+              </motion.div>
+              <motion.div
+                style={{
+                  position: "absolute",
+                  top: "15%",
+                  right: "30%",
+                  width: 8,
+                  height: 8,
+                }}
+              >
+                <Sparkle delay={0.7} />
+              </motion.div>
+            </motion.div>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -86,13 +153,13 @@ const Home = () => {
             style={{
               fontSize: "clamp(20px, 5vw, 30px)",
               fontWeight: 700,
-              color: "#0a192f",
-              margin: "12px 0 0 0",
+              color: theme.text,
+              margin: "32px 0 0 0",
               lineHeight: 1.1,
             }}
           >
             Notes Organisation{" "}
-            <span style={{ color: "#0078FF" }}>Simplified</span>
+            <span style={{ color: theme.primary }}>Simplified</span>
           </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -100,11 +167,12 @@ const Home = () => {
             transition={{ duration: 0.7, delay: 0.6 }}
             style={{
               fontSize: "clamp(16px, 3vw, 18px)",
-              color: "#222",
-              margin: "20px auto 0 auto",
+              color: theme.textSecondary,
+              margin: "32px auto 0 auto",
               maxWidth: 700,
               fontWeight: 400,
               padding: "0 15px",
+              lineHeight: 1.6,
             }}
           >
             Organise, search, and access your notes with ease. Pingnotes helps
@@ -122,14 +190,14 @@ const Home = () => {
               style={{
                 display: "inline-block",
                 marginTop: 30,
-                background: "#0078FF",
-                color: "#fff",
+                background: theme.primary,
+                color: isDark ? "#000" : "#fff",
                 padding: "16px 48px",
                 borderRadius: 12,
                 fontWeight: 700,
                 fontSize: "clamp(18px, 4vw, 22px)",
                 textDecoration: "none",
-                boxShadow: "0 4px 16px rgba(0,120,255,0.10)",
+                boxShadow: `0 4px 16px ${isDark ? "rgba(0, 212, 255, 0.2)" : "rgba(0, 120, 255, 0.1)"}`,
               }}
             >
               Get Started{" "}
@@ -323,8 +391,8 @@ const Home = () => {
                 flexWrap: "wrap",
               }}
             >
-              <Link
-                to="/login"
+              <button
+                onClick={() => setShowLoginModal(true)}
                 style={{
                   background: "#0a192f",
                   color: "#fff",
@@ -332,10 +400,12 @@ const Home = () => {
                   borderRadius: 10,
                   textDecoration: "none",
                   fontWeight: 700,
+                  border: "none",
+                  cursor: "pointer",
                 }}
               >
                 Sign In
-              </Link>
+              </button>
               <Link
                 to="/explore"
                 style={{
@@ -353,6 +423,13 @@ const Home = () => {
           </div>
         </section>
       </div>
+      <LoginModal
+        isOpen={showLoginModal}
+        onClose={() => setShowLoginModal(false)}
+        onLoginSuccess={() => {
+          // Optional: handle post-login navigation if needed
+        }}
+      />
     </>
   );
 };
