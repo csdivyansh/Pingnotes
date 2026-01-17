@@ -42,7 +42,7 @@ const Footer = () => {
 
       <div className="footer-bottom">
         <hr />
-        <p>© {new Date().getFullYear()} Pingnotes. All rights reserved.</p>
+        <p>© 2025 - {new Date().getFullYear()} Pingnotes. All rights reserved.</p>
       </div>
     </footer>
   );

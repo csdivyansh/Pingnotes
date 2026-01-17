@@ -199,7 +199,7 @@ const Plans: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           transition={{ staggerChildren: 0.15 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
         >
           {plans.map((plan, idx) => (
             <motion.div
@@ -211,7 +211,7 @@ const Plans: React.FC = () => {
               initial={{ opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: idx * 0.15 }}
-              viewport={{ once: true }}
+              viewport={{ once: false }}
               whileHover={{ y: -8, transition: { duration: 0.2 } }}
             >
               {/* Popular Badge */}
@@ -236,7 +236,7 @@ const Plans: React.FC = () => {
                   initial={{ opacity: 0, y: -10 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
-                  viewport={{ once: true }}
+                  viewport={{ once: false }}
                 >
                   MOST POPULAR
                 </motion.div>
@@ -468,7 +468,7 @@ const Plans: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
         >
           <p
             style={{

@@ -7,6 +7,14 @@ import { useTheme } from "./ThemeContext";
 import { themes } from "./themeConfig";
 import { motion } from "framer-motion";
 
+// Safely add alpha to an rgb color string like "rgb(59, 130, 246)".
+const withAlpha = (rgb: string, alpha: number) => {
+  const match = rgb.match(/rgb\((\d+),\s*(\d+),\s*(\d+)\)/);
+  if (!match) return rgb;
+  const [, r, g, b] = match;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
 interface Developer {
   initials: string;
   name: string;
@@ -159,7 +167,7 @@ const About: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
         >
           <motion.h2
             style={{
@@ -172,7 +180,7 @@ const About: React.FC = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
           >
             Developed By
           </motion.h2>
@@ -185,7 +193,7 @@ const About: React.FC = () => {
             initial="hidden"
             whileInView="visible"
             transition={{ staggerChildren: 0.1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
           >
             {developers.map((dev, idx) => (
               <motion.div
@@ -209,7 +217,7 @@ const About: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 whileHover={{ y: -8, scale: 1.02 }}
               >
                 <motion.div
@@ -224,8 +232,8 @@ const About: React.FC = () => {
                     color: "#fff",
                     fontSize: 28,
                     fontWeight: 800,
-                    background: `linear-gradient(135deg, ${dev.accentColor}, ${dev.accentColor}dd)`,
-                    boxShadow: `0 4px 20px ${dev.accentColor}30`,
+                    background: `linear-gradient(135deg, ${dev.accentColor}, ${withAlpha(dev.accentColor, 0.85)})`,
+                    boxShadow: `0 4px 20px ${withAlpha(dev.accentColor, 0.18)}`,
                   }}
                   whileHover={{ scale: 1.15 }}
                 >
@@ -260,7 +268,7 @@ const About: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
         >
           <motion.div
             style={{
@@ -272,7 +280,7 @@ const About: React.FC = () => {
             initial="hidden"
             whileInView="visible"
             transition={{ staggerChildren: 0.1 }}
-            viewport={{ once: true }}
+            viewport={{ once: false }}
           >
             {features.map((feature, idx) => (
               <motion.div
@@ -296,7 +304,7 @@ const About: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 whileHover={{ y: -8, scale: 1.02 }}
               >
                 <motion.div
@@ -308,7 +316,7 @@ const About: React.FC = () => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: `linear-gradient(135deg, ${feature.accentColor}22, ${feature.accentColor}11)`,
+                    background: `linear-gradient(135deg, ${withAlpha(feature.accentColor, 0.13)}, ${withAlpha(feature.accentColor, 0.07)})`,
                     color: feature.accentColor,
                   }}
                   whileHover={{ scale: 1.15, rotate: 10 }}
@@ -337,33 +345,6 @@ const About: React.FC = () => {
               </motion.div>
             ))}
           </motion.div>
-        </motion.div>
-
-        {/* Footer */}
-        <motion.div
-          style={{
-            textAlign: "center",
-            fontSize: 16,
-            color: theme.textSecondary,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 8,
-          }}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <FaRocket style={{ color: "rgb(59, 130, 246)" }} />
-          Built with{" "}
-          <FaHeart
-            style={{
-              color: "rgb(239, 68, 68)",
-              animation: "pulse 2s infinite",
-            }}
-          />{" "}
-          for modern education.
         </motion.div>
       </div>
     </div>

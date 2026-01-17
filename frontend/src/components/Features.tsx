@@ -185,7 +185,7 @@ const Features: React.FC = () => {
           initial="hidden"
           whileInView="visible"
           transition={{ staggerChildren: 0.08 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
         >
           {featuresData.map((feature, idx) => {
             const colorClass = feature.color || "from-blue-500";
@@ -204,7 +204,7 @@ const Features: React.FC = () => {
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: idx * 0.08 }}
-                viewport={{ once: true }}
+                viewport={{ once: false }}
                 whileHover={{
                   y: -6,
                   scale: 1.02,
@@ -290,7 +290,7 @@ const Features: React.FC = () => {
                     initial={{ scaleX: 0, originX: 0 }}
                     whileInView={{ scaleX: 1 }}
                     transition={{ duration: 0.6, delay: idx * 0.08 + 0.3 }}
-                    viewport={{ once: true }}
+                    viewport={{ once: false }}
                   />
                 </div>
 
@@ -321,7 +321,7 @@ const Features: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
         >
           <p
             style={{
