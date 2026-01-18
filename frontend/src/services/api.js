@@ -24,9 +24,13 @@ class ApiService {
   // Generic request method
   async request(endpoint, options = {}) {
     const url = `${this.baseURL}${endpoint}`;
+    const baseHeaders = this.getHeaders();
     const config = {
-      headers: this.getHeaders(),
       ...options,
+      headers: {
+        ...baseHeaders,
+        ...(options.headers || {}),
+      },
     };
 
     try {
@@ -295,7 +299,6 @@ class ApiService {
   async shareFile(fileId, friendIdsOrEmails) {
     return this.request(`/api/files/${fileId}/share`, {
       method: "POST",
-      headers: { "Content-Type": "application/json", ...this.getHeaders() },
       body: JSON.stringify({ friendIdsOrEmails }),
     });
   }

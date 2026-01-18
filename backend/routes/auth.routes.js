@@ -126,17 +126,15 @@ router.get("/google/drive/status", async (req, res) => {
 });
 
 // Google OAuth for Users
-router.get(
-  "/google/user", (req, res, next) => {
-    const redirect = req.query.redirect || "/auth/success";
-    passport.authenticate("google-user", {
-      scope: ["profile", "email", "https://www.googleapis.com/auth/drive.file"],
-      accessType: "offline",
-      prompt: "consent",
-      state: redirect,
-    })(req, res, next);
-  }
-);
+router.get("/google/user", (req, res, next) => {
+  const redirect = req.query.redirect || "/auth/success";
+  passport.authenticate("google-user", {
+    scope: ["profile", "email", "https://www.googleapis.com/auth/drive.file"],
+    accessType: "offline",
+    prompt: "consent",
+    state: redirect,
+  })(req, res, next);
+});
 
 router.get(
   "/google/user/callback",
@@ -153,7 +151,8 @@ router.get(
   (req, res) => {
     try {
       const token = generateToken(req.user, "user");
-      const frontendBase = process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
+      const frontendBase =
+        process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
       const stateRedirect = req.query.state || "/auth/success";
 
       const targetUrl = stateRedirect.toString().startsWith("http")
@@ -167,24 +166,23 @@ router.get(
       res.redirect(url.toString());
     } catch (error) {
       console.error("Google OAuth callback error:", error);
-      const frontendBase = process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
+      const frontendBase =
+        process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
       res.redirect(`${frontendBase}/auth/error`);
     }
   },
 );
 
 // Google OAuth for Teachers
-router.get(
-  "/google/teacher", (req, res, next) => {
-    const redirect = req.query.redirect || "/auth/success";
-    passport.authenticate("google-teacher", {
-      scope: ["profile", "email", "https://www.googleapis.com/auth/drive.file"],
-      accessType: "offline",
-      prompt: "consent",
-      state: redirect,
-    })(req, res, next);
-  }
-);
+router.get("/google/teacher", (req, res, next) => {
+  const redirect = req.query.redirect || "/auth/success";
+  passport.authenticate("google-teacher", {
+    scope: ["profile", "email", "https://www.googleapis.com/auth/drive.file"],
+    accessType: "offline",
+    prompt: "consent",
+    state: redirect,
+  })(req, res, next);
+});
 
 router.get(
   "/google/teacher/callback",
@@ -201,7 +199,8 @@ router.get(
   (req, res) => {
     try {
       const token = generateToken(req.user, "teacher");
-      const frontendBase = process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
+      const frontendBase =
+        process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
       const stateRedirect = req.query.state || "/auth/success";
 
       const targetUrl = stateRedirect.toString().startsWith("http")
@@ -215,7 +214,8 @@ router.get(
       res.redirect(url.toString());
     } catch (error) {
       console.error("Google OAuth callback error:", error);
-      const frontendBase = process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
+      const frontendBase =
+        process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
       res.redirect(`${frontendBase}/auth/error`);
     }
   },
