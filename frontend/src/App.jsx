@@ -18,8 +18,8 @@ import MyGroups from "./components/MyGroups";
 import GroupDetail from "./components/GroupDetail";
 import FileSummary from "./components/FileSummary";
 import FileViewer from "./components/FileViewer";
-import Success from "./components/Success";
-import { GlobalFileUploadProvider } from "./components/GlobalFileUploadContext";
+import Success from "./components/Success.tsx";
+import { GlobalFileUploadProvider } from "./components/GlobalFileUploadContext.tsx";
 import { ThemeProvider } from "./components/ThemeContext";
 import Footer from "./components/Footer";
 

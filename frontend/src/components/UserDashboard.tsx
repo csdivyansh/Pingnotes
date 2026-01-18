@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTheme } from "./ThemeContext";
 import { themes } from "./themeConfig";
 import DashNav from "./DashNav";
-import { useGlobalFileUpload } from "./GlobalFileUploadContext";
+import { useGlobalFileUpload } from "./GlobalFileUploadContext.tsx";
 import apiService from "../services/api";
 import {
   FaTrash,
@@ -32,6 +32,7 @@ interface File {
   _id: string;
   name: string;
   path?: string;
+  drive_file_url?: string;
 }
 
 const UserDashboard: React.FC = () => {
@@ -702,35 +703,93 @@ const UserDashboard: React.FC = () => {
                                         textOverflow: "ellipsis",
                                         whiteSpace: "nowrap",
                                         color: theme.text,
+                                        marginRight: "8px",
                                       }}
+                                      title={file.name}
                                     >
                                       {file.name}
                                     </span>
-                                    <button
-                                      onClick={() => handleDeleteFile(file._id)}
+                                    <div
                                       style={{
-                                        marginLeft: "8px",
-                                        padding: "4px",
-                                        border: "none",
-                                        background: "transparent",
-                                        cursor: "pointer",
-                                        transition: "opacity 0.2s",
                                         display: "flex",
+                                        gap: "6px",
                                         alignItems: "center",
-                                        justifyContent: "center",
-                                      }}
-                                      onMouseEnter={(e) => {
-                                        e.currentTarget.style.opacity = "0.7";
-                                      }}
-                                      onMouseLeave={(e) => {
-                                        e.currentTarget.style.opacity = "1";
                                       }}
                                     >
-                                      <FaTrash
-                                        size={10}
-                                        style={{ color: "#ff6b6b" }}
-                                      />
-                                    </button>
+                                      <button
+                                        onClick={() =>
+                                          navigate(`/files/${file._id}/view`)
+                                        }
+                                        style={{
+                                          padding: "4px 8px",
+                                          borderRadius: "6px",
+                                          border: "none",
+                                          background: "#00d4ff",
+                                          color: "white",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        View
+                                      </button>
+                                      <button
+                                        onClick={() =>
+                                          navigate(`/files/${file._id}/summary`)
+                                        }
+                                        style={{
+                                          padding: "4px 8px",
+                                          borderRadius: "6px",
+                                          border: "none",
+                                          background: "#fbbf24",
+                                          color: "#1f2937",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        Summary
+                                      </button>
+                                      {file.drive_file_url && (
+                                        <a
+                                          href={file.drive_file_url}
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          style={{
+                                            padding: "4px 8px",
+                                            borderRadius: "6px",
+                                            background: "#10b981",
+                                            color: "white",
+                                            textDecoration: "none",
+                                          }}
+                                        >
+                                          Open
+                                        </a>
+                                      )}
+                                      <button
+                                        onClick={() =>
+                                          handleDeleteFile(file._id)
+                                        }
+                                        style={{
+                                          padding: "4px",
+                                          border: "none",
+                                          background: "transparent",
+                                          cursor: "pointer",
+                                          transition: "opacity 0.2s",
+                                          display: "flex",
+                                          alignItems: "center",
+                                          justifyContent: "center",
+                                        }}
+                                        onMouseEnter={(e) => {
+                                          e.currentTarget.style.opacity = "0.7";
+                                        }}
+                                        onMouseLeave={(e) => {
+                                          e.currentTarget.style.opacity = "1";
+                                        }}
+                                        title="Delete"
+                                      >
+                                        <FaTrash
+                                          size={10}
+                                          style={{ color: "#ff6b6b" }}
+                                        />
+                                      </button>
+                                    </div>
                                   </div>
                                 ))}
                               </div>

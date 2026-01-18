@@ -215,15 +215,28 @@ class ApiService {
       });
 
       xhr.addEventListener("load", () => {
-        if (xhr.status === 200 || xhr.status === 201) {
+        const tryParse = () => {
           try {
-            const response = JSON.parse(xhr.responseText);
-            resolve(response);
+            return JSON.parse(xhr.responseText);
           } catch (error) {
+            return null;
+          }
+        };
+
+        const payload = tryParse();
+
+        if (xhr.status === 200 || xhr.status === 201) {
+          if (payload) {
+            resolve(payload);
+          } else {
             reject(new Error("Invalid JSON response"));
           }
         } else {
-          reject(new Error(`Upload failed: ${xhr.status}`));
+          const message =
+            (payload && payload.message) ||
+            (payload && payload.error) ||
+            `Upload failed: ${xhr.status}`;
+          reject(new Error(message));
         }
       });
 
