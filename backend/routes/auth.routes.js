@@ -113,9 +113,8 @@ router.get("/google/drive/status", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const hasDriveAccess = !!(
-      user.googleAccessToken && user.googleRefreshToken
-    );
+    // Only check refresh token (access token expires but refresh token persists)
+    const hasDriveAccess = !!user.googleRefreshToken;
     // console.log("Drive access status:", hasDriveAccess);
 
     res.json({ hasDriveAccess });
@@ -208,6 +207,49 @@ router.get(
       res.redirect(url.toString());
     } catch (error) {
       console.error("Google basic OAuth callback error:", error);
+      const frontendBase =
+        process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
+      res.redirect(`${frontendBase}/auth/error`);
+    }
+  },
+);
+
+// Google OAuth for Drive linking only (with offline access and consent prompt)
+router.get("/google/link", (req, res, next) => {
+  const redirect = req.query.redirect || "/dashboard";
+  passport.authenticate("google-user", {
+    scope: ["profile", "email", "https://www.googleapis.com/auth/drive.file"],
+    accessType: "offline",
+    prompt: "consent",
+    state: redirect,
+  })(req, res, next);
+});
+
+router.get(
+  "/google/link/callback",
+  passport.authenticate("google-user", {
+    session: false,
+    failureRedirect: "/login",
+  }),
+  (req, res) => {
+    try {
+      const token = generateToken(req.user, "user");
+      const frontendBase =
+        process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
+      const stateRedirect = req.query.state || "/dashboard";
+
+      const targetUrl = stateRedirect.toString().startsWith("http")
+        ? stateRedirect.toString()
+        : `${frontendBase}${stateRedirect}`;
+
+      const url = new URL(targetUrl);
+      url.searchParams.set("token", token);
+      url.searchParams.set("role", "user");
+      url.searchParams.set("driveLinked", "true");
+
+      res.redirect(url.toString());
+    } catch (error) {
+      console.error("Google link OAuth callback error:", error);
       const frontendBase =
         process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
       res.redirect(`${frontendBase}/auth/error`);

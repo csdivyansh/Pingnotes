@@ -112,7 +112,8 @@ const UserDashboard: React.FC = () => {
   const handleAuthenticateGoogleDrive = () => {
     const apiBase = (import.meta.env.VITE_API_URL as string) || "";
     const currentUrl = window.location.pathname;
-    window.location.href = `${apiBase}/api/auth/google/user?redirect=${encodeURIComponent(
+    // Use /api/auth/google/link for first-time Drive linking with offline consent
+    window.location.href = `${apiBase}/api/auth/google/link?redirect=${encodeURIComponent(
       currentUrl,
     )}`;
   };

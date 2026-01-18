@@ -29,7 +29,10 @@ passport.use(
             // Update existing user with Google ID
             user.googleId = profile.id;
             user.googleAccessToken = accessToken;
-            user.googleRefreshToken = refreshToken;
+            // Only save refresh token if provided (Google only provides it on first auth)
+            if (refreshToken) {
+              user.googleRefreshToken = refreshToken;
+            }
             user.profilePicture = profile.photos[0]?.value;
             await user.save();
           } else {
@@ -46,7 +49,10 @@ passport.use(
         } else {
           // Update tokens for existing Google user
           user.googleAccessToken = accessToken;
-          user.googleRefreshToken = refreshToken;
+          // Only save refresh token if provided (Google only provides it on first auth)
+          if (refreshToken) {
+            user.googleRefreshToken = refreshToken;
+          }
           await user.save();
         }
 
@@ -54,8 +60,8 @@ passport.use(
       } catch (error) {
         return done(error, null);
       }
-    }
-  )
+    },
+  ),
 );
 
 // Google OAuth Strategy for Teachers
@@ -83,7 +89,10 @@ passport.use(
             // Update existing teacher with Google ID
             teacher.googleId = profile.id;
             teacher.googleAccessToken = accessToken;
-            teacher.googleRefreshToken = refreshToken;
+            // Only save refresh token if provided (Google only provides it on first auth)
+            if (refreshToken) {
+              teacher.googleRefreshToken = refreshToken;
+            }
             teacher.profilePicture = profile.photos[0]?.value;
             await teacher.save();
           } else {
@@ -101,7 +110,10 @@ passport.use(
         } else {
           // Update tokens for existing Google teacher
           teacher.googleAccessToken = accessToken;
-          teacher.googleRefreshToken = refreshToken;
+          // Only save refresh token if provided (Google only provides it on first auth)
+          if (refreshToken) {
+            teacher.googleRefreshToken = refreshToken;
+          }
           await teacher.save();
         }
 
@@ -109,8 +121,8 @@ passport.use(
       } catch (error) {
         return done(error, null);
       }
-    }
-  )
+    },
+  ),
 );
 
 // Generate JWT token
@@ -125,7 +137,7 @@ export const generateToken = (user, role) => {
       name: user.name,
     },
     jwtSecret,
-    { expiresIn: "30d" } // Changed from '7d' to '30d'
+    { expiresIn: "30d" }, // Changed from '7d' to '30d'
   );
 };
 
