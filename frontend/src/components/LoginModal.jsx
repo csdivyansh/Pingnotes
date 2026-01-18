@@ -45,13 +45,13 @@ function LoginModal({ isOpen, onClose, onLoginSuccess }) {
     }
   };
 
-  // Fallback to redirect login
+  // Fallback to redirect login (basic profile/email only)
   const handleFallbackLogin = () => {
     const apiBase = import.meta.env.VITE_API_URL || "";
     const intendedRedirect =
       localStorage.getItem("postLoginRedirect") || "/dashboard";
-    window.location.href = `${apiBase}/api/auth/google/user?redirect=${encodeURIComponent(
-      intendedRedirect
+    window.location.href = `${apiBase}/api/auth/google/basic?redirect=${encodeURIComponent(
+      intendedRedirect,
     )}`;
   };
 

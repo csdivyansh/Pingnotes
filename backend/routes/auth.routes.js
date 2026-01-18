@@ -173,6 +173,48 @@ router.get(
   },
 );
 
+// Google OAuth (basic profile/email only) for Users - no Drive consent
+router.get("/google/basic", (req, res, next) => {
+  const redirect = req.query.redirect || "/auth/success";
+  passport.authenticate("google-user", {
+    scope: ["profile", "email"],
+    // No accessType offline, no drive scopes, minimal consent
+    prompt: "select_account",
+    state: redirect,
+  })(req, res, next);
+});
+
+router.get(
+  "/google/basic/callback",
+  passport.authenticate("google-user", {
+    session: false,
+    failureRedirect: "/login",
+  }),
+  (req, res) => {
+    try {
+      const token = generateToken(req.user, "user");
+      const frontendBase =
+        process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
+      const stateRedirect = req.query.state || "/auth/success";
+
+      const targetUrl = stateRedirect.toString().startsWith("http")
+        ? stateRedirect.toString()
+        : `${frontendBase}${stateRedirect}`;
+
+      const url = new URL(targetUrl);
+      url.searchParams.set("token", token);
+      url.searchParams.set("role", "user");
+
+      res.redirect(url.toString());
+    } catch (error) {
+      console.error("Google basic OAuth callback error:", error);
+      const frontendBase =
+        process.env.FRONTEND_URL || "https://pingnotes.csdiv.tech";
+      res.redirect(`${frontendBase}/auth/error`);
+    }
+  },
+);
+
 // Google OAuth for Teachers
 router.get("/google/teacher", (req, res, next) => {
   const redirect = req.query.redirect || "/auth/success";
