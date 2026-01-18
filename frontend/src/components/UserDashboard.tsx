@@ -90,10 +90,12 @@ const UserDashboard: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (authChecked && !needsGoogleDriveAuth) {
+    if (authChecked) {
+      // Fetch subjects regardless of Google Drive authorization status.
+      // Drive auth is handled via a non-blocking modal overlay.
       fetchSubjects();
     }
-  }, [authChecked, needsGoogleDriveAuth]);
+  }, [authChecked]);
 
   // API functions
   const checkGoogleDriveAccess = async () => {
