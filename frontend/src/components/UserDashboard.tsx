@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTheme } from "./ThemeContext";
 import { themes } from "./themeConfig";
 import DashNav from "./DashNav";
@@ -36,6 +36,7 @@ interface File {
 
 const UserDashboard: React.FC = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { isDark } = useTheme();
   const theme = isDark ? themes.dark : themes.light;
   const { openUploadModal } = useGlobalFileUpload();
@@ -68,6 +69,21 @@ const UserDashboard: React.FC = () => {
   const [authChecked, setAuthChecked] = useState(false);
 
   // Effects
+  useEffect(() => {
+    // Extract token from query params if present
+    const token = searchParams.get("token");
+    const role = searchParams.get("role");
+
+    if (token && !localStorage.getItem("userToken")) {
+      localStorage.setItem("userToken", token);
+      if (role) {
+        localStorage.setItem("userRole", role);
+      }
+      // Clean up URL by removing query params
+      navigate("/dashboard", { replace: true });
+    }
+  }, [searchParams, navigate]);
+
   useEffect(() => {
     checkGoogleDriveAccess();
   }, []);

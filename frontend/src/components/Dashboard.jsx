@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import AdminSidebar from "./AdminSidebar";
 import DashboardCard from "./DashboardCard";
 import apiService from "../services/api";
 
 const Dashboard = () => {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [stats, setStats] = useState({
     notes: 0,
     users: 0,
@@ -14,6 +17,21 @@ const Dashboard = () => {
   });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    // Extract token from query params if present
+    const token = searchParams.get("token");
+    const role = searchParams.get("role");
+
+    if (token && !localStorage.getItem("adminToken")) {
+      localStorage.setItem("adminToken", token);
+      if (role) {
+        localStorage.setItem("adminRole", role);
+      }
+      // Clean up URL by removing query params
+      navigate("/admin/dashboard", { replace: true });
+    }
+  }, [searchParams, navigate]);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -64,45 +82,45 @@ const Dashboard = () => {
           Admin Dashboard
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-5">
-            <DashboardCard
-              title="Total Notes"
-              count={stats.notes}
-              iconClass="fa-file-alt"
-              color="blue"
-            />
-            <DashboardCard
-              title="Students"
-              count={stats.users}
-              iconClass="fa-users"
-              color="green"
-            />
-            <DashboardCard
-              title="Teachers"
-              count={stats.teachers}
-              iconClass="fa-chalkboard-teacher"
-              color="yellow"
-            />
-            <DashboardCard
-              title="Groups"
-              count={stats.groups}
-              iconClass="fa-folder"
-              color="purple"
-            />
-            <DashboardCard
-              title="Subjects"
-              count={stats.subjects}
-              iconClass="fa-book"
-              color="pink"
-            />
-            <DashboardCard
-              title="Admins"
-              count={stats.admins}
-              iconClass="fa-user-shield"
-              color="red"
-            />
-          </div>
-        </main>
-      </div>
+          <DashboardCard
+            title="Total Notes"
+            count={stats.notes}
+            iconClass="fa-file-alt"
+            color="blue"
+          />
+          <DashboardCard
+            title="Students"
+            count={stats.users}
+            iconClass="fa-users"
+            color="green"
+          />
+          <DashboardCard
+            title="Teachers"
+            count={stats.teachers}
+            iconClass="fa-chalkboard-teacher"
+            color="yellow"
+          />
+          <DashboardCard
+            title="Groups"
+            count={stats.groups}
+            iconClass="fa-folder"
+            color="purple"
+          />
+          <DashboardCard
+            title="Subjects"
+            count={stats.subjects}
+            iconClass="fa-book"
+            color="pink"
+          />
+          <DashboardCard
+            title="Admins"
+            count={stats.admins}
+            iconClass="fa-user-shield"
+            color="red"
+          />
+        </div>
+      </main>
+    </div>
   );
 };
 
